@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:bs21_05_innocart/registration_screen.dart';
+import 'registration_screen.dart';
+import 'hello_screen.dart';
+import 'profile_screen.dart';
+import 'creating_order_screen.dart';
+import 'profile_change_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -28,6 +32,6 @@ class baseScreen extends StatefulWidget {
 class _baseScreenState extends State<baseScreen> {
   @override
   Widget build(BuildContext context) {
-    return regScreen();
+    return ProfileChangePage();
   }
 }
