@@ -65,6 +65,11 @@ flutter:
     - assets/icons/Calendar_light.svg
     - assets/icons/Pin_alt_light.svg
     - assets/icons/Time_light.svg
+    - assets/icons/List Icon.svg
+    - assets/icons/Arhive_light.svg
+    - assets/icons/Create Order Button.svg
+    - assets/icons/Message Icon.svg
+    - assets/icons/User_alt_light.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
