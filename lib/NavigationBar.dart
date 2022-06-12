@@ -21,8 +21,8 @@ Widget navigationBar = NavigationBar(
   }),*/
   destinations: [
     NavigationDestination(
-      icon: SvgPicture.asset('assets/icons/List Icon.svg',
-          width: 24, height: 24),
+      icon:
+          SvgPicture.asset('assets/icons/List Icon.svg', width: 24, height: 24),
       label: 'ListOfOrders',
     ),
     NavigationDestination(
@@ -59,4 +59,4 @@ Widget navigationBar = NavigationBar(
       label: 'ProfilePicture',
     ),
   ],
-),
+);
