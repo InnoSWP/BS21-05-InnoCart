@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'NavigationBar.dart';
 import 'main.dart';
 
-class PageOfShopperOrders extends StatefulWidget {
-  const PageOfShopperOrders({Key? key}) : super(key: key);
+class PageOfActiveOrders extends StatefulWidget {
+  const PageOfActiveOrders({Key? key}) : super(key: key);
 
   @override
-  State<PageOfShopperOrders> createState() => _PageOfShopperOrdersState();
+  State<PageOfActiveOrders> createState() => _PageOfActiveOrdersState();
 }
 
-class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
+class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,11 +19,9 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
               backgroundColor: Colors.white,
               elevation: 0,
               title: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/AngelOrders');
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-                child: const Text('Move to Angel page',
+                child: const Text('All Orders',
                     style: TextStyle(color: Colors.black, fontSize: 16)),
               ),
             ),

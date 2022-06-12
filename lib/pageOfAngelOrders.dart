@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'NavigationBar.dart';
+import 'main.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
               elevation: 0,
               title: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/');
+                  Navigator.of(context).pushNamed('/ShopperOrders');
                 },
                 style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
                 child: const Text('Move to Shopper page',
@@ -28,7 +30,20 @@ class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
             ),
             bottomNavigationBar: NavigationBar(
               labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-              selectedIndex: 1,
+              selectedIndex: selectedPage,
+              onDestinationSelected: (index) => setState(() {
+                selectedPage = index;
+                switch (index) {
+                  case 0:
+                    Navigator.of(context).pushNamed('/');
+                    break;
+                  case 1:
+                    Navigator.of(context).pushNamed('/ShopperOrders');
+                    break;
+                  default:
+                    Navigator.of(context).pushNamed('/');
+                }
+              }),
               destinations: [
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/icons/List Icon.svg',
