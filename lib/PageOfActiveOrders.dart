@@ -32,13 +32,14 @@ class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
                 selectedPage = index;
                 switch (index) {
                   case 0:
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushReplacementNamed('/');
                     break;
                   case 1:
-                    Navigator.of(context).pushNamed('/ShopperOrders');
+                    Navigator.of(context)
+                        .pushReplacementNamed('/ShopperOrders');
                     break;
                   default:
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushReplacementNamed('/');
                 }
               }),
               destinations: [

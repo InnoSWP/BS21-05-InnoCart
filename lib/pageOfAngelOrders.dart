@@ -21,7 +21,7 @@ class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
               elevation: 0,
               title: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/ShopperOrders');
+                  Navigator.of(context).pushReplacementNamed('/ShopperOrders');
                 },
                 style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
                 child: const Text('Move to Shopper page',
@@ -35,13 +35,14 @@ class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
                 selectedPage = index;
                 switch (index) {
                   case 0:
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushReplacementNamed('/');
                     break;
                   case 1:
-                    Navigator.of(context).pushNamed('/ShopperOrders');
+                    Navigator.of(context)
+                        .pushReplacementNamed('/ShopperOrders');
                     break;
                   default:
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushReplacementNamed('/');
                 }
               }),
               destinations: [
