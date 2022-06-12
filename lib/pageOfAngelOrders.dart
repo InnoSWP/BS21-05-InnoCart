@@ -32,6 +32,7 @@ class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
               labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
               selectedIndex: selectedPage,
               onDestinationSelected: (index) => setState(() {
+                if (selectedPage == index) return;
                 selectedPage = index;
                 switch (index) {
                   case 0:

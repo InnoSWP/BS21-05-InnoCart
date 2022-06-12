@@ -29,6 +29,7 @@ class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
               labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
               selectedIndex: selectedPage,
               onDestinationSelected: (index) => setState(() {
+                if (selectedPage == index) return;
                 selectedPage = index;
                 switch (index) {
                   case 0:

@@ -32,6 +32,7 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
               labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
               selectedIndex: selectedPage,
               onDestinationSelected: (index) => setState(() {
+                if (selectedPage == index) return;
                 selectedPage = index;
                 switch (index) {
                   case 0:
