@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class PageOfActiveOrders extends StatefulWidget {
-  const PageOfActiveOrders({Key? key}) : super(key: key);
+class PageOfAngelOrders extends StatefulWidget {
+  const PageOfAngelOrders({Key? key}) : super(key: key);
 
   @override
-  State<PageOfActiveOrders> createState() => _PageOfActiveOrdersState();
+  State<PageOfAngelOrders> createState() => _PageOfAngelOrdersState();
 }
 
-class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
+class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,9 +18,11 @@ class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
               backgroundColor: Colors.white,
               elevation: 0,
               title: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/');
+                },
                 style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-                child: const Text('Move to Angel page',
+                child: const Text('Move to Shopper page',
                     style: TextStyle(color: Colors.black, fontSize: 16)),
               ),
             ),

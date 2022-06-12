@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/pageOfActiveOrders.dart';
+import 'package:inno_cart/GenerateRoute.dart';
+import 'package:inno_cart/pageOfAngelOrders.dart';
+import 'package:inno_cart/pageOfShopperOrders.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: PageOfActiveOrders(),
+      initialRoute: '/AngelOrders',
+      onGenerateRoute: generateRoute,
     );
   }
 }
