@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'NavigationBar.dart';
-import 'main.dart';
 
 class PageOfActiveOrders extends StatefulWidget {
   const PageOfActiveOrders({Key? key}) : super(key: key);

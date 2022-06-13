@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/PageOfActiveOrders.dart';
-import 'package:inno_cart/pageOfAngelOrders.dart';
-import 'package:inno_cart/pageOfShopperOrders.dart';
+import 'PageOfActiveOrders.dart';
+import 'pageOfAngelOrders.dart';
+import 'pageOfShopperOrders.dart';
 
 Route? generateRoute(RouteSettings settings) {
   switch (settings.name) {

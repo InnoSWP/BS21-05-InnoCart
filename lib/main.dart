@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/GenerateRoute.dart';
+import 'GenerateRoute.dart';
 
 void main() => runApp(const MyApp());
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'NavigationBar.dart';
-import 'main.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
