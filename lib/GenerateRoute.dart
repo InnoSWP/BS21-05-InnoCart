@@ -14,5 +14,6 @@ Route? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const PageOfShopperOrders());
     default:
       return null;
+    // some comment
   }
 }
