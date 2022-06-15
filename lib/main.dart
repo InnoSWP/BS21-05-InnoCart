@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'GenerateRoute.dart';
+import 'registration_screen.dart';
 
 void main() => runApp(const MyApp());
 
