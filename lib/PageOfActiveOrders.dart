@@ -18,11 +18,28 @@ class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              title: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-                child: const Text('All Orders',
-                    style: TextStyle(color: Colors.black, fontSize: 16)),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        showDatePicker(
+                            context: context,
+                            initialDate: DateTime(2000),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2000));
+                      },
+                      child: const Text('Choose date')),
+                  IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset('assets/icons/Filter Icon.svg'),
+                      color: Colors.black),
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/icons/Filter Seacrh.svg'),
+                    color: Colors.black,
+                  ),
+                ],
               ),
             ),
             bottomNavigationBar: makeNavigationBar(context, this),
