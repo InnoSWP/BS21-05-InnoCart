@@ -70,6 +70,7 @@ flutter:
     - assets/icons/Create Order Button.svg
     - assets/icons/Message Icon.svg
     - assets/icons/User_alt_light.svg
+    - assets/images/man.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

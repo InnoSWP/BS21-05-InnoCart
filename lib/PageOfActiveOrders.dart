@@ -27,7 +27,7 @@ class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
             ),
             bottomNavigationBar: makeNavigationBar(context, this),
             body: ListView(
-              children: Tickets().getTickets(),
+              children: Tickets(context).getTickets(),
             ))); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
@@ -40,10 +40,11 @@ class Tickets {
   late List<Widget> inProgress;
   late List<Widget> completed;
 
-  Tickets() {
-    waitingForAccept = setTicket('See requests');
-    inProgress = setTicket('Open Chat') + setTicket('Open Chat');
-    completed = setTicket('Rate Angel');
+  Tickets(BuildContext context) {
+    waitingForAccept = setTicket('See requests', context);
+    inProgress =
+        setTicket('Open Chat', context) + setTicket('Open Chat', context);
+    completed = setTicket('Rate Angel', context);
   }
 
   List<Widget> getTickets() {
@@ -55,7 +56,31 @@ class Tickets {
         completed;
   }
 
-  List<Widget> setTicket(String text) {
+  Future popUpTicket(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+            clipBehavior: Clip.antiAlias,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            child: Container(
+              width: 313,
+              height: 355,
+              child: ListView(
+                children: const [
+                  CircleAvatar(
+                    radius: (50),
+                    backgroundImage: AssetImage('assets/images/man.jpg'),
+                  ),
+                ],
+              ),
+            ));
+      },
+    );
+  }
+
+  List<Widget> setTicket(String text, BuildContext context) {
     return [
       Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
@@ -144,7 +169,9 @@ class Tickets {
             //Button
 
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  popUpTicket(context);
+                },
                 child: Container(
                     width: 150,
                     height: 32,
