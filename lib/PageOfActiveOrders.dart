@@ -10,6 +10,22 @@ class PageOfActiveOrders extends StatefulWidget {
 }
 
 class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
+  DateTime selectedDate = DateTime.now();
+  Widget dropdownvalue = Text('1');
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: selectedDate,
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,24 +35,93 @@ class _PageOfActiveOrdersState extends State<PageOfActiveOrders> {
               backgroundColor: Colors.white,
               elevation: 0,
               title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                      onPressed: () {
-                        showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2000),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2000));
-                      },
-                      child: const Text('Choose date')),
-                  IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset('assets/icons/Filter Icon.svg'),
-                      color: Colors.black),
+                      onPressed: () => selectDate(context),
+                      child: SizedBox(
+                          width: 130,
+                          height: 30,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.calendar_today_outlined),
+                              Text('Choose date'),
+                            ],
+                          ))),
+                  PopupMenuButton(
+                      icon: SvgPicture.asset(
+                        'assets/icons/Filter Icon.svg',
+                        color: Colors.black,
+                      ),
+                      itemBuilder: (context) => [
+                            PopupMenuItem(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              value: 0,
+                              child: Column(
+                                children: [
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Type',
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize:
+                                                const Size.fromHeight(40),
+                                          ),
+                                          onPressed: () {},
+                                          child: const Text('All'))),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              padding: const EdgeInsets.all(20),
+                              value: 0,
+                              child: Column(
+                                children: const [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Weight',
+                                    ),
+                                  ),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'Enter max weight (kg)'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              padding: const EdgeInsets.only(
+                                  bottom: 20, left: 20, right: 20),
+                              value: 0,
+                              child: Column(
+                                children: const [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Distance',
+                                    ),
+                                  ),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'Enter max distance (m)'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
                   IconButton(
                     onPressed: () {},
-                    icon: SvgPicture.asset('assets/icons/Filter Seacrh.svg'),
+                    icon: SvgPicture.asset('assets/icons/Filter Seacrh.svg',
+                        color: Colors.black),
                     color: Colors.black,
                   ),
                 ],
@@ -54,23 +139,14 @@ const double bottomPadding = 29;
 
 class Tickets {
   late List<Widget> waitingForAccept;
-  late List<Widget> inProgress;
-  late List<Widget> completed;
 
   Tickets(BuildContext context) {
-    waitingForAccept = setTicket('See requests', context);
-    inProgress =
-        setTicket('Open Chat', context) + setTicket('Open Chat', context);
-    completed = setTicket('Rate Angel', context);
+    waitingForAccept =
+        setTicket(context) + setTicket(context) + setTicket(context);
   }
 
   List<Widget> getTickets() {
-    return generateHeader('Waiting for accept') +
-        waitingForAccept +
-        generateHeader('In progress') +
-        inProgress +
-        generateHeader('Completed') +
-        completed;
+    return waitingForAccept;
   }
 
   Future popUpTicket(BuildContext context) {
@@ -97,7 +173,7 @@ class Tickets {
     );
   }
 
-  List<Widget> setTicket(String text, BuildContext context) {
+  List<Widget> setTicket(BuildContext context) {
     return [
       Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
@@ -106,113 +182,101 @@ class Tickets {
         color: const Color(gray),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //PICTURE
-                Container(
-                  width: 130,
-                  height: 130,
-                  color: Colors.blueGrey,
-                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                ),
-
-                //TICKET INFO
-
-                Column(
+            GestureDetector(
+                onTap: () => popUpTicket(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //PICTURE
                     Container(
-                        margin: const EdgeInsets.only(top: 12),
-                        child: const Text(
-                          'Pizza',
-                          style: TextStyle(fontSize: 20),
-                        )),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Bag_alt_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: const Text('2 kg')),
-                      ],
+                      width: 130,
+                      height: 130,
+                      color: Colors.blueGrey,
+                      margin:
+                          const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                     ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Pin_alt_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: const Text('124 m')),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Time_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: const Text('14:00')),
-                      ],
-                    ),
-                  ],
-                ),
 
-                Container(
-                    margin: const EdgeInsets.all(12),
-                    color: Colors.yellowAccent,
-                    padding: const EdgeInsets.all(6),
-                    child: Row(
+                    //TICKET INFO
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('100'),
-                        SvgPicture.asset('assets/icons/Currency.svg'),
+                        Container(
+                            margin: const EdgeInsets.only(top: 12),
+                            child: const Text(
+                              'Pizza',
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/Bag_alt_light.svg',
+                              color: Colors.black,
+                              width: 24,
+                              height: 24,
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: const Text('2 kg')),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/Pin_alt_light.svg',
+                              color: Colors.black,
+                              width: 24,
+                              height: 24,
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: const Text('124 m')),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/Time_light.svg',
+                              color: Colors.black,
+                              width: 24,
+                              height: 24,
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: const Text('14:00')),
+                          ],
+                        ),
                       ],
-                    )),
-              ],
-            ),
+                    ),
+
+                    Container(
+                        margin: const EdgeInsets.all(12),
+                        color: Colors.yellowAccent,
+                        padding: const EdgeInsets.all(6),
+                        child: Row(
+                          children: [
+                            const Text('100'),
+                            SvgPicture.asset('assets/icons/Currency.svg'),
+                          ],
+                        )),
+                  ],
+                )),
             //Button
 
             ElevatedButton(
-                onPressed: () {
-                  popUpTicket(context);
-                },
+                onPressed: () {},
                 child: Container(
                     width: 150,
                     height: 32,
                     child: Center(
                         child: Text(
-                      text,
+                      'Send request',
                       style: const TextStyle(fontSize: 14),
                     )))),
           ],
         ),
       )
-    ];
-  }
-
-  List<Widget> generateHeader(String text) {
-    return [
-      Container(
-          width: 161,
-          height: 22,
-          margin: const EdgeInsets.only(left: 29, bottom: bottomPadding),
-          child: Text(
-            text,
-            style: const TextStyle(fontSize: 20),
-          )),
     ];
   }
 }
