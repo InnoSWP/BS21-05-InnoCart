@@ -4,6 +4,8 @@ import 'GenerateRoute.dart';
 void main() => runApp(const MyApp());
 
 int selectedPage = 0;
+const int gray = 0xe5e5e5e5;
+const double bottomPadding = 29;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

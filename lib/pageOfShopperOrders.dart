@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'NavigationBar.dart';
+import 'SetTicket.dart';
+import 'PopUpTicket.dart';
+import 'main.dart';
 
 class PageOfShopperOrders extends StatefulWidget {
   const PageOfShopperOrders({Key? key}) : super(key: key);
@@ -33,9 +36,6 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
             ))); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
-
-const int gray = 0xe5e5e5e5;
-const double bottomPadding = 29;
 
 class Tickets {
   late List<Widget> waitingForAccept;
