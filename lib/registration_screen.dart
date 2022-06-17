@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'backend_functions.dart';
 import 'user.dart';
+
 class regScreen extends StatefulWidget {
   regScreen({Key? key}) : super(key: key);
   Color mistake_color = Colors.white;
@@ -134,7 +135,6 @@ class _regScreenState extends State<regScreen> {
               child: TextField(
                 onChanged: (text) {
                   raw_data['phone_number'] = text;
-
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -168,17 +168,19 @@ class _regScreenState extends State<regScreen> {
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
                     print(raw_data.toString());
-                    if (await nickExists(raw_data['allias'])){
-                      setState((){
+                    if (await nickExists(raw_data['allias'])) {
+                      setState(() {
                         widget.mistake_color = Colors.redAccent;
                       });
-                    }
-                    else{
-                      raw_data['password'] = await getHash(raw_data['password']);;
+                    } else {
+                      raw_data['password'] =
+                          await getHash(raw_data['password']);
+                      ;
                       raw_data['user_id'] = await getId(raw_data['allias']);
                       var user = User(raw_data);
                       await addUser(user);
-                      Navigator.of(context).pushReplacementNamed('/ShopperOrders');
+                      Navigator.of(context)
+                          .pushReplacementNamed('/PageOfActiveOrders');
                     }
                   },
                   child: Text(

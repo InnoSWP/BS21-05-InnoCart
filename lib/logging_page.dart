@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'backend_functions.dart';
 import 'user.dart';
+
 class LogInPage extends StatefulWidget {
   LogInPage({Key? key}) : super(key: key);
   Color mistake_color = Colors.white;
@@ -81,12 +82,12 @@ class _LogInPageState extends State<LogInPage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
-                    if (await dataIsCorrect(curNick, curPass)){
+                    if (await dataIsCorrect(curNick, curPass)) {
                       var user = User(await getDataByNick(curNick));
-                      Navigator.of(context).pushReplacementNamed('/ShopperOrders');
-                    }
-                    else{
-                      setState((){
+                      Navigator.of(context)
+                          .pushReplacementNamed('/PageOfActiveOrders');
+                    } else {
+                      setState(() {
                         widget.mistake_color = Colors.redAccent;
                       });
                     }
