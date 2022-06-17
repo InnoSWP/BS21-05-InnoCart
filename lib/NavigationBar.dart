@@ -19,6 +19,12 @@ Widget makeNavigationBar(BuildContext context, var object) {
         case 2:
           Navigator.of(context).pushNamed('/CreatingOrderScreen');
           break;
+        case 3:
+          Navigator.of(context).pushNamed('/');
+          break;
+        case 4:
+          Navigator.of(context).pushNamed('/ProfileScreen');
+          break;
         default:
           Navigator.of(context).pushNamed('/');
       }

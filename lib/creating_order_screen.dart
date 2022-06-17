@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:inno_cart/NavigationBar.dart';
 
-class OrderFactoryPage extends StatelessWidget {
+class OrderFactoryPage extends StatefulWidget {
   const OrderFactoryPage({Key? key}) : super(key: key);
 
+  @override
+  State<OrderFactoryPage> createState() => _OrderFactoryPageState();
+}
+
+class _OrderFactoryPageState extends State<OrderFactoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +30,13 @@ class OrderFactoryPage extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(7.0)),
                       borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                      const BorderSide(color: Colors.black, width: 2.0),
                     ),
                     enabledBorder: const OutlineInputBorder(
                       borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                      const BorderSide(color: Colors.black, width: 2.0),
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(7.0)),
+                      const BorderRadius.all(Radius.circular(7.0)),
                     ),
                     hintText: 'Name',
                   ),
@@ -68,7 +73,7 @@ class OrderFactoryPage extends StatelessWidget {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(7.0)),
+                            BorderRadius.all(Radius.circular(7.0)),
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -76,7 +81,7 @@ class OrderFactoryPage extends StatelessWidget {
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7.0)),
+                            const BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter weight',
                         ),
@@ -95,7 +100,7 @@ class OrderFactoryPage extends StatelessWidget {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(7.0)),
+                            BorderRadius.all(Radius.circular(7.0)),
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -103,7 +108,7 @@ class OrderFactoryPage extends StatelessWidget {
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7.0)),
+                            const BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Add location',
                         ),
@@ -129,11 +134,11 @@ class OrderFactoryPage extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(7.0)),
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
+                    const BorderSide(color: Colors.black, width: 2.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
+                    const BorderSide(color: Colors.black, width: 2.0),
                     borderRadius: const BorderRadius.all(Radius.circular(7.0)),
                   ),
                 ),
@@ -152,11 +157,11 @@ class OrderFactoryPage extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(7.0)),
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
+                    const BorderSide(color: Colors.black, width: 2.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
+                    const BorderSide(color: Colors.black, width: 2.0),
                     borderRadius: const BorderRadius.all(Radius.circular(7.0)),
                   ),
                   hintText: 'Type',
@@ -183,13 +188,13 @@ class OrderFactoryPage extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7.0)),
+                          const BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Type',
                       ),
@@ -218,13 +223,13 @@ class OrderFactoryPage extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7.0)),
+                          const BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Set date',
                       ),
@@ -241,13 +246,13 @@ class OrderFactoryPage extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7.0)),
+                          const BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Set time',
                       ),
@@ -279,3 +284,4 @@ class OrderFactoryPage extends StatelessWidget {
     );
   }
 }
+
