@@ -5,15 +5,16 @@ import 'PageOfActiveOrders.dart';
 import 'pageOfAngelOrders.dart';
 import 'pageOfShopperOrders.dart';
 import 'logging_page.dart';
+import 'creating_order_screen.dart';
 
 Route? generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/':
       final data = settings.arguments;
       return MaterialPageRoute(builder: (_) => const helloPage());
-    case '/OrdersPage':
-      return MaterialPageRoute(builder: (_) => const PageOfActiveOrders());
     case '/PageOfActiveOrders':
+      return MaterialPageRoute(builder: (_) => const PageOfActiveOrders());
+    case '/AngelOrders':
       return MaterialPageRoute(builder: (_) => const PageOfAngelOrders());
     case '/ShopperOrders':
       return MaterialPageRoute(builder: (_) => const PageOfShopperOrders());
@@ -21,7 +22,8 @@ Route? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => regScreen());
     case '/LogInPage':
       return MaterialPageRoute(builder: (_) => LogInPage());
-
+    case '/CreatingOrderScreen':
+      return MaterialPageRoute(builder: (_) => OrderFactoryPage());
     default:
       return null;
   }
