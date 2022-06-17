@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
-class ProfileChangePage extends StatelessWidget {
-  const ProfileChangePage({Key? key}) : super(key: key);
+import 'NavigationBar.dart';
+class ProfileChangeScreen extends StatefulWidget {
+  const ProfileChangeScreen({Key? key}) : super(key: key);
 
   @override
+  State<ProfileChangeScreen> createState() => _ProfileChangeScreenState();
+}
+
+class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Padding(
+    return Scaffold(
+      bottomNavigationBar: makeNavigationBar(context, this),
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 70),
         child: Column(
           children: [
@@ -124,7 +130,9 @@ class ProfileChangePage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             primary: Colors.white,
                             side: BorderSide(width: 2.0, color: Colors.black)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/ProfileScreen');
+                        },
                         child: Text(
                           'Go back',
                           style: TextStyle(color: Colors.black),

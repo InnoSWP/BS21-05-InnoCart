@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'NavigationBar.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Padding(
+    return Scaffold(
+      bottomNavigationBar: makeNavigationBar(context, this),
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 70),
         child: Column(
           children: [
@@ -65,7 +72,9 @@ class ProfilePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.white,
                         side: BorderSide(width: 2.0, color: Colors.black)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/ProfileChangeScreen');
+                    },
                     child: Text(
                       'Edit profile',
                       style: TextStyle(color: Colors.black),
