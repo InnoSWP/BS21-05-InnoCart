@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'user.dart';
+//keklol
 /// this function craves for implementation...
 Future<bool> dataIsCorrect(String nick, String pass) async{
   if (nick.length > 0 && nick[0] == 'a' && pass.length > 0) return true;
