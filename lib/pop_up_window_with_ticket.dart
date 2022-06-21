@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'SetTicket.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 
@@ -11,7 +10,7 @@ Future popUpTicket(BuildContext context) {
           clipBehavior: Clip.antiAlias,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          child: Container(
+          child: SizedBox(
             height: 400,
             child: Column(children: [
               Container(
@@ -105,9 +104,9 @@ Future popUpTicket(BuildContext context) {
               ),
               Container(
                 height: 50,
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: ListView(
-                  children: [
+                  children: const [
                     Text('I want two DoDo peperoni pizzas, thank you!'),
                   ],
                 ),
@@ -115,19 +114,18 @@ Future popUpTicket(BuildContext context) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: (20),
                     backgroundImage: AssetImage('assets/images/man.jpg'),
                   ),
-                  Text('Amr. T.'),
+                  const Text('Amr. T.'),
                   ElevatedButton(
                       onPressed: () {},
-                      child: Container(
-                          child: Center(
-                              child: Text(
+                      child: const Center(
+                          child: Text(
                         'Send request',
-                        style: const TextStyle(fontSize: 14),
-                      )))),
+                        style: TextStyle(fontSize: 14),
+                      ))),
                 ],
               ),
             ]),
