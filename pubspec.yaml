@@ -72,9 +72,11 @@ flutter:
     - assets/icons/Message Icon.svg
     - assets/icons/User_alt_light.svg
     - assets/images/man.jpg
+    - assets/images/man1.png
     - assets/icons/Filter Icon.svg
     - assets/icons/Filter Seacrh.svg
     - assets/images/pizza.jpg
+    - assets/icons/RequestSent.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

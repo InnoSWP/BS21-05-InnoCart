@@ -35,12 +35,9 @@ PreferredSizeWidget? appBar(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.calendar_today_outlined,
-                      color: Colors.black,
-                    ),
-                    Text(
+                  children: [
+                    SvgPicture.asset('assets/icons/Calendar_light.svg'),
+                    const Text(
                       'Choose date',
                       style: TextStyle(color: Colors.black),
                     ),
