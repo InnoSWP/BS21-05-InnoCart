@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
 
@@ -13,7 +14,7 @@ List<Widget> setTicket(BuildContext context) {
           padding: const EdgeInsets.all(20),
           width: 345,
           height: 230,
-          color: const Color(gray),
+          color: Colors.white,
           child: Column(
             children: [
               Row(
@@ -134,17 +135,26 @@ List<Widget> setTicket(BuildContext context) {
                       ),
                       ElevatedButton(
                           onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.yellowAccent),
-                          child: const SizedBox(
-                              width: 150,
-                              height: 32,
-                              child: Center(
-                                  child: Text(
-                                'Send request',
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                              )))),
+                          style: RoundedWhite,
+                          child: SizedBox(
+                            width: 150,
+                            height: 32,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text(
+                                  'Send request',
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black,
+                                  size: 14,
+                                ),
+                              ],
+                            ),
+                          )),
                     ],
                   )),
             ],

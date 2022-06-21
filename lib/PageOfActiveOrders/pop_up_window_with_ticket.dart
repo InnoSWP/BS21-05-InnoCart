@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/elevated_button_style.dart';
 import 'pop_up_notify.dart';
 import '../main.dart';
 
@@ -114,7 +113,8 @@ Future popUpTicket(BuildContext context) {
               ),
               Container(
                 alignment: Alignment.topLeft,
-                child: Text('I want two DoDo peperoni pizzas, thank you!'),
+                child:
+                    const Text('I want two DoDo peperoni pizzas, thank you!'),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,17 +151,29 @@ Future popUpTicket(BuildContext context) {
                     ],
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        PopUpRequestSentNotifier(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.yellowAccent),
-                      child: const Center(
-                          child: Text(
-                        'Send request',
-                        style: TextStyle(fontSize: 14, color: Colors.black),
-                      ))),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      PopUpRequestSentNotifier(context);
+                    },
+                    style: RoundedWhite,
+                    child: SizedBox(
+                      width: 120,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'Send request',
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.black,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               //Button
