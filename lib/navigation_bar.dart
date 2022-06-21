@@ -11,22 +11,22 @@ Widget makeNavigationBar(BuildContext context, var object) {
       selectedPage = index;
       switch (index) {
         case 0:
-          Navigator.of(context).pushNamed('/PageOfActiveOrders');
+          Navigator.of(context).pushReplacementNamed('/PageOfActiveOrders');
           break;
         case 1:
-          Navigator.of(context).pushNamed('/ShopperOrders');
+          Navigator.of(context).pushReplacementNamed('/ShopperOrders');
           break;
         case 2:
-          Navigator.of(context).pushNamed('/CreatingOrderScreen');
+          Navigator.of(context).pushReplacementNamed('/CreatingOrderScreen');
           break;
         case 3:
-          Navigator.of(context).pushNamed('/');
+          Navigator.of(context).pushReplacementNamed('/');
           break;
         case 4:
-          Navigator.of(context).pushNamed('/ProfileScreen');
+          Navigator.of(context).pushReplacementNamed('/ProfileScreen');
           break;
         default:
-          Navigator.of(context).pushNamed('/');
+          Navigator.of(context).pushReplacementNamed('/');
       }
     }),
     destinations: [

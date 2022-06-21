@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../PageOfActiveOrders/app_bar.dart';
 import '../navigation_bar.dart';
-import '../set_ticket.dart';
+import 'set_ticket.dart';
 
 class PageOfActiveOrders extends StatefulWidget {
   const PageOfActiveOrders({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
 }
 
 class Tickets {
-  late List<Widget> waitingForAccept;
+  List<Widget> waitingForAccept = [];
 
   Tickets(BuildContext context) {
     waitingForAccept =

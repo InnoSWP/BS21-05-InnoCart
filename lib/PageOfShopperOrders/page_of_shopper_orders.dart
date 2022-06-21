@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
+import 'app_bar.dart';
 
 class PageOfShopperOrders extends StatefulWidget {
   const PageOfShopperOrders({Key? key}) : super(key: key);
@@ -16,19 +17,7 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
     return SafeArea(
         child: Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              centerTitle: true,
-              title: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/AngelOrders');
-                },
-                style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-                child: const Text('Move to Angel page',
-                    style: TextStyle(color: Colors.black, fontSize: 16)),
-              ),
-            ),
+            appBar: appBar(context),
             bottomNavigationBar: makeNavigationBar(context, this),
             body: ListView(
               children: Tickets().getTickets(),
@@ -75,6 +64,10 @@ class Tickets {
                   height: 130,
                   color: Colors.blueGrey,
                   margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                  child: Image.asset(
+                    'assets/images/pizza.jpg',
+                    fit: BoxFit.fill,
+                  ),
                 ),
 
                 //TICKET INFO
@@ -146,13 +139,14 @@ class Tickets {
 
             ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
                 child: SizedBox(
                     width: 150,
                     height: 32,
                     child: Center(
                         child: Text(
                       text,
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
                     )))),
           ],
         ),

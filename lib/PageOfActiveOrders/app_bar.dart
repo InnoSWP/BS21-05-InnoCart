@@ -22,12 +22,13 @@ PreferredSizeWidget? appBar(
     BuildContext context, PageOfActiveOrdersState pageOfActiveOrders) {
   return AppBar(
     backgroundColor: Colors.white,
-    elevation: 0,
+    elevation: 1,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton(
             onPressed: () => selectDate(context, pageOfActiveOrders),
+            style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
             child: SizedBox(
                 width: 130,
                 height: 30,
@@ -35,8 +36,14 @@ PreferredSizeWidget? appBar(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
-                    Icon(Icons.calendar_today_outlined),
-                    Text('Choose date'),
+                    Icon(
+                      Icons.calendar_today_outlined,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      'Choose date',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ],
                 ))),
         PopupMenuButton(
