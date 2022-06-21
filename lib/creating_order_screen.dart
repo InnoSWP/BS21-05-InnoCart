@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/NavigationBar.dart';
+import 'navigation_bar.dart';
 
 class OrderFactoryPage extends StatefulWidget {
   const OrderFactoryPage({Key? key}) : super(key: key);
@@ -30,13 +30,13 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(7.0)),
                       borderSide:
-                      const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                     ),
                     enabledBorder: const OutlineInputBorder(
                       borderSide:
-                      const BorderSide(color: Colors.black, width: 2.0),
+                          const BorderSide(color: Colors.black, width: 2.0),
                       borderRadius:
-                      const BorderRadius.all(Radius.circular(7.0)),
+                          const BorderRadius.all(Radius.circular(7.0)),
                     ),
                     hintText: 'Name',
                   ),
@@ -73,7 +73,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -81,7 +81,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(7.0)),
+                                const BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter weight',
                         ),
@@ -100,7 +100,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -108,7 +108,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(7.0)),
+                                const BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Add location',
                         ),
@@ -134,11 +134,11 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(7.0)),
                     borderSide:
-                    const BorderSide(color: Colors.black, width: 2.0),
+                        const BorderSide(color: Colors.black, width: 2.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.black, width: 2.0),
+                        const BorderSide(color: Colors.black, width: 2.0),
                     borderRadius: const BorderRadius.all(Radius.circular(7.0)),
                   ),
                 ),
@@ -157,11 +157,11 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(7.0)),
                     borderSide:
-                    const BorderSide(color: Colors.black, width: 2.0),
+                        const BorderSide(color: Colors.black, width: 2.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.black, width: 2.0),
+                        const BorderSide(color: Colors.black, width: 2.0),
                     borderRadius: const BorderRadius.all(Radius.circular(7.0)),
                   ),
                   hintText: 'Type',
@@ -188,13 +188,13 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                              const BorderSide(color: Colors.black, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                              const BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(7.0)),
+                              const BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Type',
                       ),
@@ -223,13 +223,13 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                              const BorderSide(color: Colors.black, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                              const BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(7.0)),
+                              const BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Set date',
                       ),
@@ -246,13 +246,13 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                              const BorderSide(color: Colors.black, width: 2.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                              const BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(7.0)),
+                              const BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Set time',
                       ),
@@ -284,4 +284,3 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
     );
   }
 }
-

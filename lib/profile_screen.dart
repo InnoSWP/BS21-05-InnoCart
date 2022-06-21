@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'NavigationBar.dart';
+import 'navigation_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
               width: 130,
               height: 160,
               decoration:
-              BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey),
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey),
             ),
             SizedBox(
               height: 15,
@@ -68,20 +68,23 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 30,
                 ),
                 Center(
-                  child: SizedBox(height: 35, child:ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        side: BorderSide(width: 2.0, color: Colors.black)),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/ProfileChangeScreen');
-                    },
-                    child: Text(
-                      'Edit profile',
-                      style: TextStyle(color: Colors.black),
+                  child: SizedBox(
+                    height: 35,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          side: BorderSide(width: 2.0, color: Colors.black)),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, '/ProfileChangeScreen');
+                      },
+                      child: Text(
+                        'Edit profile',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
-                  ),),
+                  ),
                 ),
-
               ],
             ),
           ],

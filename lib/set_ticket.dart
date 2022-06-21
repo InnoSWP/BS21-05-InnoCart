@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
-import 'PopUpTicket.dart';
+import 'pop_up_window_with_ticket.dart';
 
 List<Widget> setTicket(BuildContext context) {
   return [
@@ -96,13 +96,13 @@ List<Widget> setTicket(BuildContext context) {
 
               ElevatedButton(
                   onPressed: () {},
-                  child: Container(
+                  child: const SizedBox(
                       width: 150,
                       height: 32,
                       child: Center(
                           child: Text(
                         'Send request',
-                        style: const TextStyle(fontSize: 14),
+                        style: TextStyle(fontSize: 14),
                       )))),
             ],
           ),

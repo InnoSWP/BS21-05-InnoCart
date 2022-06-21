@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'NavigationBar.dart';
-import 'SetTicket.dart';
-import 'PopUpTicket.dart';
-import 'main.dart';
+import '../navigation_bar.dart';
+import '../set_ticket.dart';
+import '../pop_up_window_with_ticket.dart';
+import '../main.dart';
 
-class PageOfShopperOrders extends StatefulWidget {
-  const PageOfShopperOrders({Key? key}) : super(key: key);
+class PageOfAngelOrders extends StatefulWidget {
+  const PageOfAngelOrders({Key? key}) : super(key: key);
 
   @override
-  State<PageOfShopperOrders> createState() => _PageOfShopperOrdersState();
+  State<PageOfAngelOrders> createState() => _PageOfAngelOrdersState();
 }
 
-class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
+class _PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,13 +21,12 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              centerTitle: true,
               title: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/AngelOrders');
+                  Navigator.of(context).pushReplacementNamed('/ShopperOrders');
                 },
                 style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-                child: const Text('Move to Angel page',
+                child: const Text('Move to Shopper page',
                     style: TextStyle(color: Colors.black, fontSize: 16)),
               ),
             ),

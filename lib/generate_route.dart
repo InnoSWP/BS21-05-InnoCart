@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/hello_screen.dart';
-import 'package:inno_cart/profile_change_screen.dart';
-import 'package:inno_cart/profile_screen.dart';
-import 'package:inno_cart/registration_screen.dart';
-import 'PageOfActiveOrders.dart';
-import 'pageOfAngelOrders.dart';
-import 'pageOfShopperOrders.dart';
+import 'hello_screen.dart';
+import 'profile_change_screen.dart';
+import 'profile_screen.dart';
+import 'registration_screen.dart';
+import 'PageOfActiveOrders/page_of_active_orders.dart';
+import 'PageOfAngelOrders/page_of_angel_orders.dart';
+import 'PageOfShopperOrders/page_of_shopper_orders.dart';
 import 'logging_page.dart';
 import 'creating_order_screen.dart';
-import 'profile_change_screen.dart';
+
 Route? generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/':
