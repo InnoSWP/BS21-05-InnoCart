@@ -21,14 +21,15 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              title: Center(child:ElevatedButton(
+              centerTitle: true,
+              title: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/AngelOrders');
                 },
                 style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
                 child: const Text('Move to Angel page',
                     style: TextStyle(color: Colors.black, fontSize: 16)),
-              ),),
+              ),
             ),
             bottomNavigationBar: makeNavigationBar(context, this),
             body: ListView(
