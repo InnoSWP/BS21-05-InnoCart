@@ -8,6 +8,7 @@ Widget makeNavigationBar(BuildContext context, var object) {
     labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
     selectedIndex: selectedPage,
     onDestinationSelected: (index) => object.setState(() {
+      if (selectedPage == index) return;
       selectedPage = index;
       switch (index) {
         case 0:
@@ -20,7 +21,7 @@ Widget makeNavigationBar(BuildContext context, var object) {
           Navigator.of(context).pushReplacementNamed('/CreatingOrderScreen');
           break;
         case 3:
-          Navigator.of(context).pushReplacementNamed('/');
+          Navigator.of(context).pushReplacementNamed('/Messenger');
           break;
         case 4:
           Navigator.of(context).pushReplacementNamed('/ProfileScreen');
