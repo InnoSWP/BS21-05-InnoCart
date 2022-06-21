@@ -8,8 +8,24 @@ PreferredSizeWidget? appBar(BuildContext context) {
       onPressed: () =>
           Navigator.of(context).pushReplacementNamed('/ShopperOrders'),
       style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-      child: const Text('Move to Shopper page',
-          style: TextStyle(color: Colors.black, fontSize: 16)),
+      child: Container(
+        width: 270,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(right: 45),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 16,
+              ),
+            ),
+            Text('Move to Shopper page',
+                style: TextStyle(color: Colors.black, fontSize: 16)),
+          ],
+        ),
+      ),
     ),
   );
 }

@@ -9,9 +9,27 @@ PreferredSizeWidget? appBar(BuildContext context) {
       onPressed: () {
         Navigator.of(context).pushReplacementNamed('/AngelOrders');
       },
-      style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-      child: const Text('Move to Angel page',
-          style: TextStyle(color: Colors.black, fontSize: 16)),
+      style: ElevatedButton.styleFrom(
+        primary: Colors.yellowAccent,
+      ),
+      child: Container(
+        width: 270,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text('Move to Angel page',
+                style: TextStyle(color: Colors.black, fontSize: 16)),
+            Padding(
+              padding: EdgeInsets.only(left: 45),
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+                size: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }

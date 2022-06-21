@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../elevated_button_style.dart';
 import '../PageOfActiveOrders/page_of_active_orders.dart';
 
 DateTime selectedDate = DateTime.now();
@@ -28,7 +29,7 @@ PreferredSizeWidget? appBar(
       children: [
         ElevatedButton(
             onPressed: () => selectDate(context, pageOfActiveOrders),
-            style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
+            style: RoundedWhite,
             child: SizedBox(
                 width: 130,
                 height: 30,
@@ -39,7 +40,7 @@ PreferredSizeWidget? appBar(
                     SvgPicture.asset('assets/icons/Calendar_light.svg'),
                     const Text(
                       'Choose date',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.grey),
                     ),
                   ],
                 ))),
@@ -84,7 +85,8 @@ PreferredSizeWidget? appBar(
                         ),
                         TextField(
                           decoration: InputDecoration(
-                              hintText: 'Enter max weight (kg)'),
+                            hintText: 'Enter max weight (kg)',
+                          ),
                         ),
                       ],
                     ),
