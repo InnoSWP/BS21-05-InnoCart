@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inno_cart/Messenger/page_messenger.dart';
 import 'hello_screen.dart';
 import 'profile_change_screen.dart';
 import 'profile_screen.dart';
@@ -30,6 +31,8 @@ Route? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => ProfilePage());
     case '/ProfileChangeScreen':
       return MaterialPageRoute(builder: (_) => ProfileChangeScreen());
+    case '/Messenger':
+      return MaterialPageRoute(builder: (_) => const PageMessenger());
     default:
       return null;
   }
