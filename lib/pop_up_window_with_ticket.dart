@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'set_ticket.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 

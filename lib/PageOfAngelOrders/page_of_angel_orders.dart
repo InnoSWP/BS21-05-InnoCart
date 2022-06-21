@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../navigation_bar.dart';
-import '../set_ticket.dart';
-import '../pop_up_window_with_ticket.dart';
 import '../main.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
@@ -147,7 +145,7 @@ class Tickets {
 
             ElevatedButton(
                 onPressed: () {},
-                child: Container(
+                child: SizedBox(
                     width: 150,
                     height: 32,
                     child: Center(
