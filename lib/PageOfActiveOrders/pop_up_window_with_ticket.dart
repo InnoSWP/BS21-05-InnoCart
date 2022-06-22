@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inno_cart/elevated_button_style.dart';
+import '../elevated_button_style.dart';
 import 'pop_up_notify.dart';
 import '../main.dart';
 
 Future popUpTicket(BuildContext context) {
+  String buttonText = 'Send request';
+  String profilePicture = 'assets/images/man1.png';
+  String orderImage = 'assets/images/pizza.jpg';
+  String orderName = 'Pizza';
+  String orderWeight = '3 kg';
+  String orderDistance = '124 m';
+  String orderTime = '14:00';
+  String orderDate = '03.06.2022';
+  String orderPrice = '200';
+  String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
+  String shopperName = 'Amr. T.';
+
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -30,7 +42,7 @@ Future popUpTicket(BuildContext context) {
                     height: 130,
                     color: Colors.blueGrey,
                     child: Image.asset(
-                      'assets/images/pizza.jpg',
+                      orderImage,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -41,9 +53,9 @@ Future popUpTicket(BuildContext context) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          child: const Text(
-                        'Pizza',
-                        style: TextStyle(fontSize: 20),
+                          child: Text(
+                        orderName,
+                        style: const TextStyle(fontSize: 20),
                       )),
                       Row(
                         children: [
@@ -55,7 +67,7 @@ Future popUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('2 kg')),
+                              child: Text(orderWeight)),
                         ],
                       ),
                       Row(
@@ -68,7 +80,7 @@ Future popUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('124 m')),
+                              child: Text(orderDistance)),
                         ],
                       ),
                       Row(
@@ -81,7 +93,7 @@ Future popUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('03.06.2022')),
+                              child: Text(orderDate)),
                         ],
                       ),
                       Row(
@@ -94,7 +106,7 @@ Future popUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('14:00')),
+                              child: Text(orderTime)),
                         ],
                       ),
                     ],
@@ -105,7 +117,7 @@ Future popUpTicket(BuildContext context) {
                       padding: const EdgeInsets.all(6),
                       child: Row(
                         children: [
-                          const Text('100'),
+                          Text(orderPrice),
                           SvgPicture.asset('assets/icons/Currency.svg'),
                         ],
                       )),
@@ -113,23 +125,22 @@ Future popUpTicket(BuildContext context) {
               ),
               Container(
                 alignment: Alignment.topLeft,
-                child:
-                    const Text('I want two DoDo peperoni pizzas, thank you!'),
+                child: Text(orderInfo),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: (20),
-                        backgroundImage: AssetImage('assets/images/man1.png'),
+                        backgroundImage: AssetImage(profilePicture),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Column(
                           children: [
-                            const Text('Amr. T.'),
+                            Text(shopperName),
                             RatingBar.builder(
                               initialRating: 5,
                               ignoreGestures: true,
@@ -153,19 +164,20 @@ Future popUpTicket(BuildContext context) {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      PopUpRequestSentNotifier(context);
+                      popUpRequestSentNotifier(context);
                     },
                     style: RoundedWhite,
                     child: SizedBox(
                       width: 120,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
-                            'Send request',
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            buttonText,
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward_ios,
                             color: Colors.black,
                             size: 14,

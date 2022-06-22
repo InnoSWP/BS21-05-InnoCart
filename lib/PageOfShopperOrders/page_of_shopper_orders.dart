@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'completed_popup_window.dart';
+import 'waiting_popup_ticket.dart';
 import '../elevated_button_style.dart';
-import 'pop_up_window_with_ticket.dart';
+import 'in_progress_popup_window.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
@@ -10,10 +12,10 @@ class PageOfShopperOrders extends StatefulWidget {
   const PageOfShopperOrders({Key? key}) : super(key: key);
 
   @override
-  State<PageOfShopperOrders> createState() => _PageOfShopperOrdersState();
+  State<PageOfShopperOrders> createState() => PageOfShopperOrdersState();
 }
 
-class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
+class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,17 +24,19 @@ class _PageOfShopperOrdersState extends State<PageOfShopperOrders> {
             appBar: appBar(context),
             bottomNavigationBar: makeNavigationBar(context, this),
             body: ListView(
-              children: Tickets(context).getTickets(),
+              children: Tickets(context, this).getTickets(),
             ))); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
 class Tickets {
+  late PageOfShopperOrdersState page;
   late List<Widget> waitingForAccept;
   late List<Widget> inProgress;
   late List<Widget> completed;
 
-  Tickets(BuildContext context) {
+  Tickets(BuildContext context, PageOfShopperOrdersState page1) {
+    page = page1;
     waitingForAccept = setTicket('See requests', context);
     inProgress =
         setTicket('Open Chat', context) + setTicket('Open Chat', context);
@@ -51,7 +55,15 @@ class Tickets {
   List<Widget> setTicket(String text, BuildContext context) {
     return [
       GestureDetector(
-        onTap: () => popUpTicket(context),
+        onTap: () {
+          if (text == 'See requests') {
+            waitingPopUpTicket(context);
+          } else if (text == 'Open Chat') {
+            inProgressPopUpTicket(context);
+          } else {
+            completedPopUpTicket(context);
+          }
+        },
         child: Container(
           margin: const EdgeInsets.only(bottom: bottomPadding),
           width: 345,
@@ -144,17 +156,35 @@ class Tickets {
               //Button
 
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (text == 'Open Chat') {
+                      page.setState(() {
+                        selectedPage = 3;
+                        Navigator.of(context)
+                            .pushReplacementNamed('/Messenger');
+                      });
+                    }
+                  },
                   style: RoundedWhite,
                   child: SizedBox(
-                      width: 150,
-                      height: 32,
-                      child: Center(
-                          child: Text(
-                        text,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
-                      )))),
+                    width: 150,
+                    height: 32,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          text,
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.black),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.black,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                  )),
             ],
           ),
         ),

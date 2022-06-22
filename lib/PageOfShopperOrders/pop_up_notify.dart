@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Future popUpRequestSentNotifier(BuildContext context) {
+Future popUpOrderCanceled(BuildContext context) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -12,12 +12,12 @@ Future popUpRequestSentNotifier(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  'assets/icons/RequestSent.svg',
+                  'assets/icons/close_ring_light.svg',
                   width: 100,
                   height: 100,
                 ),
                 const Text(
-                  'Request sent',
+                  'Order canceled',
                   style: TextStyle(fontSize: 22),
                 ),
               ],
