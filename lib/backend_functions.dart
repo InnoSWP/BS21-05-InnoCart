@@ -11,7 +11,19 @@ User currentUser = User(getEmptyMap());
 //test
 /// this function craves for implementation...
 Future<bool> dataIsCorrect(String nick, String pass) async {
-  if (nick.length > 0 && nick[0] == 'a' && pass.length > 0) return true;
+  Map<String, dynamic> requestParameters = {
+    "nickname": nick,
+    "password_hash": getHash(pass)
+  };
+  Uri uri = Uri.http(serverURL, '/loginByNickname', requestParameters);
+  http.Response response = await http.get(uri);
+  print(response.body);
+  if (response.statusCode == 200){
+    Map<String, dynamic> userData = jsonDecode(
+        response.body.replaceAll("'", "\"").replaceAll("None", '""'));
+    currentUser = User(userData);
+    return true;
+  }
   return false;
 }
 
@@ -39,8 +51,8 @@ Map<String, dynamic> getEmptyMap() {
 
 /// this function craves for implementation...
 
-Future<int> getHash(String pass) async {
-  return pass.hashCode;
+String getHash(String pass){
+  return pass.hashCode.toString();
 }
 
 /// this function craves for implementation...
@@ -74,16 +86,16 @@ Future<bool> contactDataOccupied(
       'user_telegram': userRegisterInformation.telegram,
       'user_email': userRegisterInformation.email
     };
-    print("Send a request");
+    //print("Send a request");
     Uri request = Uri.http(serverURL, '/contactDataOccupied', queryParameters);
-    print(request);
+    //print(request);
     final http.Response response = await http.get(request);
-    print(response.body);
+    //print(response.body);
     if (response.statusCode == 200){
       return jsonDecode(response.body.replaceAll("'", "\""))['occupied'] == 1;
     }
     else{
-      print(response.body);
+      //print(response.body);
     }
     return true;
 
@@ -97,7 +109,7 @@ Future<bool> contactDataOccupied(
 /// this function craves for implementation...
 Future<bool> addUser(User user) async {
   try {
-    Map<String, dynamic> registerRequestData = {
+    Map<String, String> registerRequestData = {
       "nickname": user.nickname,
       "name": user.name,
       "surname": user.surname,
@@ -106,10 +118,15 @@ Future<bool> addUser(User user) async {
       "telegram": user.telegram,
       "password_hash": user.passwordHash
     };
-    Uri uri = Uri.http(serverURL, '/register');
-    http.Response response = await http.post(uri, body: registerRequestData);
+    print(registerRequestData);
+
+    Uri uri = Uri.http(serverURL, '/register', registerRequestData);
+    http.Response response = await http.post(uri);
+    print("Got response from server");
+    print(response.body);
     if (response.statusCode == 200) {
-      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      Map<String, dynamic> responseBody = jsonDecode(
+          response.body.replaceAll("'", '"').replaceAll("None", '\"\"'));
       currentUser.userId = responseBody['user_id'];
       currentUser.token = responseBody['token'];
       currentUser.rating = responseBody['rating'];
@@ -118,6 +135,7 @@ Future<bool> addUser(User user) async {
     }
   }
   on Exception catch(_, e){
+    print(e.toString());
   }
   return false;
 }

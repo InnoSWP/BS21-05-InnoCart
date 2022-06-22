@@ -178,8 +178,7 @@ class _regScreenState extends State<regScreen> {
                         widget.mistake_color = Colors.redAccent;
                       });
                     } else {
-                      raw_data['password'] =
-                          await getHash(raw_data['password']);
+                      raw_data['password_hash'] = getHash(raw_data['password']);
                       currentUser = User(raw_data);
                       bool registerResult = await addUser(currentUser);
                       if (registerResult) {
