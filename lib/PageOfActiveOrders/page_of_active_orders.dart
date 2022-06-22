@@ -58,7 +58,7 @@ class Tickets {
     print(serverURL);
     print(args);
     Uri uri = Uri.parse(
-        "http://127.0.0.1:8000/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}"
+        "http://${serverURL}/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}"
     );
     print(uri);
     http.Response response = await http.get(uri);
