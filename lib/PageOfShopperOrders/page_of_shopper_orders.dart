@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'see_requests_window.dart';
 import 'completed_popup_window.dart';
 import 'waiting_popup_ticket.dart';
 import '../elevated_button_style.dart';
@@ -175,6 +176,8 @@ class Tickets {
                         Navigator.of(context)
                             .pushReplacementNamed('/Messenger');
                       });
+                    } else if (text == 'See requests') {
+                      seeRequestWindow(context);
                     }
                   },
                   style: RoundedWhite,

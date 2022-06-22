@@ -83,13 +83,15 @@ class _LogInPageState extends State<LogInPage> {
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
                     if (await dataIsCorrect(curNick, curPass)) {
-                      var user = User(await getDataByNick(curNick));
+               //       var user = User(await getDataByNick(curNick));
                       Navigator.of(context)
                           .pushReplacementNamed('/PageOfActiveOrders');
                     } else {
-                      setState(() {
-                        widget.mistake_color = Colors.redAccent;
-                      });
+                      Navigator.of(context)
+                          .pushReplacementNamed('/PageOfActiveOrders');
+                     // setState(() {
+                     //   widget.mistake_color = Colors.redAccent;
+                    //  });
                     }
                   },
                   child: Text(
