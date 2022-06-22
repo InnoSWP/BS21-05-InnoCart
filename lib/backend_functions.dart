@@ -104,12 +104,13 @@ Future<bool> addUser(User user) async {
       "telegram": user.telegram,
       "password_hash": user.passwordHash
     };
+    print("USER PASSWORD HASH IS = ${user.passwordHash}");
     print(registerRequestData);
 
     Uri uri = Uri.http(serverURL, '/register', registerRequestData);
     http.Response response = await http.post(uri);
-    print("Got response from server");
-    print(response.body);
+    // print("Got response from server");
+    // print(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(
           response.body.replaceAll("'", '"').replaceAll("None", '\"\"'));

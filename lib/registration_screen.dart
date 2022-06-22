@@ -172,16 +172,17 @@ class _regScreenState extends State<regScreen> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
-
-                    print(raw_data.toString());
+                    // print(raw_data.toString());
+                    raw_data['password_hash'] = getHash(raw_data['password']);
                     currentUser = User(raw_data);
-                    print("currentUser has been created");
+                    print("currentUser.passwordHash = ${currentUser.passwordHash}");
+                    // print("currentUser has been created");
                     if (await contactDataOccupied(currentUser)) {
                       setState(() {
                         widget.mistake_color = Colors.redAccent;
                       });
-                    } else {
-                      raw_data['password_hash'] = getHash(raw_data['password']);
+                    }
+                    else {
                       bool registerResult = await addUser(currentUser);
                       if (registerResult) {
                         Navigator.of(context)
