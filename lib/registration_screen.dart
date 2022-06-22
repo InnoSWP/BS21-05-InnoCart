@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'backend_functions.dart';
 import 'user.dart';
@@ -5,6 +7,7 @@ import 'user.dart';
 class regScreen extends StatefulWidget {
   regScreen({Key? key}) : super(key: key);
   Color mistake_color = Colors.white;
+
   @override
   State<regScreen> createState() => _regScreenState();
 }
@@ -12,6 +15,8 @@ class regScreen extends StatefulWidget {
 class _regScreenState extends State<regScreen> {
   @override
   Map<String, dynamic> raw_data = getEmptyMap();
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
@@ -43,6 +48,7 @@ class _regScreenState extends State<regScreen> {
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['name'] = text;
@@ -52,12 +58,12 @@ class _regScreenState extends State<regScreen> {
                   hintText: 'Name',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['surname'] = text;
@@ -67,7 +73,6 @@ class _regScreenState extends State<regScreen> {
                   hintText: 'Surname',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 15,
@@ -80,6 +85,7 @@ class _regScreenState extends State<regScreen> {
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['allias'] = text;
@@ -89,7 +95,6 @@ class _regScreenState extends State<regScreen> {
                   hintText: '@yourNickname',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 15,
@@ -102,6 +107,7 @@ class _regScreenState extends State<regScreen> {
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['e-mail'] = text;
@@ -111,12 +117,12 @@ class _regScreenState extends State<regScreen> {
                   hintText: 'E-mail',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['telegram'] = text;
@@ -126,12 +132,12 @@ class _regScreenState extends State<regScreen> {
                   hintText: 'Telegram alias',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['phone_number'] = text;
@@ -141,22 +147,21 @@ class _regScreenState extends State<regScreen> {
                   hintText: 'Telephone number',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 15,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   raw_data['password'] = text;
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter password',
                 ),
               ),
-              height: 40,
             ),
             SizedBox(
               height: 60,
@@ -168,19 +173,24 @@ class _regScreenState extends State<regScreen> {
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
                     print(raw_data.toString());
-                    if (await nickExists(raw_data['allias'])) {
+                    if (await contactDataOccupied(User(raw_data))) {
                       setState(() {
                         widget.mistake_color = Colors.redAccent;
                       });
                     } else {
                       raw_data['password'] =
                           await getHash(raw_data['password']);
-                      ;
-                      raw_data['user_id'] = await getId(raw_data['allias']);
-                      var user = User(raw_data);
-                      await addUser(user);
-                      Navigator.of(context)
-                          .pushReplacementNamed('/PageOfActiveOrders');
+                      currentUser = User(raw_data);
+                      bool registerResult = await addUser(currentUser);
+                      if (registerResult) {
+                        Navigator.of(context)
+                            .pushReplacementNamed('/PageOfActiveOrders');
+                      }
+                      else{
+                        setState(() {
+                          widget.mistake_color = Colors.redAccent;
+                        });
+                      }
                     }
                   },
                   child: Text(
