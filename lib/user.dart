@@ -14,7 +14,6 @@ class User{
   int ticketsAmount = 0;
 
   User(Map<String, dynamic> initialData){
-
     nickname = initialData['nickname'];
     phoneNumber = initialData['phone_number'];
     telegram = initialData['telegram'];
