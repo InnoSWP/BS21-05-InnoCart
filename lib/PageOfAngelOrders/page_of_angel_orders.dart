@@ -33,10 +33,10 @@ class Tickets {
   late List<Widget> completed;
 
   Tickets(BuildContext context) {
-    waitingForAccept = setTicket('See requests', context);
+    waitingForAccept = setTicket('Cancel Request', context);
     inProgress =
         setTicket('Open Chat', context) + setTicket('Open Chat', context);
-    completed = setTicket('Rate Angel', context);
+    completed = setTicket('Rate Shopper', context);
   }
 
   List<Widget> getTickets() {
@@ -49,6 +49,18 @@ class Tickets {
   }
 
   List<Widget> setTicket(String text, BuildContext context) {
+    String buttonText = text;
+    String profilePicture = 'assets/images/man1.png';
+    String orderImage = 'assets/images/rolls.jpg';
+    String orderName = 'Rolls';
+    String orderWeight = '1 kg';
+    String orderDistance = '125 m';
+    String orderTime = '15:00';
+    String orderDate = '03.06.2022';
+    String orderPrice = '300';
+    String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
+    String orderAngel = 'Amr. T.';
+
     return [
       GestureDetector(
         onTap: () => popUpTicket(context),
@@ -71,7 +83,7 @@ class Tickets {
                     margin:
                         const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                     child: Image.asset(
-                      'assets/images/pizza.jpg',
+                      orderImage,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -83,9 +95,9 @@ class Tickets {
                     children: [
                       Container(
                           margin: const EdgeInsets.only(top: 12),
-                          child: const Text(
-                            'Pizza',
-                            style: TextStyle(fontSize: 20),
+                          child: Text(
+                            orderName,
+                            style: const TextStyle(fontSize: 20),
                           )),
                       Row(
                         children: [
@@ -97,7 +109,7 @@ class Tickets {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('2 kg')),
+                              child: Text(orderWeight)),
                         ],
                       ),
                       Row(
@@ -110,7 +122,7 @@ class Tickets {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('124 m')),
+                              child: Text(orderDistance)),
                         ],
                       ),
                       Row(
@@ -123,7 +135,7 @@ class Tickets {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('14:00')),
+                              child: Text(orderTime)),
                         ],
                       ),
                     ],
@@ -135,7 +147,7 @@ class Tickets {
                       padding: const EdgeInsets.all(6),
                       child: Row(
                         children: [
-                          const Text('100'),
+                          Text(orderPrice),
                           SvgPicture.asset('assets/icons/Currency.svg'),
                         ],
                       )),
@@ -147,14 +159,24 @@ class Tickets {
                   onPressed: () {},
                   style: RoundedWhite,
                   child: SizedBox(
-                      width: 150,
-                      height: 32,
-                      child: Center(
-                          child: Text(
-                        text,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
-                      )))),
+                    width: 150,
+                    height: 32,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          buttonText,
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.black),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.black,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                  )),
             ],
           ),
         ),
