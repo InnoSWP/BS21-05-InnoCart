@@ -79,6 +79,7 @@ flutter:
     - assets/images/pizza.jpg
     - assets/icons/RequestSent.svg
     - assets/icons/close_ring_light.svg
+    - assets/images/rolls.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

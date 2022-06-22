@@ -53,6 +53,18 @@ class Tickets {
   }
 
   List<Widget> setTicket(String text, BuildContext context) {
+    String buttonText = text;
+    String profilePicture = 'assets/images/man1.png';
+    String orderImage = 'assets/images/pizza.jpg';
+    String orderName = 'Pizza';
+    String orderWeight = '2 kg';
+    String orderDistance = '124 m';
+    String orderTime = '14:00';
+    String orderDate = '03.06.2022';
+    String orderPrice = '100';
+    String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
+    String orderAngel = 'Amr. T.';
+
     return [
       GestureDetector(
         onTap: () {
@@ -83,7 +95,7 @@ class Tickets {
                     margin:
                         const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                     child: Image.asset(
-                      'assets/images/pizza.jpg',
+                      orderImage,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -95,8 +107,8 @@ class Tickets {
                     children: [
                       Container(
                           margin: const EdgeInsets.only(top: 12),
-                          child: const Text(
-                            'Pizza',
+                          child: Text(
+                            orderName,
                             style: TextStyle(fontSize: 20),
                           )),
                       Row(
@@ -109,7 +121,7 @@ class Tickets {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('2 kg')),
+                              child: Text(orderWeight)),
                         ],
                       ),
                       Row(
@@ -122,7 +134,7 @@ class Tickets {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('124 m')),
+                              child: Text(orderDistance)),
                         ],
                       ),
                       Row(
@@ -135,7 +147,7 @@ class Tickets {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text('14:00')),
+                              child: Text(orderTime)),
                         ],
                       ),
                     ],
@@ -147,7 +159,7 @@ class Tickets {
                       padding: const EdgeInsets.all(6),
                       child: Row(
                         children: [
-                          const Text('100'),
+                          Text(orderPrice),
                           SvgPicture.asset('assets/icons/Currency.svg'),
                         ],
                       )),
@@ -173,7 +185,7 @@ class Tickets {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          text,
+                          buttonText,
                           style: const TextStyle(
                               fontSize: 14, color: Colors.black),
                         ),
