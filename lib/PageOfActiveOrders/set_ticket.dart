@@ -5,7 +5,7 @@ import '../elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
 
-List<Widget> setTicket(BuildContext context) {
+List<Widget> Ticket(BuildContext context) {
   String buttonText = 'Send request';
   String profilePicture = 'assets/images/man1.png';
   String orderImage = 'assets/images/pizza.jpg';

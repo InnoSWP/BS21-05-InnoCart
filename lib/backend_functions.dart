@@ -86,7 +86,6 @@ Future<bool> contactDataOccupied(
       'user_telegram': userRegisterInformation.telegram,
       'user_email': userRegisterInformation.email
     };
-    //print("Send a request");
     Uri request = Uri.http(serverURL, '/contactDataOccupied', queryParameters);
     //print(request);
     final http.Response response = await http.get(request);

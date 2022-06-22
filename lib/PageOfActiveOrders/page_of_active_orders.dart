@@ -18,8 +18,18 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
             backgroundColor: Colors.white,
             appBar: appBar(context, this),
             bottomNavigationBar: makeNavigationBar(context, this),
-            body: ListView(
-              children: Tickets(context).getTickets(),
+            body: FutureBuilder<List<Widget>>(
+              future: Tickets(context).getTickets(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData){
+                  return ListView(
+                    children: snapshot.data!
+                  );
+                }
+                else{
+                  return const Text("waiting for data");
+                }
+              }
             ))); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
@@ -29,10 +39,10 @@ class Tickets {
 
   Tickets(BuildContext context) {
     waitingForAccept =
-        setTicket(context) + setTicket(context) + setTicket(context);
+        Ticket(context) + Ticket(context) + Ticket(context);
   }
 
-  List<Widget> getTickets() {
+  Future<List<Widget>> getTickets() async {
     return waitingForAccept;
   }
 }
