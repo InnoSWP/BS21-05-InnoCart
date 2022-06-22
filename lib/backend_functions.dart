@@ -41,17 +41,18 @@ Future<Map<String, dynamic>> getDataByNick(String nick) async {
 /// this function craves for implementation...
 Map<String, dynamic> getEmptyMap() {
   return {
-    'used_id': 0,
-    'allias': '',
+    'user_id': 0,
+    'nickname': '',
     'name': '',
     'surname': '',
-    'e-mail': '',
+    'email': '',
     'phone_number': '',
     'telegram': '',
     'profile_image': '',
     'password_hash': '',
     'token': '',
-    'rating': ''
+    'rating': 0.0,
+    'tickets_amount': 0
   };
 }
 
@@ -61,26 +62,6 @@ String getHash(String pass){
   return pass.hashCode.toString();
 }
 
-/// this function craves for implementation...
-Future<bool> nickExists(String candidate) async {
-  try {
-    final http.Response response = await http.get(
-        Uri.parse('${serverURL}nickExists?user_nickname=${candidate}')
-    );
-    print("GOT DATA FROM API");
-    print(response.body.replaceAll("'", "\""));
-    Map<String, dynamic> data = jsonDecode(response.body.replaceAll("'", "\""));
-    print('data fetched from API');
-    print(data);
-    if (data['exists'] == 0) {
-      return false;
-    }
-  }
-  on Exception catch (_, e){
-    print(e.toString());
-  }
-  return true;
-}
 
 Future<bool> contactDataOccupied(
     User userRegisterInformation
@@ -95,7 +76,7 @@ Future<bool> contactDataOccupied(
     Uri request = Uri.http(serverURL, '/contactDataOccupied', queryParameters);
     //print(request);
     final http.Response response = await http.get(request);
-    //print(response.body);
+    print(response.body);
     if (response.statusCode == 200){
       return jsonDecode(response.body.replaceAll("'", "\""))['occupied'] == 1;
     }

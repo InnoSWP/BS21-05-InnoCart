@@ -23,5 +23,6 @@ class User{
     passwordHash = initialData['password_hash'];
     token = initialData['token'];
     userId = initialData['user_id'];
+    ticketsAmount = initialData['tickets_amount'];
   }
 }

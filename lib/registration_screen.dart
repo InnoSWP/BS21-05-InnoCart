@@ -88,7 +88,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['allias'] = text;
+                  raw_data['nickname'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -110,7 +110,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['e-mail'] = text;
+                  raw_data['email'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -172,14 +172,16 @@ class _regScreenState extends State<regScreen> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
+
                     print(raw_data.toString());
-                    if (await contactDataOccupied(User(raw_data))) {
+                    currentUser = User(raw_data);
+                    print("currentUser has been created");
+                    if (await contactDataOccupied(currentUser)) {
                       setState(() {
                         widget.mistake_color = Colors.redAccent;
                       });
                     } else {
                       raw_data['password_hash'] = getHash(raw_data['password']);
-                      currentUser = User(raw_data);
                       bool registerResult = await addUser(currentUser);
                       if (registerResult) {
                         Navigator.of(context)
