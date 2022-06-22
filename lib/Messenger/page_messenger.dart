@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/navigation_bar.dart';
+import '../navigation_bar.dart';
 
 class PageMessenger extends StatefulWidget {
   const PageMessenger({Key? key}) : super(key: key);

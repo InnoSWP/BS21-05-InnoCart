@@ -11,20 +11,27 @@ class helloPage extends StatelessWidget {
           SizedBox(
             height: 275,
           ),
-          Text('Innocart', style: TextStyle(fontSize: 50),),
+          Text(
+            'Innocart',
+            style: TextStyle(fontSize: 50),
+          ),
           SizedBox(
             height: 50,
           ),
-          Text('Welcome!', style: TextStyle(fontSize: 30),),
+          Text(
+            'Welcome!',
+            style: TextStyle(fontSize: 30),
+          ),
           SizedBox(
             height: 50,
           ),
           SizedBox(
               width: 300,
               height: 43,
-              child:ElevatedButton(
+              child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/RegistrattionPage');
+                    Navigator.of(context)
+                        .pushReplacementNamed('/RegistrationPage');
                   },
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   child: Text(
@@ -37,7 +44,7 @@ class helloPage extends StatelessWidget {
           SizedBox(
               width: 300,
               height: 43,
-              child:ElevatedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/LogInPage');
                   },

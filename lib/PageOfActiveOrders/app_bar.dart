@@ -61,14 +61,16 @@ PreferredSizeWidget? appBar(
                             'Type',
                           ),
                         ),
-                        Padding(
+                        Container(
+                            width: 180,
                             padding: const EdgeInsets.only(top: 20),
                             child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size.fromHeight(40),
-                                ),
+                                style: RoundedWhite,
                                 onPressed: () {},
-                                child: const Text('All'))),
+                                child: const Text(
+                                  'All',
+                                  style: TextStyle(color: Colors.black),
+                                ))),
                       ],
                     ),
                   ),
