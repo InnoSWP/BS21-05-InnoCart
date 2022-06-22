@@ -4,7 +4,7 @@ import 'user.dart';
 import 'package:http/http.dart' as http;
 
 
-const String serverURL = "127.0.0.1:8000";
+const String serverURL = "10.91.51.83:8000";
 User currentUser = User(getEmptyMap());
 
 
@@ -16,11 +16,17 @@ Future<bool> dataIsCorrect(String nick, String pass) async {
     "password_hash": getHash(pass)
   };
   Uri uri = Uri.http(serverURL, '/loginByNickname', requestParameters);
+  print(uri);
   http.Response response = await http.get(uri);
-  print(response.body);
+ // print(response.body);
   if (response.statusCode == 200){
     Map<String, dynamic> userData = jsonDecode(
         response.body.replaceAll("'", "\"").replaceAll("None", '""'));
+    for (var kek in userData.keys){
+      if (userData[kek] == null){
+        userData[kek] = 'a';
+      }
+    }
     currentUser = User(userData);
     return true;
   }
