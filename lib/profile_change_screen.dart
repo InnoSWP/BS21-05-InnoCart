@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'NavigationBar.dart';
+import 'navigation_bar.dart';
+
 class ProfileChangeScreen extends StatefulWidget {
   const ProfileChangeScreen({Key? key}) : super(key: key);
 
@@ -24,7 +25,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
               width: 130,
               height: 160,
               decoration:
-              BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey),
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey),
             ),
             SizedBox(
               height: 15,
@@ -66,7 +67,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -74,7 +75,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(7.0)),
+                                const BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter E-mail',
                         ),
@@ -99,7 +100,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -107,7 +108,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(7.0)),
+                                const BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter alias',
                         ),
@@ -131,7 +132,8 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                             primary: Colors.white,
                             side: BorderSide(width: 2.0, color: Colors.black)),
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/ProfileScreen');
+                          Navigator.pushReplacementNamed(
+                              context, '/ProfileScreen');
                         },
                         child: Text(
                           'Go back',

@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^1.1.0
   flutter_rating_bar: ^4.0.1
+  page_transition: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -73,8 +74,13 @@ flutter:
     - assets/icons/Message Icon.svg
     - assets/icons/User_alt_light.svg
     - assets/images/man.jpg
+    - assets/images/man1.png
     - assets/icons/Filter Icon.svg
     - assets/icons/Filter Seacrh.svg
+    - assets/images/pizza.jpg
+    - assets/icons/RequestSent.svg
+    - assets/icons/close_ring_light.svg
+    - assets/images/rolls.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
