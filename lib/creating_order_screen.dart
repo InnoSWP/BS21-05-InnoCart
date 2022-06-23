@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inno_cart/backend_functions.dart';
 import 'navigation_bar.dart';
 
 class OrderFactoryPage extends StatefulWidget {
@@ -9,40 +10,47 @@ class OrderFactoryPage extends StatefulWidget {
 }
 
 class _OrderFactoryPageState extends State<OrderFactoryPage> {
+  String title = "";
+  String description = "";
+  String type = "";
+  double reward = 0.0;
+  double weight = 0.0;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: makeNavigationBar(context, this),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 70,
             ),
             SizedBox(
+                height: 30,
                 child: TextField(
                   onChanged: (text) {
-                    print('First text field: $text');
+                    title = text;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(7.0)),
                       borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                          BorderSide(color: Colors.black, width: 2.0),
                     ),
-                    enabledBorder: const OutlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0),
+                          BorderSide(color: Colors.black, width: 2.0),
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(7.0)),
+                          BorderRadius.all(Radius.circular(7.0)),
                     ),
                     hintText: 'Name',
                   ),
-                ),
-                height: 30),
-            SizedBox(
+                )),
+            const SizedBox(
               height: 15,
             ),
             SizedBox(
@@ -54,13 +62,13 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                     width: 130,
                     height: 130,
                     color: Colors.blueGrey,
-                    margin: EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                    margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     SizedBox(
@@ -68,26 +76,31 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                       height: 30,
                       child: TextField(
                         onChanged: (text) {
-                          print('First text field: $text');
+                         try{
+                           weight = double.parse(text);
+                         }
+                         on Exception{
+                           weight = 0.0;
+                         }
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(7.0)),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: const BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter weight',
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     SizedBox(
@@ -95,20 +108,20 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                       height: 30,
                       child: TextField(
                         onChanged: (text) {
-                          print('First text field: $text');
+                          // WHY THIS FIELD IS TEXT?????? 8 )
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(7.0)),
-                            borderSide: const BorderSide(
+                                BorderRadius.all(const Radius.circular(7.0)),
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: const BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Add location',
                         ),
@@ -118,57 +131,57 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Text('Additional info'),
-            SizedBox(
+            const Text('Additional info'),
+            const SizedBox(
               height: 15,
             ),
             SizedBox(
               child: TextField(
                 onChanged: (text) {
-                  print('First text field: $text');
+                  description = text;
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(7.0)),
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
+                        BorderSide(color: Colors.black, width: 2.0),
                   ),
-                  enabledBorder: const OutlineInputBorder(
+                  enabledBorder: OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(7.0)),
+                        BorderSide(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
                   ),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             SizedBox(
               height: 30,
               child: TextField(
                 onChanged: (text) {
-                  print('First text field: $text');
+                  type = text;
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                    borderRadius: BorderRadius.all(const Radius.circular(7.0)),
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
+                        BorderSide(color: Colors.black, width: 2.0),
                   ),
-                  enabledBorder: const OutlineInputBorder(
+                  enabledBorder: OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(7.0)),
+                        BorderSide(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
                   ),
                   hintText: 'Type',
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             SizedBox(
@@ -176,34 +189,39 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Reward'),
+                  const Text('Reward'),
                   SizedBox(
                     width: 100,
                     height: 30,
                     child: TextField(
                       onChanged: (text) {
-                        print('First text field: $text');
+                        try{
+                          reward = double.parse(text);
+                        }
+                        on Exception{
+                          reward = 0;
+                        }
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                         ),
-                        enabledBorder: const OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7.0)),
+                              BorderRadius.all(Radius.circular(7.0)),
                         ),
-                        hintText: 'Type',
+                        hintText: 'In rubles',
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             SizedBox(
@@ -211,25 +229,25 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Deadline'),
+                  const Text('Deadline'),
                   SizedBox(
                     width: 100,
                     height: 30,
                     child: TextField(
                       onChanged: (text) {
-                        print('First text field: $text');
+
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                         ),
-                        enabledBorder: const OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7.0)),
+                              BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Set date',
                       ),
@@ -240,19 +258,18 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                     height: 30,
                     child: TextField(
                       onChanged: (text) {
-                        print('First text field: $text');
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                         ),
-                        enabledBorder: const OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(7.0)),
+                              BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Set time',
                       ),
@@ -261,7 +278,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 70,
             ),
             Center(
@@ -269,11 +286,22 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 height: 60,
                 width: double.maxFinite,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
-                  onPressed: () {},
-                  child: Text(
+                  style: ElevatedButton.styleFrom(primary: const Color(0xffF2F208)),
+                  onPressed: () async {
+                    print("Button had been pressed");
+                    Map<String, dynamic> response = await registerNewTicket({
+                      "title": title,
+                      "description": description,
+                      "weight": weight.toString().replaceAll('.', ','),
+                      "product_type": type,
+                      "reward": reward.toString().replaceAll('.', ',')
+                    });
+                    Navigator.of(context)
+                        .pushReplacementNamed('/PageOfActiveOrders');
+                  },
+                  child: const Text(
                     'Push Order',
-                    style: TextStyle(color: Color(0xff000000)),
+                    style: const TextStyle(color: const Color(0xff000000)),
                   ),
                 ),
               ),

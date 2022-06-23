@@ -87,11 +87,9 @@ class _LogInPageState extends State<LogInPage> {
                       Navigator.of(context)
                           .pushReplacementNamed('/PageOfActiveOrders');
                     } else {
-                      Navigator.of(context)
-                          .pushReplacementNamed('/PageOfActiveOrders');
-                     // setState(() {
-                     //   widget.mistake_color = Colors.redAccent;
-                    //  });
+                     setState(() {
+                     widget.mistake_color = Colors.redAccent;
+                      });
                     }
                   },
                   child: Text(

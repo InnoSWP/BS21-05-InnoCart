@@ -4,7 +4,7 @@ import 'user.dart';
 import 'package:http/http.dart' as http;
 
 
-const String serverURL = "10.91.51.83:8000";
+const String serverURL = "127.0.0.1:8000";
 User currentUser = User(getEmptyMap());
 
 
@@ -27,6 +27,7 @@ Future<bool> dataIsCorrect(String nick, String pass) async {
         userData[kek] = 'a';
       }
     }
+    print("NEW TOKEN AFTER AUTH = ${userData['token']}");
     currentUser = User(userData);
     return true;
   }
@@ -78,8 +79,10 @@ Future<bool> contactDataOccupied(
     final http.Response response = await http.get(request);
     print(response.body);
     if (response.statusCode == 200){
-      return jsonDecode(response.body.replaceAll("'", "\""))['occupied'] == 1;
+      return jsonDecode(response.body.replaceAll("'", "\"")
+          .replaceAll('None', ""))['occupied'] == 1;
     }
+
     else{
       //print(response.body);
     }
@@ -109,8 +112,8 @@ Future<bool> addUser(User user) async {
 
     Uri uri = Uri.http(serverURL, '/register', registerRequestData);
     http.Response response = await http.post(uri);
-    // print("Got response from server");
-    // print(response.body);
+    print("Got response from server");
+    print(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(
           response.body.replaceAll("'", '"').replaceAll("None", '\"\"'));
@@ -126,6 +129,30 @@ Future<bool> addUser(User user) async {
   }
   return false;
 }
+
+
+Future<Map<String, dynamic>> registerNewTicket(Map<String,
+    dynamic> requestData) async{
+  print("And function registerNewTicket proceeded argument correctly");
+  requestData['shopper_id'] = currentUser.userId.toString();
+  requestData['shopper_token'] = currentUser.token;
+  print('currentUserToken = ${currentUser.token}');
+  print(requestData);
+  Uri uri = Uri.http(serverURL, '/registerNewTicket', requestData);
+  print("url of new ticket post request: $uri");
+  http.Response response = await http.post(uri);
+  print("status code of the response: ${response.statusCode}\n"
+      "body of the response: ${response.body}");
+  if (response.statusCode == 200){
+    return jsonDecode(response.body.replaceAll("'",
+        '"').replaceAll("None", "\"\""));
+  }
+  return {
+    "status_code": 500
+  };
+}
+
+
 Future<int> getId(String name) async {
   return 0;
 }

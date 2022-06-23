@@ -15,15 +15,26 @@ class Ticket extends StatelessWidget{
   static const String orderDistance = '124 m';
   String orderTime = '14:00';
   String orderDate = '03.06.2022';
-  String orderPrice = '200';
+  String reward = '';
   String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
-  String? shopperName;
+  String userName = "";
+  String userSurname = "";
+  String userNickname = "";
+  double userRating = 0;
 
 
   Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key){
-    print('Initialization of ticket entity');
+    /*print('Initialization of ticket entity');
     this.shopperName = data['user_id'].toString();
-    this.orderName = data['title'];
+    this.orderName = data['title'];*/
+    orderName = data['title'];
+    orderWeight = data['weight'];
+    userName = data['shopper_info']['name'];
+    userSurname = data['shopper_info']['surname'];
+    userNickname = data['shopper_info']['nickname'];
+    userRating = data['shopper_info']['rating'];
+    orderInfo = data['description'];
+    reward = data['reward'].toString();
   }
 
   Widget build(BuildContext context) {
@@ -73,7 +84,7 @@ class Ticket extends StatelessWidget{
                             ),
                             Container(
                                 margin: const EdgeInsets.only(left: 10),
-                                child: Text(orderWeight.toString() + "KG")),
+                                child: Text(orderWeight.toString() + " KG")),
                           ],
                         ),
                         Row(
@@ -110,7 +121,7 @@ class Ticket extends StatelessWidget{
                         padding: const EdgeInsets.all(6),
                         child: Row(
                           children: [
-                            Text(orderPrice),
+                            Text(reward.toString()),
                             SvgPicture.asset('assets/icons/Currency.svg'),
                           ],
                         )),
@@ -132,9 +143,9 @@ class Ticket extends StatelessWidget{
                               padding: const EdgeInsets.only(left: 15),
                               child: Column(
                                 children: [
-                                  Text(shopperName!),
+                                  Text(userName),
                                   RatingBar.builder(
-                                    initialRating: 5,
+                                    initialRating: userRating,
                                     ignoreGestures: true,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
