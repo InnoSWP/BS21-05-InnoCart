@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/backend_functions.dart';
 import '../elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
@@ -173,7 +174,9 @@ class Ticket extends StatelessWidget{
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              //popUpRequestSentNotifier(context);
+                              bookTicket(ticketId);
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/PageOfActiveOrders');
                             },
                             style: RoundedWhite,
                             child: SizedBox(

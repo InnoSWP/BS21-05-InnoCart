@@ -267,15 +267,7 @@ class AbstractHistoryTicket extends StatelessWidget{
 
             ElevatedButton(
                 onPressed: () {
-                  if (buttonText == 'Cancel Request') {
-                    popUpRequestCanceled(context);
-                  } else if (buttonText == 'Open Chat') {
-                    page.setState(() {
-                      selectedPage = 3;
-                      Navigator.of(context)
-                          .pushReplacementNamed('/Messenger');
-                    });
-                  }
+                 onButtonPress();
                 },
                 style: RoundedWhite,
                 child: SizedBox(
@@ -337,11 +329,13 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket{
       PageOfShopperOrdersState page, {Key? key}) : super(key: key,
       ticketId, shopperId,
       orderName, orderWeight, orderPrice, orderDescription,
-      "Open chat", page) {super.type = 1;}
+      "Complete (REWRITE)", page) {super.type = 1;}
 
   @override
   Future<void> onButtonPress() async{
-
+    print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
+    bool result = await completeOrder(ticketId);
+    if (result) Navigator.of(page.context).pushReplacementNamed('/ShopperOrders');
   }
 }
 

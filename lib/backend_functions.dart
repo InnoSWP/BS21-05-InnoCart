@@ -171,6 +171,49 @@ Future<Map<String, dynamic>> getTicketHistory(
   return {};
 }
 
+Future<bool> bookTicket(int ticketId) async{
+  Map<String, String> args = {
+    "ticket_id": ticketId.toString(),
+    "angel_id": currentUser.userId.toString(),
+    "angel_token": currentUser.token
+  };
+  Uri uri = Uri.http(serverURL, '/bookTicket', args);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    return true;
+  }
+  return false;
+}
+
+Future<bool> cancelBookOfTicket(int ticketId) async{
+  Map<String, String> args = {
+    "ticket_id": ticketId.toString(),
+    "angel_id": currentUser.userId.toString(),
+    "angel_token": currentUser.token
+  };
+  Uri uri = Uri.http(serverURL, '/cancelBookOfTicket', args);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    return true;
+  }
+  print(response.body);
+  return false;
+}
+
+Future<bool> completeOrder(int ticketId) async{
+  Map<String, String> args = {
+    "ticket_id": ticketId.toString(),
+    "shopper_id": currentUser.userId.toString(),
+    "shopper_token": currentUser.token
+  };
+  Uri uri = Uri.http(serverURL, '/completeOrder', args);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    return true;
+  }
+  print(response.body);
+  return false;
+}
 
 Future<int> getId(String name) async {
   return 0;
