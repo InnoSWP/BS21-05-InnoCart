@@ -43,41 +43,41 @@ class Tickets {
   BuildContext context;
 
   Tickets(this.context) {
-    print("Tickets class has been initialized!");
+    // print("Tickets class has been initialized!");
   }
 
   Future<List<Widget>> getTickets() async {
     //waitingForAccept =
     //    Ticket(context) + Ticket(context) + Ticket(context);
-    print("Running function get Tickets");
-    Map<String, dynamic> args = {
+    // print("Running function get Tickets");
+     /*Map<String, dynamic> args = {
       "user_id": currentUser.userId,
       "user_token": currentUser.passwordHash
-    };
-    print("Map of arguments had been constructed correctly");
+    };*/
+    /*print("Map of arguments had been constructed correctly");
     print(serverURL);
-    print(args);
+    print(args);*/
     Uri uri = Uri.parse(
-        "http://${serverURL}/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}"
+        "http://$serverURL/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}"
     );
-    print(uri);
+    // print(uri);
     http.Response response = await http.get(uri);
-    print(response.statusCode);
+    // print(response.statusCode);
 
     if (response.statusCode == 200){
       Map<String, dynamic> jsonData = jsonDecode(
-        response.body.replaceAll("'", '"').replaceAll("None", '\"\"')
+        response.body.replaceAll("'", '"').replaceAll("None", '""')
       );
-      print(jsonData['tickets'][0]);
+      // print(jsonData['tickets'][0]);
       for (Map<String, dynamic> ticketNote in jsonData['tickets']){
-        print(ticketNote);
+        // print(ticketNote);
         waitingForAccept.add(Ticket(ticketNote));
       }
     }
     else{
       return [];
     }
-    print(waitingForAccept);
+    // print(waitingForAccept);
     return waitingForAccept;
   }
 }

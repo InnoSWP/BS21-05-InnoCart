@@ -7,6 +7,9 @@ import 'pop_up_window_with_ticket.dart';
 
 
 class Ticket extends StatelessWidget{
+  int ticketId = 0;
+  int shopperId = 0;
+
   static const String buttonText = 'Send request';
   static const String profilePicture = 'assets/images/man1.png';
   static const String orderImage = 'assets/images/pizza.jpg';
@@ -27,6 +30,8 @@ class Ticket extends StatelessWidget{
     /*print('Initialization of ticket entity');
     this.shopperName = data['user_id'].toString();
     this.orderName = data['title'];*/
+    ticketId = data['ticket_id'];
+    shopperId = data['shopper_id'];
     orderName = data['title'];
     orderWeight = data['weight'];
     userName = data['shopper_info']['name'];
@@ -37,6 +42,7 @@ class Ticket extends StatelessWidget{
     reward = data['reward'].toString();
   }
 
+  @override
   Widget build(BuildContext context) {
     return
       GestureDetector(

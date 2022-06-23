@@ -152,6 +152,25 @@ Future<Map<String, dynamic>> registerNewTicket(Map<String,
   };
 }
 
+Future<Map<String, dynamic>> getTicketHistory(
+    int ticketStatus,
+    int fromAngel
+    ) async{
+  Map<String, String> args = {
+    "user_id": currentUser.userId.toString(),
+    "user_token": currentUser.token,
+    "ticket_states": ticketStatus.toString(),
+    "from_angel": fromAngel.toString()
+  };
+  Uri uri = Uri.http(serverURL, '/getTicketHistory', args);
+  print(uri);
+  http.Response response = await http.get(uri);
+  if (response.statusCode == 200){
+    return jsonDecode(response.body);
+  }
+  return {};
+}
+
 
 Future<int> getId(String name) async {
   return 0;
