@@ -14,14 +14,15 @@ class User{
   int ticketsAmount = 0;
 
   User(Map<String, dynamic> initialData){
-    nickname = initialData['allias'];
+    nickname = initialData['nickname'];
     phoneNumber = initialData['phone_number'];
     telegram = initialData['telegram'];
-    email = initialData['e-mail'];
+    email = initialData['email'];
     name = initialData['name'];
     surname = initialData['surname'];
     passwordHash = initialData['password_hash'];
     token = initialData['token'];
     userId = initialData['user_id'];
+    ticketsAmount = initialData['tickets_amount'];
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:inno_cart/backend_functions.dart';
 import 'navigation_bar.dart';
+import 'user.dart';
+import 'backend_functions.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -85,6 +88,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+                Center(
+                  child: SizedBox(
+                    height: 35,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          side: BorderSide(width: 2.0, color: Colors.black)),
+                      onPressed: () {
+                        currentUser = User(getEmptyMap());
+                        Navigator.pushReplacementNamed(
+                            context, '/');
+                      },
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ],
