@@ -26,7 +26,7 @@ class _regScreenState extends State<regScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 150,
+              height: 40,
             ),
             Center(
               child: Text(

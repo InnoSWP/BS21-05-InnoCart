@@ -4,7 +4,7 @@ import 'user.dart';
 import 'package:http/http.dart' as http;
 
 
-const String serverURL = "127.0.0.1:8000";
+const String serverURL = "10.91.51.83";
 User currentUser = User(getEmptyMap());
 
 
@@ -29,6 +29,7 @@ Future<bool> dataIsCorrect(String nick, String pass) async {
     }
     print("NEW TOKEN AFTER AUTH = ${userData['token']}");
     currentUser = User(userData);
+
     return true;
   }
   return false;
