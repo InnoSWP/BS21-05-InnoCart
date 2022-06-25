@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:inno_cart/PageOfShopperOrders/pop_up_notify.dart';
@@ -28,7 +29,7 @@ Future seeRequestWindow(BuildContext context) {
                     Navigator.of(context).pop();
                     popUpOrderCanceled(context);
                   },
-                  style: RoundedWhite,
+                  style: roundedWhite,
                   child: Text(
                     buttonText,
                     style: const TextStyle(color: Colors.black),
@@ -76,7 +77,9 @@ Widget setAngel() {
                         color: Colors.amber,
                       ),
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        if (kDebugMode) {
+                          print(rating);
+                        }
                       },
                     ),
                   ],
@@ -88,7 +91,7 @@ Widget setAngel() {
               onPressed: () {
                 //popUpRequestSentNotifier(context);
               },
-              style: RoundedWhite,
+              style: roundedWhite,
               child: SizedBox(
                 width: 90,
                 height: 32,

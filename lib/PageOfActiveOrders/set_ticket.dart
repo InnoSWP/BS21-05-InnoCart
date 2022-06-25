@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,23 +9,23 @@ import 'pop_up_window_with_ticket.dart';
 
 
 class Ticket extends StatelessWidget{
-  int ticketId = 0;
-  int shopperId = 0;
+  late int ticketId = 0;
+  late int shopperId = 0;
 
   static const String buttonText = 'Send request';
   static const String profilePicture = 'assets/images/man1.png';
   static const String orderImage = 'assets/images/pizza.jpg';
-  String? orderName;
-  double orderWeight = 3.0;
+  late String? orderName;
+  late double orderWeight = 3.0;
   static const String orderDistance = '124 m';
-  String orderTime = '14:00';
-  String orderDate = '03.06.2022';
-  String reward = '';
-  String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
-  String userName = "";
-  String userSurname = "";
-  String userNickname = "";
-  double userRating = 0;
+  late String orderTime = '14:00';
+  late String orderDate = '03.06.2022';
+  late String reward = '';
+  late String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
+  late String userName = "";
+  late String userSurname = "";
+  late String userNickname = "";
+  late double userRating = 0;
 
 
   Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key){
@@ -91,7 +92,7 @@ class Ticket extends StatelessWidget{
                             ),
                             Container(
                                 margin: const EdgeInsets.only(left: 10),
-                                child: Text(orderWeight.toString() + " KG")),
+                                child: Text("$orderWeight KG")),
                           ],
                         ),
                         Row(
@@ -104,7 +105,7 @@ class Ticket extends StatelessWidget{
                             ),
                             Container(
                                 margin: const EdgeInsets.only(left: 10),
-                                child: Text(orderDistance)),
+                                child: const Text(orderDistance)),
                           ],
                         ),
                         Row(
@@ -142,7 +143,7 @@ class Ticket extends StatelessWidget{
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               radius: (20),
                               backgroundImage: AssetImage(profilePicture),
                             ),
@@ -164,7 +165,9 @@ class Ticket extends StatelessWidget{
                                       color: Colors.amber,
                                     ),
                                     onRatingUpdate: (rating) {
-                                      print(rating);
+                                      if (kDebugMode) {
+                                        print(rating);
+                                      }
                                     },
                                   ),
                                 ],
@@ -178,20 +181,20 @@ class Ticket extends StatelessWidget{
                               Navigator.of(context)
                                   .pushReplacementNamed('/PageOfActiveOrders');
                             },
-                            style: RoundedWhite,
+                            style: roundedWhite,
                             child: SizedBox(
                               width: 150,
                               height: 32,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment
                                     .spaceBetween,
-                                children: [
+                                children: const [
                                   Text(
                                     buttonText,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 14, color: Colors.black),
                                   ),
-                                  const Icon(
+                                  Icon(
                                     Icons.arrow_forward_ios,
                                     color: Colors.black,
                                     size: 14,

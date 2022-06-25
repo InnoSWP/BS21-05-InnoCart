@@ -1,20 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'backend_functions.dart';
 import 'user.dart';
 
-class regScreen extends StatefulWidget {
-  regScreen({Key? key}) : super(key: key);
-  Color mistake_color = Colors.white;
+class RegScreen extends StatefulWidget {
+  RegScreen({Key? key}) : super(key: key);
+  Color mistakeColor = Colors.white;
 
   @override
-  State<regScreen> createState() => _regScreenState();
+  State<RegScreen> createState() => _RegScreenState();
 }
 
-class _regScreenState extends State<regScreen> {
-  @override
-  Map<String, dynamic> raw_data = getEmptyMap();
+class _RegScreenState extends State<RegScreen> {
+  Map<String, dynamic> rawData = getEmptyMap();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _regScreenState extends State<regScreen> {
                 'password/nickname are incorrect!',
                 style: TextStyle(
                   color: Colors.white,
-                  backgroundColor: widget.mistake_color,
+                  backgroundColor: widget.mistakeColor,
                 ),
               ),
             ),
@@ -51,7 +51,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['name'] = text;
+                  rawData['name'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -66,7 +66,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['surname'] = text;
+                  rawData['surname'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -88,7 +88,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['nickname'] = text;
+                  rawData['nickname'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -110,7 +110,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['email'] = text;
+                  rawData['email'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -125,7 +125,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['telegram'] = text;
+                  rawData['telegram'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -140,7 +140,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['phone_number'] = text;
+                  rawData['phone_number'] = text;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -155,7 +155,7 @@ class _regScreenState extends State<regScreen> {
               height: 40,
               child: TextField(
                 onChanged: (text) {
-                  raw_data['password'] = text;
+                  rawData['password'] = text;
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -173,13 +173,15 @@ class _regScreenState extends State<regScreen> {
                   style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
                   onPressed: () async {
                     // print(raw_data.toString());
-                    raw_data['password_hash'] = getHash(raw_data['password']);
-                    currentUser = User(raw_data);
-                    print("currentUser.passwordHash = ${currentUser.passwordHash}");
+                    rawData['password_hash'] = getHash(rawData['password']);
+                    currentUser = User(rawData);
+                    if (kDebugMode) {
+                      print("currentUser.passwordHash = ${currentUser.passwordHash}");
+                    }
                     // print("currentUser has been created");
                     if (await contactDataOccupied(currentUser)) {
                       setState(() {
-                        widget.mistake_color = Colors.redAccent;
+                        widget.mistakeColor = Colors.redAccent;
                       });
                     }
                     else {
@@ -190,7 +192,7 @@ class _regScreenState extends State<regScreen> {
                       }
                       else{
                         setState(() {
-                          widget.mistake_color = Colors.redAccent;
+                          widget.mistakeColor = Colors.redAccent;
                         });
                       }
                     }

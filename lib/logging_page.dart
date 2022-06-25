@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'backend_functions.dart';
-import 'user.dart';
+// import 'user.dart';
 
 class LogInPage extends StatefulWidget {
   LogInPage({Key? key}) : super(key: key);
-  Color mistake_color = Colors.white;
+  Color mistakeColor = Colors.white;
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
@@ -16,11 +16,11 @@ class _LogInPageState extends State<LogInPage> {
   Widget build(BuildContext context) {
     return Material(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 300,
             ),
             Center(
@@ -28,59 +28,59 @@ class _LogInPageState extends State<LogInPage> {
                 'password/nickname are incorrect!',
                 style: TextStyle(
                   color: Colors.white,
-                  backgroundColor: widget.mistake_color,
+                  backgroundColor: widget.mistakeColor,
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Text(
+            const Text(
               'Nickname',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   curNick = text;
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter Nickname(not telegram alias)',
                 ),
               ),
-              height: 40,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Password',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             ),
             SizedBox(
+              height: 40,
               child: TextField(
                 onChanged: (text) {
                   curPass = text;
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Password',
                 ),
               ),
-              height: 40,
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Center(
               child: SizedBox(
                 height: 40,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
+                  style: ElevatedButton.styleFrom(primary: const Color(0xffF2F208)),
                   onPressed: () async {
                     if (await dataIsCorrect(curNick, curPass)) {
                //       var user = User(await getDataByNick(curNick));
@@ -88,11 +88,11 @@ class _LogInPageState extends State<LogInPage> {
                           .pushReplacementNamed('/PageOfActiveOrders');
                     } else {
                      setState(() {
-                     widget.mistake_color = Colors.redAccent;
+                     widget.mistakeColor = Colors.redAccent;
                       });
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Get into system!',
                     style: TextStyle(color: Color(0xff000000)),
                   ),

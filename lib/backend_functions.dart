@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'dart:math';
+// import 'dart:math';
+import 'package:flutter/foundation.dart';
+
 import 'user.dart';
 import 'package:http/http.dart' as http;
 
 
-const String serverURL = "10.91.51.83";
+const String serverURL = "192.168.43.143:8000";
 User currentUser = User(getEmptyMap());
 
 
@@ -16,7 +18,9 @@ Future<bool> dataIsCorrect(String nick, String pass) async {
     "password_hash": getHash(pass)
   };
   Uri uri = Uri.http(serverURL, '/loginByNickname', requestParameters);
-  print(uri);
+  if (kDebugMode) {
+    print(uri);
+  }
   http.Response response = await http.get(uri);
  // print(response.body);
   if (response.statusCode == 200){
@@ -27,7 +31,9 @@ Future<bool> dataIsCorrect(String nick, String pass) async {
         userData[kek] = 'a';
       }
     }
-    print("NEW TOKEN AFTER AUTH = ${userData['token']}");
+    if (kDebugMode) {
+      print("NEW TOKEN AFTER AUTH = ${userData['token']}");
+    }
     currentUser = User(userData);
 
     return true;
@@ -78,7 +84,9 @@ Future<bool> contactDataOccupied(
     Uri request = Uri.http(serverURL, '/contactDataOccupied', queryParameters);
     //print(request);
     final http.Response response = await http.get(request);
-    print(response.body);
+    if (kDebugMode) {
+      print(response.body);
+    }
     if (response.statusCode == 200){
       return jsonDecode(response.body.replaceAll("'", "\"")
           .replaceAll('None', ""))['occupied'] == 1;
@@ -91,7 +99,9 @@ Future<bool> contactDataOccupied(
 
   }
   on Exception catch(_, e){
-    print(e.toString());
+    if (kDebugMode) {
+      print(e.toString());
+    }
   }
   return true;
 }
@@ -108,16 +118,16 @@ Future<bool> addUser(User user) async {
       "telegram": user.telegram,
       "password_hash": user.passwordHash
     };
-    print("USER PASSWORD HASH IS = ${user.passwordHash}");
-    print(registerRequestData);
+    // print("USER PASSWORD HASH IS = ${user.passwordHash}");
+    // print(registerRequestData);
 
     Uri uri = Uri.http(serverURL, '/register', registerRequestData);
     http.Response response = await http.post(uri);
-    print("Got response from server");
-    print(response.body);
+    // print("Got response from server");
+    // print(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(
-          response.body.replaceAll("'", '"').replaceAll("None", '\"\"'));
+          response.body.replaceAll("'", '"').replaceAll("None", '""'));
       currentUser.userId = responseBody['user_id'];
       currentUser.token = responseBody['token'];
       currentUser.rating = responseBody['rating'];
@@ -126,7 +136,9 @@ Future<bool> addUser(User user) async {
     }
   }
   on Exception catch(_, e){
-    print(e.toString());
+    if (kDebugMode) {
+      print(e.toString());
+    }
   }
   return false;
 }
@@ -134,16 +146,16 @@ Future<bool> addUser(User user) async {
 
 Future<Map<String, dynamic>> registerNewTicket(Map<String,
     dynamic> requestData) async{
-  print("And function registerNewTicket proceeded argument correctly");
+  // print("And function registerNewTicket proceeded argument correctly");
   requestData['shopper_id'] = currentUser.userId.toString();
   requestData['shopper_token'] = currentUser.token;
-  print('currentUserToken = ${currentUser.token}');
-  print(requestData);
+  // print('currentUserToken = ${currentUser.token}');
+  // print(requestData);
   Uri uri = Uri.http(serverURL, '/registerNewTicket', requestData);
-  print("url of new ticket post request: $uri");
+  // print("url of new ticket post request: $uri");
   http.Response response = await http.post(uri);
-  print("status code of the response: ${response.statusCode}\n"
-      "body of the response: ${response.body}");
+  // print("status code of the response: ${response.statusCode}\n"
+  //    "body of the response: ${response.body}");
   if (response.statusCode == 200){
     return jsonDecode(response.body.replaceAll("'",
         '"').replaceAll("None", "\"\""));
@@ -164,7 +176,7 @@ Future<Map<String, dynamic>> getTicketHistory(
     "from_angel": fromAngel.toString()
   };
   Uri uri = Uri.http(serverURL, '/getTicketHistory', args);
-  print(uri);
+  // print(uri);
   http.Response response = await http.get(uri);
   if (response.statusCode == 200){
     return jsonDecode(response.body);
@@ -197,7 +209,7 @@ Future<bool> cancelBookOfTicket(int ticketId) async{
   if (response.statusCode == 200){
     return true;
   }
-  print(response.body);
+  // print(response.body);
   return false;
 }
 
@@ -212,7 +224,7 @@ Future<bool> completeOrder(int ticketId) async{
   if (response.statusCode == 200){
     return true;
   }
-  print(response.body);
+  // print(response.body);
   return false;
 }
 

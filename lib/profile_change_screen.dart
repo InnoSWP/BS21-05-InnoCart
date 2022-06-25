@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'navigation_bar.dart';
@@ -15,19 +16,19 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
     return Scaffold(
       bottomNavigationBar: makeNavigationBar(context, this),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 70),
+        padding: const EdgeInsets.symmetric(horizontal: 70),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 70,
             ),
             Container(
               width: 130,
               height: 160,
               decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey),
+                  const BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             RatingBar.builder(
@@ -36,46 +37,50 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
                 Icons.star,
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
-                print(rating);
+                if (kDebugMode) {
+                  print(rating);
+                }
               },
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Contact Information'),
-                SizedBox(
+                const Text('Contact Information'),
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('E-mail'),
+                    const Text('E-mail'),
                     SizedBox(
                       width: 150,
                       height: 30,
                       child: TextField(
                         onChanged: (text) {
-                          print('First text field: $text');
+                          if (kDebugMode) {
+                            print('First text field: $text');
+                          }
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(7.0)),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: const BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter E-mail',
                         ),
@@ -83,32 +88,34 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Telegram'),
+                    const Text('Telegram'),
                     SizedBox(
                       width: 150,
                       height: 30,
                       child: TextField(
                         onChanged: (text) {
-                          print('First text field: $text');
+                          if (kDebugMode) {
+                            print('First text field: $text');
+                          }
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(7.0)),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: const BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Enter alias',
                         ),
@@ -116,10 +123,10 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Row(
@@ -130,12 +137,12 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.white,
-                            side: BorderSide(width: 2.0, color: Colors.black)),
+                            side: const BorderSide(width: 2.0, color: Colors.black)),
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                               context, '/ProfileScreen');
                         },
-                        child: Text(
+                        child: const Text(
                           'Go back',
                           style: TextStyle(color: Colors.black),
                         ),
@@ -146,9 +153,9 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.white,
-                            side: BorderSide(width: 2.0, color: Colors.black)),
+                            side: const BorderSide(width: 2.0, color: Colors.black)),
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'Save',
                           style: TextStyle(color: Colors.black),
                         ),

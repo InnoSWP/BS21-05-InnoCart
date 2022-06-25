@@ -8,7 +8,7 @@ PreferredSizeWidget? appBar(BuildContext context) {
       onPressed: () =>
           Navigator.of(context).pushReplacementNamed('/ShopperOrders'),
       style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
-      child: Container(
+      child: SizedBox(
         width: 270,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

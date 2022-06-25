@@ -6,7 +6,7 @@ import '../main.dart';
 
 Future waitingPopUpTicket(BuildContext context) {
   String buttonText = 'Cancel order';
-  String profilePicture = 'assets/images/man1.png';
+  // String profilePicture = 'assets/images/man1.png';
   String orderImage = 'assets/images/pizza.jpg';
   String orderName = 'Pizza';
   String orderWeight = '2 kg';
@@ -15,7 +15,7 @@ Future waitingPopUpTicket(BuildContext context) {
   String orderDate = '03.06.2022';
   String orderPrice = '100';
   String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
-  String orderAngel = 'Amr. T.';
+  // String orderAngel = 'Amr. T.';
 
   return showDialog(
     context: context,
@@ -51,11 +51,10 @@ Future waitingPopUpTicket(BuildContext context) {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                          child: Text(
+                      Text(
                         orderName,
                         style: const TextStyle(fontSize: 20),
-                      )),
+                      ),
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -131,7 +130,7 @@ Future waitingPopUpTicket(BuildContext context) {
                   Navigator.pop(context);
                   popUpOrderCanceled(context);
                 },
-                style: RoundedWhite,
+                style: roundedWhite,
                 child: SizedBox(
                   width: 120,
                   child: Row(

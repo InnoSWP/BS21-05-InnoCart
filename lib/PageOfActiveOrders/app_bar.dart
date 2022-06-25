@@ -29,7 +29,7 @@ PreferredSizeWidget? appBar(
       children: [
         ElevatedButton(
             onPressed: () => selectDate(context, pageOfActiveOrders),
-            style: RoundedWhite,
+            style: roundedWhite,
             child: SizedBox(
                 width: 130,
                 height: 30,
@@ -65,7 +65,7 @@ PreferredSizeWidget? appBar(
                             width: 180,
                             padding: const EdgeInsets.only(top: 20),
                             child: ElevatedButton(
-                                style: RoundedWhite,
+                                style: roundedWhite,
                                 onPressed: () {},
                                 child: const Text(
                                   'All',

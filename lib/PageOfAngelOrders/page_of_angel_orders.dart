@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inno_cart/PageOfAngelOrders/pop_up_notify.dart';
+// import 'package:inno_cart/PageOfAngelOrders/pop_up_notify.dart';
 import '../backend_functions.dart';
 import 'pop_up_window_with_ticket.dart';
 import '../elevated_button_style.dart';
@@ -46,7 +46,7 @@ class Tickets {
   late List<Widget> inProgress;
   late List<Widget> completed;
 
-  Tickets(BuildContext context, PageOfAngelOrdersState this.page);
+  Tickets(BuildContext context, this.page);
 
   Future<List<Widget>> getTickets() async{
     Map<String, dynamic> waitingForAcceptHistoryTickets = await getTicketHistory(0, 1);
@@ -242,7 +242,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
                         ),
                         Container(
                             margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderTime)),
+                            child: const Text(orderTime)),
                       ],
                     ),
                   ],
@@ -266,7 +266,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
                 onPressed: () {
                   onButtonPress();
                 },
-                style: RoundedWhite,
+                style: roundedWhite,
                 child: SizedBox(
                   width: 150,
                   height: 32,
@@ -336,6 +336,7 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket{
           .pushReplacementNamed('/ShopperOrders');
     }
   }
+
 }
 
 class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket{

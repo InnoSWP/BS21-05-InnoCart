@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,11 +52,10 @@ Future completedPopUpTicket(BuildContext context) {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                          child: Text(
+                      Text(
                         orderName,
                         style: const TextStyle(fontSize: 20),
-                      )),
+                      ),
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -152,7 +152,9 @@ Future completedPopUpTicket(BuildContext context) {
                                 color: Colors.amber,
                               ),
                               onRatingUpdate: (rating) {
-                                print(rating);
+                                if (kDebugMode) {
+                                  print(rating);
+                                }
                               },
                             ),
                           ],
@@ -164,7 +166,7 @@ Future completedPopUpTicket(BuildContext context) {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    style: RoundedWhite,
+                    style: roundedWhite,
                     child: SizedBox(
                       width: 120,
                       child: Row(

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-class helloPage extends StatelessWidget {
-  const helloPage({Key? key}) : super(key: key);
+class HelloPage extends StatelessWidget {
+  const HelloPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 275,
           ),
-          Text(
+          const Text(
             'Innocart',
             style: TextStyle(fontSize: 50),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Text(
+          const Text(
             'Welcome!',
             style: TextStyle(fontSize: 30),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           SizedBox(
@@ -33,12 +33,12 @@ class helloPage extends StatelessWidget {
                     Navigator.of(context)
                         .pushReplacementNamed('/RegistrationPage');
                   },
-                  style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
-                  child: Text(
+                  style: ElevatedButton.styleFrom(primary: const Color(0xffF2F208)),
+                  child: const Text(
                     'Sign up',
                     style: TextStyle(color: Color(0xff000000)),
                   ))),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           SizedBox(
@@ -48,8 +48,8 @@ class helloPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/LogInPage');
                   },
-                  style: ElevatedButton.styleFrom(primary: Color(0xffF2F208)),
-                  child: Text(
+                  style: ElevatedButton.styleFrom(primary: const Color(0xffF2F208)),
+                  child: const Text(
                     'log in',
                     style: TextStyle(color: Color(0xff000000)),
                   )))

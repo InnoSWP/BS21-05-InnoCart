@@ -14,8 +14,8 @@ import 'creating_order_screen.dart';
 Route? generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/':
-      final data = settings.arguments;
-      return MaterialPageRoute(builder: (_) => const helloPage());
+      // final data = settings.arguments;
+      return MaterialPageRoute(builder: (_) => const HelloPage());
     case '/PageOfActiveOrders':
       return PageTransition(
           child: const PageOfActiveOrders(), type: PageTransitionType.fade);
@@ -26,7 +26,7 @@ Route? generateRoute(RouteSettings settings) {
       return PageTransition(
           child: const PageOfShopperOrders(), type: PageTransitionType.fade);
     case '/RegistrationPage':
-      return MaterialPageRoute(builder: (_) => regScreen());
+      return MaterialPageRoute(builder: (_) => RegScreen());
     case '/LogInPage':
       return MaterialPageRoute(builder: (_) => LogInPage());
     case '/CreatingOrderScreen':
@@ -36,7 +36,7 @@ Route? generateRoute(RouteSettings settings) {
       return PageTransition(
           child: const ProfilePage(), type: PageTransitionType.fade);
     case '/ProfileChangeScreen':
-      return MaterialPageRoute(builder: (_) => ProfileChangeScreen());
+      return MaterialPageRoute(builder: (_) => const ProfileChangeScreen());
     case '/Messenger':
       return PageTransition(
           child: const PageMessenger(), type: PageTransitionType.fade);

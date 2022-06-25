@@ -1,13 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../PageOfActiveOrders/pop_up_window_with_ticket.dart';
-import '../PageOfAngelOrders/pop_up_notify.dart';
+// import '../PageOfAngelOrders/pop_up_notify.dart';
 import '../backend_functions.dart';
-import 'see_requests_window.dart';
-import 'completed_popup_window.dart';
-import 'waiting_popup_ticket.dart';
+// import 'see_requests_window.dart';
+// import 'completed_popup_window.dart';
+// import 'waiting_popup_ticket.dart';
 import '../elevated_button_style.dart';
-import 'in_progress_popup_window.dart';
+// import 'in_progress_popup_window.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
@@ -49,7 +50,7 @@ class Tickets {
   late List<Widget> inProgress;
   late List<Widget> completed;
 
-  Tickets(BuildContext context, PageOfShopperOrdersState this.page);
+  Tickets(BuildContext context, this.page);
 
   Future<List<Widget>> getTickets() async{
     Map<String, dynamic> waitingForAcceptHistoryTickets = await getTicketHistory(0, 0);
@@ -245,7 +246,7 @@ class AbstractHistoryTicket extends StatelessWidget{
                         ),
                         Container(
                             margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderTime)),
+                            child: const Text(orderTime)),
                       ],
                     ),
                   ],
@@ -269,7 +270,7 @@ class AbstractHistoryTicket extends StatelessWidget{
                 onPressed: () {
                  onButtonPress();
                 },
-                style: RoundedWhite,
+                style: roundedWhite,
                 child: SizedBox(
                   width: 150,
                   height: 32,
@@ -333,7 +334,9 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket{
 
   @override
   Future<void> onButtonPress() async{
-    print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
+    if (kDebugMode) {
+      print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
+    }
     bool result = await completeOrder(ticketId);
     if (result) Navigator.of(page.context).pushReplacementNamed('/ShopperOrders');
   }

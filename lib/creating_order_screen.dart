@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inno_cart/backend_functions.dart';
 import 'navigation_bar.dart';
@@ -113,7 +114,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(const Radius.circular(7.0)),
+                                BorderRadius.all(Radius.circular(7.0)),
                             borderSide: BorderSide(
                                 color: Colors.black, width: 2.0),
                           ),
@@ -168,7 +169,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(const Radius.circular(7.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
                     borderSide:
                         BorderSide(color: Colors.black, width: 2.0),
                   ),
@@ -288,8 +289,10 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: const Color(0xffF2F208)),
                   onPressed: () async {
-                    print("Button had been pressed");
-                    Map<String, dynamic> response = await registerNewTicket({
+                    if (kDebugMode) {
+                      print("Button had been pressed");
+                    }
+                    await registerNewTicket({
                       "title": title,
                       "description": description,
                       "weight": weight.toString().replaceAll('.', ','),
@@ -301,7 +304,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                   },
                   child: const Text(
                     'Push Order',
-                    style: const TextStyle(color: const Color(0xff000000)),
+                    style: TextStyle(color: Color(0xff000000)),
                   ),
                 ),
               ),
