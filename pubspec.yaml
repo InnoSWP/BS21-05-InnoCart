@@ -38,7 +38,9 @@ dependencies:
   flutter_svg: ^1.1.0
   flutter_rating_bar: ^4.0.1
   page_transition: ^2.0.9
-
+  animations: ^2.0.3
+  flutter_gradient_colors: ^2.1.1
+  flutter_fadein: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
