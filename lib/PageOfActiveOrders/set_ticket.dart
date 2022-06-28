@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inno_cart/backend_functions.dart';
+import 'package:inno_cart/profile_screen.dart';
 import '../elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
@@ -143,7 +144,9 @@ class Ticket extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            GestureDetector(onTap: (() {}),
+                            GestureDetector(onTap: (() {
+                               Navigator.push(context, MaterialPageRoute(builder: ((context)=>ProfilePage(ok:1,rating: userRating, email: '${userSurname}@mail.ru', telegram: '@$userName',))));
+                            }),
                               child: const CircleAvatar(
                                 radius: (20),
                                 backgroundImage: AssetImage(profilePicture),

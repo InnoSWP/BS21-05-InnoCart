@@ -10,6 +10,7 @@ import '../elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
+import '../profile_screen.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -87,6 +88,8 @@ class Tickets {
           data['weight'],
           data['reward'],
           data['description'],
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
           page);
     } else if (data['status'] == 1) {
       return AngelInProgressHistoryTicket(
@@ -97,6 +100,8 @@ class Tickets {
           data['weight'],
           data['reward'],
           data['description'],
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
           page);
     } else if (data['status'] == 2) {
       return AngelCompletedHistoryTicket(
@@ -107,6 +112,8 @@ class Tickets {
           data['weight'],
           data['reward'],
           data['description'],
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
           page);
     }
     return AbstractAngelHistoryTicket(
@@ -116,6 +123,8 @@ class Tickets {
         data['weight'],
         data['reward'],
         data['description'],
+        data['shopper_info']['surname'],
+        data['shopper_info']['name'],
         "UNKNOWN ERROR",
         page);
   }
@@ -140,6 +149,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
   String orderImage = 'assets/images/man1.png';
   String orderName = "";
   double orderWeight = 0;
+  String userName='kek';
+  String userSurname='kek';
   static const double orderDistance = 100; // OVERRIDE IN MVP V2
   static const String orderTime = "23.06.2022"; // OVERRIDE IN MVP V2
   double orderPrice = 0;
@@ -155,6 +166,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
       this.orderPrice,
       this.orderDescription,
       this.buttonText,
+      this.userName,
+      this.userSurname,
       this.page,
       {Key? key})
       : super(key: key);
@@ -178,7 +191,9 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                GestureDetector(onTap: ((){}),child:
+                GestureDetector(onTap: ((){
+                  Navigator.push(context, MaterialPageRoute(builder: ((context)=>ProfilePage(ok:1,rating: 4, email: '${userSurname}@mail.ru', telegram: '@$userName',))));
+                }),child:
                 Container(
                   width: 130,
                   height: 130,
@@ -296,6 +311,8 @@ class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
       double orderWeight,
       double orderPrice,
       String orderDescription,
+      String userName,
+      String userSurname,
       PageOfAngelOrdersState page,
       {Key? key})
       : super(
@@ -307,6 +324,8 @@ class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
             orderPrice,
             orderDescription,
             "Cancel request",
+            userName,
+            userName,
             page) {
     super.type = 0;
   }
@@ -326,6 +345,8 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
       double orderWeight,
       double orderPrice,
       String orderDescription,
+      String userName,
+      String userSurname,
       PageOfAngelOrdersState page,
       {Key? key})
       : super(
@@ -336,6 +357,8 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
             orderWeight,
             orderPrice,
             orderDescription,
+            userName,
+            userSurname,
             "Cancel (Rewrite)",
             page) {
     super.type = 1;
@@ -361,6 +384,8 @@ class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket {
       double orderWeight,
       double orderPrice,
       String orderDescription,
+      String userName,
+      String userSurname,
       PageOfAngelOrdersState page,
       {Key? key})
       : super(
@@ -371,6 +396,8 @@ class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket {
             orderWeight,
             orderPrice,
             orderDescription,
+            userName,
+            userSurname,
             "Rate Shopper",
             page) {
     super.type = 3;

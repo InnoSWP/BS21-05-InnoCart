@@ -8,9 +8,12 @@ import 'backend_functions.dart';
 import 'main.dart';
 
 class ProfilePage extends StatefulWidget {
-  late final ok;
+  late final int ok;
+  late final double rating;
+  late final String telegram;
+  late final String email;
 
-  ProfilePage( {Key? key, this.ok=0}) : super(key: key);
+  ProfilePage( {Key? key, this.ok=0, this.rating = 4, this.telegram = 'anekdot', this.email = 'ivanovinvan@gmail.com'}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -39,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 15,
                 ),
                 RatingBar.builder(
-                  initialRating: 3.5,
+                  initialRating: widget.rating,
                   minRating: 1,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
@@ -65,9 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children:  [
                         Text('E-mail'),
-                        Text('ivanovivan@gmail.com')
+                        Text(widget.email),
                       ],
                     ),
                     const SizedBox(
@@ -75,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [Text('Telegram'), Text('@anekdot')],
+                      children:  [Text('Telegram'), Text(widget.telegram)],
                     ),
                     const SizedBox(
                       height: 30,
