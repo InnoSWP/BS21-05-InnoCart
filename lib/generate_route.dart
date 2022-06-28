@@ -10,12 +10,17 @@ import 'PageOfAngelOrders/page_of_angel_orders.dart';
 import 'PageOfShopperOrders/page_of_shopper_orders.dart';
 import 'logging_page.dart';
 import 'creating_order_screen.dart';
+import 'start_screen.dart';
 
 Route? generateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case '/start':
+      return PageTransition(
+          child: const startAnimation(), type: PageTransitionType.fade);
     case '/':
       // final data = settings.arguments;
-      return MaterialPageRoute(builder: (_) => const HelloPage());
+      return PageTransition(
+          child: const HelloPage(), type: PageTransitionType.fade);
     case '/PageOfActiveOrders':
       return PageTransition(
           child: const PageOfActiveOrders(), type: PageTransitionType.fade);
@@ -26,9 +31,11 @@ Route? generateRoute(RouteSettings settings) {
       return PageTransition(
           child: const PageOfShopperOrders(), type: PageTransitionType.fade);
     case '/RegistrationPage':
-      return MaterialPageRoute(builder: (_) => RegScreen());
+      return PageTransition(
+          child:  RegScreen(), type: PageTransitionType.fade);
     case '/LogInPage':
-      return MaterialPageRoute(builder: (_) => LogInPage());
+      return PageTransition(
+          child:  LogInPage(), type: PageTransitionType.fade);
     case '/CreatingOrderScreen':
       return PageTransition(
           child: const OrderFactoryPage(), type: PageTransitionType.fade);

@@ -19,28 +19,30 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: GestureDetector(
-            child: Scaffold(
-              backgroundColor: Colors.white,
-              appBar: appBar(context, this),
-              bottomNavigationBar: makeNavigationBar(context, this),
-              body: FutureBuilder<List<Widget>>(
-                  future: Tickets(context).getTickets(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView(children: snapshot.data!);
-                    } else {
-                      return const Text("waiting for data");
-                    }
-                  }),
-            ),
-            onHorizontalDragEnd: ((DragEndDetails details) {
-              if (details.primaryVelocity! < 0.0) {
-                pageUpdate((selectedPage + 1) % 5, context);
-              } else if (details.primaryVelocity! > 0.0){
-                pageUpdate((selectedPage + 4) % 5, context);
-              }
-            }))); // This trailing comma makes auto-formatting nicer for build methods.
+      child: GestureDetector(
+        onHorizontalDragEnd: ((DragEndDetails details) {
+          if (details.primaryVelocity! < 0.0) {
+            pageUpdate((selectedPage + 1) % 5, context);
+          } else if (details.primaryVelocity! > 0.0) {
+            pageUpdate((selectedPage + 4) % 5, context);
+          }
+        }),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: appBar(context, this),
+          bottomNavigationBar: makeNavigationBar(context, this),
+          body: FutureBuilder<List<Widget>>(
+              future: Tickets(context).getTickets(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView(children: snapshot.data!);
+                } else {
+                  return const Text("waiting for data");
+                }
+              }),
+        ),
+      ),
+    ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
