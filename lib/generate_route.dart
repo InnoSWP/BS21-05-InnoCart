@@ -16,7 +16,7 @@ Route? generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/start':
       return PageTransition(
-          child: const startAnimation(), type: PageTransitionType.fade);
+          child: const StartAnimation(), type: PageTransitionType.fade);
     case '/':
       // final data = settings.arguments;
       return PageTransition(
@@ -41,7 +41,7 @@ Route? generateRoute(RouteSettings settings) {
           child: const OrderFactoryPage(), type: PageTransitionType.fade);
     case '/ProfileScreen':
       return PageTransition(
-          child: const ProfilePage(), type: PageTransitionType.fade);
+          child:  ProfilePage(), type: PageTransitionType.fade);
     case '/ProfileChangeScreen':
       return MaterialPageRoute(builder: (_) => const ProfileChangeScreen());
     case '/Messenger':

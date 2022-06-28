@@ -8,7 +8,12 @@ import 'backend_functions.dart';
 import 'main.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  late final int ok;
+  late final double rating;
+  late final String telegram;
+  late final String email;
+
+  ProfilePage( {Key? key, this.ok=0, this.rating = 4, this.telegram = 'anekdot', this.email = 'ivanovinvan@gmail.com'}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -37,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 15,
                 ),
                 RatingBar.builder(
-                  initialRating: 3.5,
+                  initialRating: widget.rating,
                   minRating: 1,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
@@ -63,9 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children:  [
                         Text('E-mail'),
-                        Text('ivanovivan@gmail.com')
+                        Text(widget.email),
                       ],
                     ),
                     const SizedBox(
@@ -73,49 +78,56 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [Text('Telegram'), Text('@anekdot')],
+                      children:  [Text('Telegram'), Text(widget.telegram)],
                     ),
                     const SizedBox(
                       height: 30,
                     ),
-                    Center(
-                      child: SizedBox(
-                        height: 35,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              side: const BorderSide(
-                                  width: 2.0, color: Colors.black)),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/ProfileChangeScreen');
-                          },
-                          child: const Text(
-                            'Edit profile',
-                            style: TextStyle(color: Colors.black),
+                    Builder(builder: (BuildContext context) {
+                      if (widget.ok == 0){
+                      return Column(
+                        children: [Center(
+                          child: SizedBox(
+                            height: 35,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  side: const BorderSide(
+                                      width: 2.0, color: Colors.black)),
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/ProfileChangeScreen');
+                              },
+
+                              child: const Text(
+                                'Edit profile',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 35,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              side: const BorderSide(
-                                  width: 2.0, color: Colors.black)),
-                          onPressed: () {
-                            currentUser = User(getEmptyMap());
-                            Navigator.pushReplacementNamed(context, '/');
-                          },
-                          child: const Text(
-                            'Log out',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    )
+                          Center(
+                            child: SizedBox(
+                              height: 35,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    side: const BorderSide(
+                                        width: 2.0, color: Colors.black)),
+                                onPressed: () {
+                                  currentUser = User(getEmptyMap());
+                                  Navigator.pushReplacementNamed(context, '/');
+                                },
+                                child: const Text(
+                                  'Log out',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          )],
+                      );}
+                      return Container();
+                    })
                   ],
                 ),
               ],
