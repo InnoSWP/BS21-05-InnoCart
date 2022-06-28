@@ -178,6 +178,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
+                GestureDetector(onTap: ((){}),child:
                 Container(
                   width: 130,
                   height: 130,
@@ -187,7 +188,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                     orderImage,
                     fit: BoxFit.fill,
                   ),
-                ),
+                ),),
 
                 //TICKET INFO
 

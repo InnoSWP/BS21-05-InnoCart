@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'backend_functions.dart';
-// import 'user.dart';
+import 'user.dart';
 
 class LogInPage extends StatefulWidget {
   LogInPage({Key? key}) : super(key: key);

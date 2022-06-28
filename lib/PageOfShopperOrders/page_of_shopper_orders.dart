@@ -183,7 +183,8 @@ class AbstractHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                Container(
+                GestureDetector(onTap: ((){}),
+                child:Container(
                   width: 130,
                   height: 130,
                   color: Colors.blueGrey,
@@ -193,7 +194,7 @@ class AbstractHistoryTicket extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-
+                ),
                 //TICKET INFO
 
                 Column(

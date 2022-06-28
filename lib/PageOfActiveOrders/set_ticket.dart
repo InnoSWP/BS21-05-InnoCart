@@ -8,7 +8,7 @@ import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
 
 
-class Ticket extends StatelessWidget{
+class Ticket extends StatelessWidget {
   late int ticketId = 0;
   late int shopperId = 0;
 
@@ -28,7 +28,7 @@ class Ticket extends StatelessWidget{
   late double userRating = 0;
 
 
-  Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key){
+  Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key) {
     /*print('Initialization of ticket entity');
     this.shopperName = data['user_id'].toString();
     this.orderName = data['title'];*/
@@ -143,10 +143,11 @@ class Ticket extends StatelessWidget{
                       children: [
                         Row(
                           children: [
-                            const CircleAvatar(
-                              radius: (20),
-                              backgroundImage: AssetImage(profilePicture),
-                            ),
+                            GestureDetector(onTap: (() {}),
+                              child: const CircleAvatar(
+                                radius: (20),
+                                backgroundImage: AssetImage(profilePicture),
+                              ),),
                             Padding(
                               padding: const EdgeInsets.only(left: 15),
                               child: Column(

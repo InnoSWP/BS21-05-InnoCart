@@ -8,7 +8,9 @@ import 'backend_functions.dart';
 import 'main.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  late final ok;
+
+  ProfilePage( {Key? key, this.ok=0}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -78,44 +80,51 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Center(
-                      child: SizedBox(
-                        height: 35,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              side: const BorderSide(
-                                  width: 2.0, color: Colors.black)),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/ProfileChangeScreen');
-                          },
-                          child: const Text(
-                            'Edit profile',
-                            style: TextStyle(color: Colors.black),
+                    Builder(builder: (BuildContext context) {
+                      if (widget.ok == 0){
+                      return Column(
+                        children: [Center(
+                          child: SizedBox(
+                            height: 35,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  side: const BorderSide(
+                                      width: 2.0, color: Colors.black)),
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/ProfileChangeScreen');
+                              },
+
+                              child: const Text(
+                                'Edit profile',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 35,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              side: const BorderSide(
-                                  width: 2.0, color: Colors.black)),
-                          onPressed: () {
-                            currentUser = User(getEmptyMap());
-                            Navigator.pushReplacementNamed(context, '/');
-                          },
-                          child: const Text(
-                            'Log out',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    )
+                          Center(
+                            child: SizedBox(
+                              height: 35,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    side: const BorderSide(
+                                        width: 2.0, color: Colors.black)),
+                                onPressed: () {
+                                  currentUser = User(getEmptyMap());
+                                  Navigator.pushReplacementNamed(context, '/');
+                                },
+                                child: const Text(
+                                  'Log out',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          )],
+                      );}
+                      return Container();
+                    })
                   ],
                 ),
               ],
