@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfShopperOrders/see_requests_window.dart';
 import '../PageOfActiveOrders/pop_up_window_with_ticket.dart';
 
 // import '../PageOfAngelOrders/pop_up_notify.dart';
@@ -137,16 +138,33 @@ class Tickets {
   }
 }
 
+<<<<<<< HEAD
+
+class AbstractHistoryTicket extends StatelessWidget{
+  final int ticketId;
+  final int shopperId;
+=======
 class AbstractHistoryTicket extends StatelessWidget {
   int ticketId = 0;
   int shopperId = 0;
   int type = -1;
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
 
-  String orderImage = 'assets/images/man1.png';
-  String orderName = "";
-  double orderWeight = 0;
+  static const String orderImage = 'assets/images/man1.png';
+  final String orderName;
+  final double orderWeight;
   static const double orderDistance = 100; // OVERRIDE IN MVP V2
   static const String orderTime = "23.06.2022"; // OVERRIDE IN MVP V2
+<<<<<<< HEAD
+  final double orderPrice;
+  final String buttonText;
+  final PageOfShopperOrdersState page;
+  final String orderDescription;
+
+  const AbstractHistoryTicket(this.ticketId, this.shopperId,
+      this.orderName, this.orderWeight,
+      this.orderPrice, this.orderDescription, this.buttonText,
+=======
   double orderPrice = 0;
   String buttonText = "";
   late PageOfShopperOrdersState page;
@@ -160,6 +178,7 @@ class AbstractHistoryTicket extends StatelessWidget {
       this.orderPrice,
       this.orderDescription,
       this.buttonText,
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
       this.page,
       {Key? key})
       : super(key: key);
@@ -295,14 +314,35 @@ class AbstractHistoryTicket extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
+class ShopperWaitingForAcceptHistoryTicket extends AbstractHistoryTicket{
+  static const int type = 1;
+  const ShopperWaitingForAcceptHistoryTicket(
+=======
 class ShopperWaitingForAcceptHistoryTicket extends AbstractHistoryTicket {
   ShopperWaitingForAcceptHistoryTicket(
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
       int ticketId,
       int shopperId,
       String orderName,
       double orderWeight,
       double orderPrice,
       String orderDescription,
+<<<<<<< HEAD
+      PageOfShopperOrdersState page, {Key? key}) : super(key: key,
+      ticketId, shopperId, orderName, orderWeight, orderPrice, orderDescription,
+      "See requests", page);
+
+  @override
+  Future<void> onButtonPress() async{
+    seeRequestWindow(page.context, ticketId, page);
+  }
+}
+
+class ShopperInProgressHistoryTicket extends AbstractHistoryTicket{
+  final int angelId;
+  static const int type = 2;
+=======
       PageOfShopperOrdersState page,
       {Key? key})
       : super(
@@ -324,8 +364,9 @@ class ShopperWaitingForAcceptHistoryTicket extends AbstractHistoryTicket {
 
 class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
   int angelId = 0;
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
 
-  ShopperInProgressHistoryTicket(
+  const ShopperInProgressHistoryTicket(
       int ticketId,
       int shopperId,
       this.angelId,
@@ -333,6 +374,12 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
       double orderWeight,
       double orderPrice,
       String orderDescription,
+<<<<<<< HEAD
+      PageOfShopperOrdersState page, {Key? key}) : super(key: key,
+      ticketId, shopperId,
+      orderName, orderWeight, orderPrice, orderDescription,
+      "Complete (REWRITE)", page);
+=======
       PageOfShopperOrdersState page,
       {Key? key})
       : super(
@@ -347,6 +394,7 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
             page) {
     super.type = 1;
   }
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
 
   @override
   Future<void> onButtonPress() async {
@@ -359,10 +407,17 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
   }
 }
 
+<<<<<<< HEAD
+class ShopperCompletedHistoryTicket extends AbstractHistoryTicket{
+  final int angelId;
+  static const int type = 3;
+  const ShopperCompletedHistoryTicket(
+=======
 class ShopperCompletedHistoryTicket extends AbstractHistoryTicket {
   int angelId = 0;
 
   ShopperCompletedHistoryTicket(
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
       int ticketId,
       int shopperId,
       this.angelId,
@@ -370,6 +425,12 @@ class ShopperCompletedHistoryTicket extends AbstractHistoryTicket {
       double orderWeight,
       double orderPrice,
       String orderDescription,
+<<<<<<< HEAD
+      PageOfShopperOrdersState page, {Key? key}) : super(key: key,
+      ticketId, shopperId,
+      orderName, orderWeight, orderPrice, orderDescription,
+      "Rate Angel", page);
+=======
       PageOfShopperOrdersState page,
       {Key? key})
       : super(
@@ -384,6 +445,7 @@ class ShopperCompletedHistoryTicket extends AbstractHistoryTicket {
             page) {
     super.type = 3;
   }
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
 
   @override
   Future<void> onButtonPress() async {}
