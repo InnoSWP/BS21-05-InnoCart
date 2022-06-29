@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfActiveOrders/pop_up_notify.dart';
 import 'package:inno_cart/backend_functions.dart';
 import 'package:inno_cart/profile_screen.dart';
 import '../elevated_button_style.dart';
@@ -175,6 +176,7 @@ class Ticket extends StatelessWidget {
                               radius: (20),
                               backgroundImage: AssetImage(profilePicture),
                             ),
+
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 15),
@@ -191,6 +193,34 @@ class Ticket extends StatelessWidget {
                                   itemBuilder: (context, _) => const Icon(
                                     Icons.star,
                                     color: Colors.amber,
+
+                          ],
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
+                              popUpRequestSentNotifier(context);
+                              sendOfferToBookTicket(ticketId);
+                              // Navigator.of(context)
+                              //     .pushReplacementNamed('/PageOfActiveOrders');
+                            },
+                            style: roundedWhite,
+                            child: SizedBox(
+                              width: 150,
+                              height: 32,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: const [
+                                  Text(
+                                    buttonText,
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.black,
+                                    size: 14,
                                   ),
                                   onRatingUpdate: (rating) {
                                     if (kDebugMode) {

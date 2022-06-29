@@ -55,6 +55,8 @@ class Tickets {
   }
 
   Future<List<Widget>> getTickets() async {
+<<<<<<< HEAD
+=======
     //waitingForAccept =
     //    Ticket(context) + Ticket(context) + Ticket(context);
     // print("Running function get Tickets");
@@ -65,6 +67,7 @@ class Tickets {
     /*print("Map of arguments had been constructed correctly");
     print(serverURL);
     print(args);*/
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
     Uri uri = Uri.parse(
         "http://$serverURL/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}");
     // print(uri);
