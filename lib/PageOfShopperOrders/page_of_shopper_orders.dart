@@ -8,7 +8,7 @@ import '../backend_functions.dart';
 
 // import 'see_requests_window.dart';
 // import 'completed_popup_window.dart';
-// import 'waiting_popup_ticket.dart';
+import 'waiting_popup_ticket.dart';
 import '../elevated_button_style.dart';
 
 // import 'in_progress_popup_window.dart';
@@ -183,17 +183,19 @@ class AbstractHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                GestureDetector(onTap: ((){}),
-                child:Container(
-                  width: 130,
-                  height: 130,
-                  color: Colors.blueGrey,
-                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                  child: Image.asset(
-                    orderImage,
-                    fit: BoxFit.fill,
+                GestureDetector(
+                  onTap: (() {}),
+                  child: Container(
+                    width: 130,
+                    height: 130,
+                    color: Colors.blueGrey,
+                    margin:
+                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                    child: Image.asset(
+                      orderImage,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
                 ),
                 //TICKET INFO
 
