@@ -356,3 +356,32 @@ class Offers:
         cursor.execute(sql_request)
         return cursor.fetchone() is None
 
+    @staticmethod
+    def getOffersByTicketId(ticket_id: int, cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
+        sql_request = f"SELECT * FROM offers WHERE ticket_id = {ticket_id}"
+        data = {'offers': []}
+        cursor.execute(sql_request)
+        offersData = cursor.fetchall()
+        for offerData in offersData:
+            data['offers'].append(
+                {
+                    "offer_id": offerData[0],
+                    "ticket_id": offerData[1],
+                    "angel_id": offerData[2],
+                    "creation_unix_time": offerData[3],
+                    "angel": Users.publicUserInformationById(offerData[2], cursor)
+                }
+            )
+        return data
+
+    @staticmethod
+    def acceptOffer(offer_id: int, cursor: sqlite3.Cursor):
+        sql_request = f"SELECT * FROM offers WHERE offer_id={offer_id}"
+        cursor.execute(sql_request)
+        offer_id, ticket_id, angel_id, creation_time = cursor.fetchone()
+        sql_request2 = f"UPDATE tickets SET status=1, angel_id={angel_id} WHERE ticket_id={ticket_id}"
+        cursor.execute(sql_request2)
+
+
+
+

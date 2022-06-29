@@ -184,7 +184,9 @@ Future<Map<String, dynamic>> getTicketHistory(
   return {};
 }
 
-Future<bool> bookTicket(int ticketId) async{
+
+// BOOK TICKET FUNCTION HAVE LOST ITS ACTUALITY
+ /*Future<bool> bookTicket(int ticketId) async{
   Map<String, String> args = {
     "ticket_id": ticketId.toString(),
     "angel_id": currentUser.userId.toString(),
@@ -196,7 +198,8 @@ Future<bool> bookTicket(int ticketId) async{
     return true;
   }
   return false;
-}
+} */
+// BOOK TICKET FUNCTION HAVE LOST ITS ACTUALITY
 
 Future<bool> cancelBookOfTicket(int ticketId) async{
   Map<String, String> args = {
@@ -246,3 +249,34 @@ Future<bool> sendOfferToBookTicket(int ticketId) async{
   return false;
 }
 
+Future<Map<String, dynamic>> getOffersByTicketId(int ticketId) async{
+  Map<String, String> requestArguments = {
+    "ticket_id": ticketId.toString(),
+    "shopper_id": currentUser.userId.toString(),
+    "shopper_token": currentUser.token
+  };
+  Uri uri = Uri.http(serverURL, "/getOffersByTicketId", requestArguments);
+  http.Response response = await http.get(uri);
+  if (response.statusCode == 200){
+    return jsonDecode(response.body);
+  }
+  if (kDebugMode) {
+    print(response.body);
+  }
+  return {"error": response.body};
+}
+
+
+Future<bool> acceptOffer(int offerId) async {
+  Map<String, String> args = {
+    "offer_id": offerId.toString(),
+    "shopper_id": currentUser.userId.toString(),
+    "shopper_token": currentUser.token
+  };
+  Uri requestUrl = Uri.http(serverURL, '/acceptOffer', args);
+  http.Response response = await http.post(requestUrl);
+  if (response.statusCode == 200){
+    return true;
+  }
+  return false;
+}
