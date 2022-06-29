@@ -77,28 +77,14 @@ class Ticket extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    SizedBox(
-                      width: 170,
-                      child: Text(
-                        orderName,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 20),
-                      ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                      orderName,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 20),
                     ),
-                    Container(
-                        color: Colors.yellowAccent,
-                        padding: const EdgeInsets.all(6),
-                        child: Row(
-                          children: [
-                            Text(
-                              reward.toString(),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SvgPicture.asset('assets/icons/Currency.svg'),
-                          ],
-                        )),
-                  ]),
+                  ),
                   Row(
                     children: [
                       SvgPicture.asset(
@@ -140,6 +126,21 @@ class Ticket extends StatelessWidget {
                   ),
                 ],
               ),
+              Container(
+                  color: Colors.yellowAccent,
+                  padding: const EdgeInsets.all(6),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 50,
+                        child: Text(
+                          reward.toString(),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SvgPicture.asset('assets/icons/Currency.svg'),
+                    ],
+                  )),
             ],
           ),
           //Button

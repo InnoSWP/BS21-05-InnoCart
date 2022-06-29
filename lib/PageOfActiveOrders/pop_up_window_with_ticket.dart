@@ -33,6 +33,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
           padding: const EdgeInsets.all(15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 child: Text(
@@ -115,18 +116,23 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                       ),
                     ],
                   ),
-
-                  Container(
-                      color: Colors.yellowAccent,
-                      padding: const EdgeInsets.all(6),
-                      child: Row(
-                        children: [
-                          Text(reward),
-                          SvgPicture.asset('assets/icons/Currency.svg'),
-                        ],
-                      )),
                 ],
               ),
+              Container(
+                  color: Colors.yellowAccent,
+                  padding: const EdgeInsets.all(6),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        child: Text(
+                          reward.toString(),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SvgPicture.asset('assets/icons/Currency.svg'),
+                    ],
+                  )),
               Container(
                 alignment: Alignment.topLeft,
                 child: Text(orderInfo),
