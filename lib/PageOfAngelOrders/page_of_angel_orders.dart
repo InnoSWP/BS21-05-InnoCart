@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../backend_functions.dart';
@@ -174,6 +176,15 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
 
   Future<void> onButtonPress() async {}
 
+  String shortName(String pattern){
+    String act = '';
+    for (int i = 0; i < min(12, pattern.length); i++){
+      act += pattern[i];
+    }
+    if (pattern.length > 12) act += '...';
+    return act;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -203,6 +214,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                                   telegram: '@$userName',
                                 ))));
                   }),
+
                   child: Container(
                     width: 130,
                     height: 130,
@@ -224,7 +236,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
-                          orderName,
+                          shortName(orderName),
                           style: const TextStyle(fontSize: 20),
                         )),
                     Row(
