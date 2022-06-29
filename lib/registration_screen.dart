@@ -22,7 +22,7 @@ class _RegScreenState extends State<RegScreen> {
       color: Colors.white,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
+        child: SingleChildScrollView( child : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -205,7 +205,7 @@ class _RegScreenState extends State<RegScreen> {
               ),
             )
           ],
-        ),
+        ),),
       ),
     );
   }

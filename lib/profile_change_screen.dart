@@ -16,7 +16,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
   Widget build(BuildContext context) {
     return GestureDetector( child: Scaffold(
       bottomNavigationBar: makeNavigationBar(context, this),
-      body: Padding(
+      body: SingleChildScrollView( child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70),
         child: Column(
           children: [
@@ -168,7 +168,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
             ),
           ],
         ),
-      ),
+      ),),
     ), onHorizontalDragEnd: ((DragEndDetails details) {
     if (details.primaryVelocity! < 0.0) {
     pageUpdate((selectedPage + 1) % 5, context);

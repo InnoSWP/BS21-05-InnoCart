@@ -23,7 +23,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
     return GestureDetector(
         child: Scaffold(
           bottomNavigationBar: makeNavigationBar(context, this),
-          body: Padding(
+          body: SingleChildScrollView(child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,7 +307,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                 )
               ],
             ),
-          ),
+          ),),
         ),
         onHorizontalDragEnd: ((DragEndDetails details) {
           if (details.primaryVelocity! < 0.0) {

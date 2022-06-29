@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return GestureDetector(
         child: Scaffold(
           bottomNavigationBar: makeNavigationBar(context, this),
-          body: Padding(
+          body: SingleChildScrollView( child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 70),
             child: Column(
               children: [
@@ -132,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ],
             ),
-          ),
+          ),),
         ),
         onHorizontalDragEnd: ((DragEndDetails details) {
           if (details.primaryVelocity! < 0.0) {

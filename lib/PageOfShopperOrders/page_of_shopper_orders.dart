@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -166,6 +168,16 @@ class AbstractHistoryTicket extends StatelessWidget {
 
   Future<void> onButtonPress() async {}
 
+
+  String shortName(String pattern){
+    String act = '';
+    for (int i = 0; i < min(12, pattern.length); i++){
+      act += pattern[i];
+    }
+    if (pattern.length > 12) act += '...';
+    return act;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -205,7 +217,7 @@ class AbstractHistoryTicket extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
-                          orderName,
+                          shortName(orderName),
                           style: const TextStyle(fontSize: 20),
                         )),
                     Row(

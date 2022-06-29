@@ -15,7 +15,7 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Padding(
+      child: SingleChildScrollView( child: Container( child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class _LogInPageState extends State<LogInPage> {
             )
           ],
         ),
-      ),
+      ),),),
     );
   }
 }
