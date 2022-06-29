@@ -46,10 +46,9 @@ class Ticket extends StatelessWidget {
     reward = data['reward'].toString();
   }
 
-
-  String shortName(String pattern){
+  String shortName(String pattern) {
     String act = '';
-    for (int i = 0; i < min(12, pattern.length); i++){
+    for (int i = 0; i < min(12, pattern.length); i++) {
       act += pattern[i];
     }
     if (pattern.length > 12) act += '...';
@@ -59,210 +58,179 @@ class Ticket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => popUpTicket(context),
-        child: Container(
-          margin: const EdgeInsets.only(bottom: bottomPadding),
-          padding: const EdgeInsets.all(20),
-          width: 345,
-          height: 230,
-          color: Colors.white,
-          child: Column(
+      onTap: () => popUpTicket(context),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: bottomPadding),
+        padding: const EdgeInsets.all(20),
+        width: 345,
+        height: 230,
+        color: Colors.white,
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //PICTURE
+              Container(
+                width: 130,
+                height: 130,
+                color: Colors.blueGrey,
+                //margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                child: Image.asset(
+                  orderImage,
+                  fit: BoxFit.fill,
+                ),
+              ),
+
+              //TICKET INFO
+
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //PICTURE
-                  Container(
-                    width: 130,
-                    height: 130,
-                    color: Colors.blueGrey,
-                    //margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                    child: Image.asset(
-                      orderImage,
-                      fit: BoxFit.fill,
-                    ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                    child: Row(children: [
+                      Text(
+                        shortName(orderName!),
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                          child: Container(
+                              color: Colors.yellowAccent,
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
+                                children: [
+                                  Text(reward.toString()),
+                                  SvgPicture.asset('assets/icons/Currency.svg'),
+                                ],
+                              ))),
+                    ]),
                   ),
-
-                  //TICKET INFO
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Padding(padding: EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 0),child:Row(children: [
-                        Text(
-                          shortName(orderName!),
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 0),
-                            child: Container(
-                                color: Colors.yellowAccent,
-                                padding: const EdgeInsets.all(6),
-                                child: Row(
-                                  children: [
-                                    Text(reward.toString()),
-                                    SvgPicture.asset(
-                                        'assets/icons/Currency.svg'),
-                                  ],
-                                ))),
-                      ]),),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/Bag_alt_light.svg',
-                            color: Colors.black,
-                            width: 24,
-                            height: 24,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: Text("$orderWeight KG")),
-                        ],
+                      SvgPicture.asset(
+                        'assets/icons/Bag_alt_light.svg',
+                        color: Colors.black,
+                        width: 24,
+                        height: 24,
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/Pin_alt_light.svg',
-                            color: Colors.black,
-                            width: 24,
-                            height: 24,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: const Text(orderDistance)),
-                        ],
+                      Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: Text("$orderWeight KG")),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/Pin_alt_light.svg',
+                        color: Colors.black,
+                        width: 24,
+                        height: 24,
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/Time_light.svg',
-                            color: Colors.black,
-                            width: 24,
-                            height: 24,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderTime)),
-                        ],
+                      Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: const Text(orderDistance)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/Time_light.svg',
+                        color: Colors.black,
+                        width: 24,
+                        height: 24,
                       ),
+                      Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: Text(orderTime)),
                     ],
                   ),
                 ],
               ),
-              //Button
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (() {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => ProfilePage(
-                                            ok: 1,
-                                            rating: userRating,
-                                            email: '${userSurname}@mail.ru',
-                                            telegram: '@$userName',
-                                          ))));
-                            }),
-                            child: const CircleAvatar(
-                              radius: (20),
-                              backgroundImage: AssetImage(profilePicture),
-                            ),
-
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Column(
-                              children: [
-                                Text(userName),
-                                RatingBar.builder(
-                                  initialRating: userRating,
-                                  ignoreGestures: true,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemSize: 10,
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-
-                          ],
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
-                              popUpRequestSentNotifier(context);
-                              sendOfferToBookTicket(ticketId);
-                              // Navigator.of(context)
-                              //     .pushReplacementNamed('/PageOfActiveOrders');
-                            },
-                            style: roundedWhite,
-                            child: SizedBox(
-                              width: 150,
-                              height: 32,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
-                                children: const [
-                                  Text(
-                                    buttonText,
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.black),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.black,
-                                    size: 14,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    if (kDebugMode) {
-                                      print(rating);
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            bookTicket(ticketId);
-                            Navigator.of(context)
-                                .pushReplacementNamed('/PageOfActiveOrders');
-                          },
-                          style: roundedWhite,
-                          child: SizedBox(
-                            width: 150,
-                            height: 32,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  buttonText,
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.black),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.black,
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          )),
-                    ],
-                  )),
             ],
           ),
-        ));
+          //Button
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => ProfilePage(
+                                        ok: 1,
+                                        rating: userRating,
+                                        email: '${userSurname}@mail.ru',
+                                        telegram: '@$userName',
+                                      ))));
+                        }),
+                        child: const CircleAvatar(
+                          radius: (20),
+                          backgroundImage: AssetImage(profilePicture),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Column(
+                          children: [
+                            Text(userName),
+                            RatingBar.builder(
+                              initialRating: userRating,
+                              ignoreGestures: true,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 10,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (double value) {},
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
+                      popUpRequestSentNotifier(context);
+                      sendOfferToBookTicket(ticketId);
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed('/PageOfActiveOrders');
+                    },
+                    style: roundedWhite,
+                    child: SizedBox(
+                      width: 150,
+                      height: 32,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              buttonText,
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.black),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.black,
+                              size: 14,
+                            ),
+                          ]),
+                    ),
+                  ),
+                ]),
+          ),
+        ]),
+      ),
+    );
   }
 }

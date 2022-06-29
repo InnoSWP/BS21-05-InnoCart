@@ -5,10 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'user.dart';
 import 'package:http/http.dart' as http;
 
-
-const String serverURL = "192.168.0.176:8000";
+const String serverURL = "10.91.52.107:8000";
 User currentUser = User(getEmptyMap());
-
 
 //test
 /// this function craves for implementation...
@@ -22,12 +20,12 @@ Future<bool> dataIsCorrect(String nick, String pass) async {
     print(uri);
   }
   http.Response response = await http.get(uri);
- // print(response.body);
-  if (response.statusCode == 200){
+  // print(response.body);
+  if (response.statusCode == 200) {
     Map<String, dynamic> userData = jsonDecode(
         response.body.replaceAll("'", "\"").replaceAll("None", '""'));
-    for (var kek in userData.keys){
-      if (userData[kek] == null){
+    for (var kek in userData.keys) {
+      if (userData[kek] == null) {
         userData[kek] = 'a';
       }
     }
@@ -66,15 +64,12 @@ Map<String, dynamic> getEmptyMap() {
 
 /// this function craves for implementation...
 
-String getHash(String pass){
+String getHash(String pass) {
   return pass.hashCode.toString();
 }
 
-
-Future<bool> contactDataOccupied(
-    User userRegisterInformation
-    ) async{
-  try{
+Future<bool> contactDataOccupied(User userRegisterInformation) async {
+  try {
     final Map<String, String> queryParameters = {
       'user_nickname': userRegisterInformation.nickname,
       'user_phone_number': userRegisterInformation.phoneNumber,
@@ -87,18 +82,16 @@ Future<bool> contactDataOccupied(
     if (kDebugMode) {
       print(response.body);
     }
-    if (response.statusCode == 200){
-      return jsonDecode(response.body.replaceAll("'", "\"")
-          .replaceAll('None', ""))['occupied'] == 1;
-    }
-
-    else{
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body
+              .replaceAll("'", "\"")
+              .replaceAll('None', ""))['occupied'] ==
+          1;
+    } else {
       //print(response.body);
     }
     return true;
-
-  }
-  on Exception catch(_, e){
+  } on Exception catch (_, e) {
     if (kDebugMode) {
       print(e.toString());
     }
@@ -134,8 +127,7 @@ Future<bool> addUser(User user) async {
       currentUser.ticketsAmount = responseBody['tickets_amount'];
       return true;
     }
-  }
-  on Exception catch(_, e){
+  } on Exception catch (_, e) {
     if (kDebugMode) {
       print(e.toString());
     }
@@ -143,9 +135,8 @@ Future<bool> addUser(User user) async {
   return false;
 }
 
-
-Future<Map<String, dynamic>> registerNewTicket(Map<String,
-    dynamic> requestData) async{
+Future<Map<String, dynamic>> registerNewTicket(
+    Map<String, dynamic> requestData) async {
   // print("And function registerNewTicket proceeded argument correctly");
   requestData['shopper_id'] = currentUser.userId.toString();
   requestData['shopper_token'] = currentUser.token;
@@ -156,19 +147,15 @@ Future<Map<String, dynamic>> registerNewTicket(Map<String,
   http.Response response = await http.post(uri);
   // print("status code of the response: ${response.statusCode}\n"
   //    "body of the response: ${response.body}");
-  if (response.statusCode == 200){
-    return jsonDecode(response.body.replaceAll("'",
-        '"').replaceAll("None", "\"\""));
+  if (response.statusCode == 200) {
+    return jsonDecode(
+        response.body.replaceAll("'", '"').replaceAll("None", "\"\""));
   }
-  return {
-    "status_code": 500
-  };
+  return {"status_code": 500};
 }
 
 Future<Map<String, dynamic>> getTicketHistory(
-    int ticketStatus,
-    int fromAngel
-    ) async{
+    int ticketStatus, int fromAngel) async {
   Map<String, String> args = {
     "user_id": currentUser.userId.toString(),
     "user_token": currentUser.token,
@@ -178,15 +165,14 @@ Future<Map<String, dynamic>> getTicketHistory(
   Uri uri = Uri.http(serverURL, '/getTicketHistory', args);
   // print(uri);
   http.Response response = await http.get(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return jsonDecode(response.body);
   }
   return {};
 }
 
-
 // BOOK TICKET FUNCTION HAVE LOST ITS ACTUALITY
- /*Future<bool> bookTicket(int ticketId) async{
+/*Future<bool> bookTicket(int ticketId) async{
   Map<String, String> args = {
     "ticket_id": ticketId.toString(),
     "angel_id": currentUser.userId.toString(),
@@ -201,7 +187,7 @@ Future<Map<String, dynamic>> getTicketHistory(
 } */
 // BOOK TICKET FUNCTION HAVE LOST ITS ACTUALITY
 
-Future<bool> cancelBookOfTicket(int ticketId) async{
+Future<bool> cancelBookOfTicket(int ticketId) async {
   Map<String, String> args = {
     "ticket_id": ticketId.toString(),
     "angel_id": currentUser.userId.toString(),
@@ -209,14 +195,14 @@ Future<bool> cancelBookOfTicket(int ticketId) async{
   };
   Uri uri = Uri.http(serverURL, '/cancelBookOfTicket', args);
   http.Response response = await http.post(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return true;
   }
   // print(response.body);
   return false;
 }
 
-Future<bool> completeOrder(int ticketId) async{
+Future<bool> completeOrder(int ticketId) async {
   Map<String, String> args = {
     "ticket_id": ticketId.toString(),
     "shopper_id": currentUser.userId.toString(),
@@ -224,7 +210,7 @@ Future<bool> completeOrder(int ticketId) async{
   };
   Uri uri = Uri.http(serverURL, '/completeOrder', args);
   http.Response response = await http.post(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return true;
   }
   // print(response.body);
@@ -235,7 +221,7 @@ Future<int> getId(String name) async {
   return 0;
 }
 
-Future<bool> sendOfferToBookTicket(int ticketId) async{
+Future<bool> sendOfferToBookTicket(int ticketId) async {
   Map<String, String> requestArguments = {
     "angel_id": currentUser.userId.toString(),
     "angel_token": currentUser.token,
@@ -243,13 +229,13 @@ Future<bool> sendOfferToBookTicket(int ticketId) async{
   };
   Uri uri = Uri.http(serverURL, "/sendOfferToBookTicket", requestArguments);
   http.Response response = await http.post(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return true;
   }
   return false;
 }
 
-Future<Map<String, dynamic>> getOffersByTicketId(int ticketId) async{
+Future<Map<String, dynamic>> getOffersByTicketId(int ticketId) async {
   Map<String, String> requestArguments = {
     "ticket_id": ticketId.toString(),
     "shopper_id": currentUser.userId.toString(),
@@ -257,7 +243,7 @@ Future<Map<String, dynamic>> getOffersByTicketId(int ticketId) async{
   };
   Uri uri = Uri.http(serverURL, "/getOffersByTicketId", requestArguments);
   http.Response response = await http.get(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return jsonDecode(response.body);
   }
   if (kDebugMode) {
@@ -265,7 +251,6 @@ Future<Map<String, dynamic>> getOffersByTicketId(int ticketId) async{
   }
   return {"error": response.body};
 }
-
 
 Future<bool> acceptOffer(int offerId) async {
   Map<String, String> args = {
@@ -275,7 +260,7 @@ Future<bool> acceptOffer(int offerId) async {
   };
   Uri requestUrl = Uri.http(serverURL, '/acceptOffer', args);
   http.Response response = await http.post(requestUrl);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return true;
   }
   return false;
