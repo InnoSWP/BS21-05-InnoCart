@@ -46,15 +46,6 @@ class Ticket extends StatelessWidget {
     reward = data['reward'].toString();
   }
 
-  String shortName(String pattern) {
-    String act = '';
-    for (int i = 0; i < min(12, pattern.length); i++) {
-      act += pattern[i];
-    }
-    if (pattern.length > 12) act += '...';
-    return act;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -87,27 +78,25 @@ class Ticket extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                    child: Row(children: [
-                      Text(
-                        shortName(orderName!),
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                          child: Container(
-                              color: Colors.yellowAccent,
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                children: [
-                                  Text(reward.toString()),
-                                  SvgPicture.asset('assets/icons/Currency.svg'),
-                                ],
-                              ))),
-                    ]),
-                  ),
+                  Row(children: [
+                    Text(
+                      orderName!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    Container(
+                        color: Colors.yellowAccent,
+                        padding: const EdgeInsets.all(6),
+                        child: Row(
+                          children: [
+                            Text(
+                              reward.toString(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SvgPicture.asset('assets/icons/Currency.svg'),
+                          ],
+                        )),
+                  ]),
                   Row(
                     children: [
                       SvgPicture.asset(
