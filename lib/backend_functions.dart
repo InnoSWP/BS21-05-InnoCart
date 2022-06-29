@@ -6,7 +6,7 @@ import 'user.dart';
 import 'package:http/http.dart' as http;
 
 
-const String serverURL = "192.168.43.143:8000";
+const String serverURL = "192.168.0.176:8000";
 User currentUser = User(getEmptyMap());
 
 

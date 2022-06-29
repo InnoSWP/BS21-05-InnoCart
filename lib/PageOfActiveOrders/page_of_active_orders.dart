@@ -6,6 +6,7 @@ import '../navigation_bar.dart';
 import 'set_ticket.dart';
 import 'package:inno_cart/backend_functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:inno_cart/main.dart';
 
 class PageOfActiveOrders extends StatefulWidget {
   const PageOfActiveOrders({Key? key}) : super(key: key);
@@ -18,23 +19,30 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      child: GestureDetector(
+        onHorizontalDragEnd: ((DragEndDetails details) {
+          if (details.primaryVelocity! < 0.0) {
+            pageUpdate((selectedPage + 1) % 5, context);
+          } else if (details.primaryVelocity! > 0.0) {
+            pageUpdate((selectedPage + 4) % 5, context);
+          }
+        }),
         child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: appBar(context, this),
-            bottomNavigationBar: makeNavigationBar(context, this),
-            body: FutureBuilder<List<Widget>>(
+          backgroundColor: Colors.white,
+          appBar: appBar(context, this),
+          bottomNavigationBar: makeNavigationBar(context, this),
+          body: FutureBuilder<List<Widget>>(
               future: Tickets(context).getTickets(),
               builder: (context, snapshot) {
-                if (snapshot.hasData){
-                  return ListView(
-                    children: snapshot.data!
-                  );
-                }
-                else{
+                if (snapshot.hasData) {
+                  return ListView(children: snapshot.data!);
+                } else {
                   return const Text("waiting for data");
                 }
-              }
-            ))); // This trailing comma makes auto-formatting nicer for build methods.
+              }),
+        ),
+      ),
+    ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
@@ -47,24 +55,34 @@ class Tickets {
   }
 
   Future<List<Widget>> getTickets() async {
+<<<<<<< HEAD
+=======
+    //waitingForAccept =
+    //    Ticket(context) + Ticket(context) + Ticket(context);
+    // print("Running function get Tickets");
+    /*Map<String, dynamic> args = {
+      "user_id": currentUser.userId,
+      "user_token": currentUser.passwordHash
+    };*/
+    /*print("Map of arguments had been constructed correctly");
+    print(serverURL);
+    print(args);*/
+>>>>>>> fc3019391fcf07bcfbfda8509a80e4f87e290ee3
     Uri uri = Uri.parse(
-        "http://$serverURL/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}"
-    );
+        "http://$serverURL/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}");
     // print(uri);
     http.Response response = await http.get(uri);
     // print(response.statusCode);
 
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = jsonDecode(
-        response.body.replaceAll("'", '"').replaceAll("None", '""')
-      );
+          response.body.replaceAll("'", '"').replaceAll("None", '""'));
       // print(jsonData['tickets'][0]);
-      for (Map<String, dynamic> ticketNote in jsonData['tickets']){
+      for (Map<String, dynamic> ticketNote in jsonData['tickets']) {
         // print(ticketNote);
         waitingForAccept.add(Ticket(ticketNote));
       }
-    }
-    else{
+    } else {
       return [];
     }
     // print(waitingForAccept);

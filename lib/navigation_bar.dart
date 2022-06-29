@@ -2,34 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 
-// Will be added in the future
-Widget makeNavigationBar(BuildContext context, var object) {
-  Widget navigationBar = NavigationBar(
+void pageUpdate(int index, BuildContext context) {
+  {
+    if (selectedPage == index) return;
+    selectedPage = index;
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushReplacementNamed('/PageOfActiveOrders');
+        break;
+      case 1:
+        Navigator.of(context).pushReplacementNamed('/ShopperOrders');
+        break;
+      case 2:
+        Navigator.of(context).pushReplacementNamed('/CreatingOrderScreen');
+        break;
+      case 3:
+        Navigator.of(context).pushReplacementNamed('/Messenger');
+        break;
+      case 4:
+        Navigator.of(context).pushReplacementNamed('/ProfileScreen');
+        break;
+      default:
+        Navigator.of(context).pushReplacementNamed('/');
+    }
+  }
+}
+
+NavigationBar makeNavigationBar(BuildContext context, var object) {
+  NavigationBar navigationBar = NavigationBar(
     labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
     selectedIndex: selectedPage,
-    onDestinationSelected: (index) => object.setState(() {
-      if (selectedPage == index) return;
-      selectedPage = index;
-      switch (index) {
-        case 0:
-          Navigator.of(context).pushReplacementNamed('/PageOfActiveOrders');
-          break;
-        case 1:
-          Navigator.of(context).pushReplacementNamed('/ShopperOrders');
-          break;
-        case 2:
-          Navigator.of(context).pushReplacementNamed('/CreatingOrderScreen');
-          break;
-        case 3:
-          Navigator.of(context).pushReplacementNamed('/Messenger');
-          break;
-        case 4:
-          Navigator.of(context).pushReplacementNamed('/ProfileScreen');
-          break;
-        default:
-          Navigator.of(context).pushReplacementNamed('/');
-      }
-    }),
+    onDestinationSelected: (index) => pageUpdate(index, context),
     destinations: [
       NavigationDestination(
         icon: SvgPicture.asset('assets/icons/List Icon.svg',

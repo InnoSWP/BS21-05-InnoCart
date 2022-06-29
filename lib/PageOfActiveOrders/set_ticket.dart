@@ -4,12 +4,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inno_cart/PageOfActiveOrders/pop_up_notify.dart';
 import 'package:inno_cart/backend_functions.dart';
+import 'package:inno_cart/profile_screen.dart';
 import '../elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
 
 
-class Ticket extends StatelessWidget{
+class Ticket extends StatelessWidget {
   late int ticketId = 0;
   late int shopperId = 0;
 
@@ -29,7 +30,7 @@ class Ticket extends StatelessWidget{
   late double userRating = 0;
 
 
-  Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key){
+  Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key) {
     /*print('Initialization of ticket entity');
     this.shopperName = data['user_id'].toString();
     this.orderName = data['title'];*/
@@ -144,10 +145,13 @@ class Ticket extends StatelessWidget{
                       children: [
                         Row(
                           children: [
-                            const CircleAvatar(
-                              radius: (20),
-                              backgroundImage: AssetImage(profilePicture),
-                            ),
+                            GestureDetector(onTap: (() {
+                               Navigator.push(context, MaterialPageRoute(builder: ((context)=>ProfilePage(ok:1,rating: userRating, email: '${userSurname}@mail.ru', telegram: '@$userName',))));
+                            }),
+                              child: const CircleAvatar(
+                                radius: (20),
+                                backgroundImage: AssetImage(profilePicture),
+                              ),),
                             Padding(
                               padding: const EdgeInsets.only(left: 15),
                               child: Column(

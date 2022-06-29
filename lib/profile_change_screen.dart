@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'navigation_bar.dart';
+import 'main.dart';
 
 class ProfileChangeScreen extends StatefulWidget {
   const ProfileChangeScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class ProfileChangeScreen extends StatefulWidget {
 class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector( child: Scaffold(
       bottomNavigationBar: makeNavigationBar(context, this),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 70),
@@ -168,6 +169,12 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
           ],
         ),
       ),
-    );
+    ), onHorizontalDragEnd: ((DragEndDetails details) {
+    if (details.primaryVelocity! < 0.0) {
+    pageUpdate((selectedPage + 1) % 5, context);
+    } else if (details.primaryVelocity! > 0.0){
+    pageUpdate((selectedPage + 4) % 5, context);
+    }
+    }));
   }
 }

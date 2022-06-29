@@ -48,5 +48,3 @@ app.*.map.json
 /build/
 
 # Database
-
-/InnoCartAPI/base.db

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:inno_cart/PageOfAngelOrders/pop_up_notify.dart';
 import '../backend_functions.dart';
 import 'pop_up_window_with_ticket.dart';
 import '../elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
+import '../profile_screen.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -20,56 +19,61 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: appBar(context),
-            bottomNavigationBar: makeNavigationBar(context, this),
-            body: FutureBuilder<List<Widget>>(
-                future: Tickets(context, this).getTickets(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData){
-                    return ListView(
-                        children: snapshot.data!
-                    );
-                  }
-                  else{
-                    return const Text('Waiting for data');
-                  }
-                }
-            ))); // This trailing comma makes auto-formatting nicer for build methods.
+        child: GestureDetector(
+            onHorizontalDragEnd: ((DragEndDetails details) {
+              if (details.primaryVelocity! < 0.0) {
+                pageUpdate((selectedPage + 1) % 5, context);
+              } else if (details.primaryVelocity! > 0.0) {
+                pageUpdate((selectedPage + 4) % 5, context);
+              }
+            }),
+            child: Scaffold(
+                backgroundColor: Colors.white,
+                appBar: appBar(context),
+                bottomNavigationBar: makeNavigationBar(context, this),
+                body: FutureBuilder<List<Widget>>(
+                    future: Tickets(context, this).getTickets(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView(children: snapshot.data!);
+                      } else {
+                        return const Text('Waiting for data');
+                      }
+                    })))); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
 class Tickets {
   late PageOfAngelOrdersState page;
-  late List<Widget> waitingForAccept;
-  late List<Widget> inProgress;
-  late List<Widget> completed;
-
+  List<Widget> listToReturn = [];
   Tickets(BuildContext context, this.page);
 
-  Future<List<Widget>> getTickets() async{
-    Map<String, dynamic> waitingForAcceptHistoryTickets = await getTicketHistory(0, 1);
-    Map<String, dynamic> inProgressHistoryTickets = await getTicketHistory(
-        1, 1
-    );
-    Map<String, dynamic> completedHistoryTickets = await getTicketHistory(
-        2, 1
-    );
-    List<Widget> listToReturn = [];
+  Future<List<Widget>> getTickets() async {
+    listToReturn.clear();
+
+    Map<String, dynamic> waitingForAcceptHistoryTickets =
+        await getTicketHistory(0, 1);
+    Map<String, dynamic> inProgressHistoryTickets =
+        await getTicketHistory(1, 1);
+    Map<String, dynamic> completedHistoryTickets = await getTicketHistory(2, 1);
+
     listToReturn.add(generateHeader('Waiting for accept'));
-    for (Map<String, dynamic> tokenNote in
-    waitingForAcceptHistoryTickets['tickets']){
+
+    for (Map<String, dynamic> tokenNote
+        in waitingForAcceptHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
+
     listToReturn.add(generateHeader('In progress'));
-    for (Map<String, dynamic> tokenNote in
-    inProgressHistoryTickets['tickets']){
+
+    for (Map<String, dynamic> tokenNote
+        in inProgressHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
+
     listToReturn.add(generateHeader('Completed'));
-    for (Map<String, dynamic> tokenNote in
-    completedHistoryTickets['tickets']){
+
+    for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
     return listToReturn;
@@ -84,10 +88,10 @@ class Tickets {
           data['weight'],
           data['reward'],
           data['description'],
-          page
-      );
-    }
-    else if (data['status'] == 1) {
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
+          page);
+    } else if (data['status'] == 1) {
       return AngelInProgressHistoryTicket(
           data['ticket_id'],
           data['shopper_id'],
@@ -96,10 +100,10 @@ class Tickets {
           data['weight'],
           data['reward'],
           data['description'],
-          page
-      );
-    }
-    else if (data['status'] == 2) {
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
+          page);
+    } else if (data['status'] == 2) {
       return AngelCompletedHistoryTicket(
           data['ticket_id'],
           data['shopper_id'],
@@ -108,8 +112,9 @@ class Tickets {
           data['weight'],
           data['reward'],
           data['description'],
-          page
-      );
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
+          page);
     }
     return AbstractAngelHistoryTicket(
         data['ticket_id'],
@@ -118,28 +123,25 @@ class Tickets {
         data['weight'],
         data['reward'],
         data['description'],
+        data['shopper_info']['surname'],
+        data['shopper_info']['name'],
         "UNKNOWN ERROR",
-        page
-    );
+        page);
   }
 
-
-
   Widget generateHeader(String text) {
-    return
-      Container(
-          width: 161,
-          height: 22,
-          margin: const EdgeInsets.only(left: 29, bottom: bottomPadding),
-          child: Text(
-            text,
-            style: const TextStyle(fontSize: 20),
-          ));
+    return Container(
+        width: 161,
+        height: 22,
+        margin: const EdgeInsets.only(left: 29, bottom: bottomPadding),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 20),
+        ));
   }
 }
 
-
-class AbstractAngelHistoryTicket extends StatelessWidget{
+class AbstractAngelHistoryTicket extends StatelessWidget {
   int ticketId = 0;
   int shopperId = 0;
   int type = -1;
@@ -147,6 +149,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
   String orderImage = 'assets/images/man1.png';
   String orderName = "";
   double orderWeight = 0;
+  String userName = 'kek';
+  String userSurname = 'kek';
   static const double orderDistance = 100; // OVERRIDE IN MVP V2
   static const String orderTime = "23.06.2022"; // OVERRIDE IN MVP V2
   double orderPrice = 0;
@@ -154,17 +158,21 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
   late PageOfAngelOrdersState page;
   String orderDescription = "";
 
-
-  AbstractAngelHistoryTicket(this.ticketId, this.shopperId,
-      this.orderName, this.orderWeight,
-      this.orderPrice, this.orderDescription, this.buttonText,
+  AbstractAngelHistoryTicket(
+      this.ticketId,
+      this.shopperId,
+      this.orderName,
+      this.orderWeight,
+      this.orderPrice,
+      this.orderDescription,
+      this.buttonText,
+      this.userName,
+      this.userSurname,
       this.page,
-      {Key? key}) : super(key: key);
+      {Key? key})
+      : super(key: key);
 
-
-  Future<void> onButtonPress() async{
-
-  }
+  Future<void> onButtonPress() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -183,15 +191,28 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                Container(
-                  width: 130,
-                  height: 130,
-                  color: Colors.blueGrey,
-                  margin:
-                  const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                  child: Image.asset(
-                    orderImage,
-                    fit: BoxFit.fill,
+                GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => ProfilePage(
+                                  ok: 1,
+                                  rating: 4,
+                                  email: '${userSurname}@mail.ru',
+                                  telegram: '@$userName',
+                                ))));
+                  }),
+                  child: Container(
+                    width: 130,
+                    height: 130,
+                    color: Colors.blueGrey,
+                    margin:
+                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                    child: Image.asset(
+                      orderImage,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
 
@@ -275,8 +296,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
                     children: [
                       Text(
                         buttonText,
-                        style: const TextStyle(
-                            fontSize: 14, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       const Icon(
                         Icons.arrow_forward_ios,
@@ -293,8 +314,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget{
   }
 }
 
-class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket{
-
+class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
   AngelWaitingForAcceptHistoryTicket(
       int ticketId,
       int shopperId,
@@ -302,17 +322,32 @@ class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket{
       double orderWeight,
       double orderPrice,
       String orderDescription,
-      PageOfAngelOrdersState page, {Key? key}) : super(key: key,
-      ticketId, shopperId, orderName, orderWeight, orderPrice, orderDescription,
-      "Cancel request", page) {super.type = 0;}
+      String userName,
+      String userSurname,
+      PageOfAngelOrdersState page,
+      {Key? key})
+      : super(
+            key: key,
+            ticketId,
+            shopperId,
+            orderName,
+            orderWeight,
+            orderPrice,
+            orderDescription,
+            "Cancel request",
+            userName,
+            userSurname,
+            page) {
+    super.type = 0;
+  }
 
   @override
-  Future<void> onButtonPress() async{
-
+  Future<void> onButtonPress() async {
+    await cancelBookOfTicket(ticketId);
   }
 }
 
-class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket{
+class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
   int angelId = 0;
 
   AngelInProgressHistoryTicket(
@@ -323,24 +358,35 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket{
       double orderWeight,
       double orderPrice,
       String orderDescription,
-      PageOfAngelOrdersState page, {Key? key}) : super(key: key,
-      ticketId, shopperId,
-      orderName, orderWeight, orderPrice, orderDescription,
-      "Cancel (Rewrite)", page) {super.type = 1;}
-
-  @override
-  Future<void> onButtonPress() async{
-    bool result = await cancelBookOfTicket(ticketId);
-    if (result){
-      Navigator.of(page.context)
-          .pushReplacementNamed('/ShopperOrders');
-    }
+      String userName,
+      String userSurname,
+      PageOfAngelOrdersState page,
+      {Key? key})
+      : super(
+            key: key,
+            ticketId,
+            shopperId,
+            orderName,
+            orderWeight,
+            orderPrice,
+            orderDescription,
+            "Cancel (Rewrite)",
+            userName,
+            userSurname,
+            page) {
+    super.type = 1;
   }
 
+  @override
+  Future<void> onButtonPress() async {
+    await cancelBookOfTicket(ticketId);
+    super.page.setState(() {});
+  }
 }
 
-class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket{
+class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket {
   int angelId = 0;
+
   AngelCompletedHistoryTicket(
       int ticketId,
       int shopperId,
@@ -349,13 +395,25 @@ class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket{
       double orderWeight,
       double orderPrice,
       String orderDescription,
-      PageOfAngelOrdersState page, {Key? key}) : super(key: key,
-      ticketId, shopperId,
-      orderName, orderWeight, orderPrice, orderDescription,
-      "Rate Shopper", page) {super.type = 3;}
+      String userName,
+      String userSurname,
+      PageOfAngelOrdersState page,
+      {Key? key})
+      : super(
+            key: key,
+            ticketId,
+            shopperId,
+            orderName,
+            orderWeight,
+            orderPrice,
+            orderDescription,
+            "Rate Shopper",
+            userName,
+            userSurname,
+            page) {
+    super.type = 3;
+  }
 
   @override
-  Future<void> onButtonPress() async{
-
-  }
+  Future<void> onButtonPress() async {}
 }
