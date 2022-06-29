@@ -149,8 +149,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
   String orderImage = 'assets/images/man1.png';
   String orderName = "";
   double orderWeight = 0;
-  String userName='kek';
-  String userSurname='kek';
+  String userName = 'kek';
+  String userSurname = 'kek';
   static const double orderDistance = 100; // OVERRIDE IN MVP V2
   static const String orderTime = "23.06.2022"; // OVERRIDE IN MVP V2
   double orderPrice = 0;
@@ -191,19 +191,30 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                GestureDetector(onTap: ((){
-                  Navigator.push(context, MaterialPageRoute(builder: ((context)=>ProfilePage(ok:1,rating: 4, email: '${userSurname}@mail.ru', telegram: '@$userName',))));
-                }),child:
-                Container(
-                  width: 130,
-                  height: 130,
-                  color: Colors.blueGrey,
-                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                  child: Image.asset(
-                    orderImage,
-                    fit: BoxFit.fill,
+                GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => ProfilePage(
+                                  ok: 1,
+                                  rating: 4,
+                                  email: '${userSurname}@mail.ru',
+                                  telegram: '@$userName',
+                                ))));
+                  }),
+                  child: Container(
+                    width: 130,
+                    height: 130,
+                    color: Colors.blueGrey,
+                    margin:
+                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                    child: Image.asset(
+                      orderImage,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),),
+                ),
 
                 //TICKET INFO
 
@@ -325,7 +336,7 @@ class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
             orderDescription,
             "Cancel request",
             userName,
-            userName,
+            userSurname,
             page) {
     super.type = 0;
   }
@@ -357,9 +368,9 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
             orderWeight,
             orderPrice,
             orderDescription,
+            "Cancel (Rewrite)",
             userName,
             userSurname,
-            "Cancel (Rewrite)",
             page) {
     super.type = 1;
   }
@@ -396,9 +407,9 @@ class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket {
             orderWeight,
             orderPrice,
             orderDescription,
+            "Rate Shopper",
             userName,
             userSurname,
-            "Rate Shopper",
             page) {
     super.type = 3;
   }
