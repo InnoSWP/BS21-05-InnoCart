@@ -1,11 +1,10 @@
 import 'dart:convert';
 // import 'dart:math';
 import 'package:flutter/foundation.dart';
-
+import 'ServerURL.dart';
 import 'user.dart';
 import 'package:http/http.dart' as http;
 
-const String serverURL = "10.91.52.107:8000";
 User currentUser = User(getEmptyMap());
 
 //test

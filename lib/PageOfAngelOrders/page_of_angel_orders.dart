@@ -176,9 +176,9 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
 
   Future<void> onButtonPress() async {}
 
-  String shortName(String pattern){
+  String shortName(String pattern) {
     String act = '';
-    for (int i = 0; i < min(12, pattern.length); i++){
+    for (int i = 0; i < min(12, pattern.length); i++) {
       act += pattern[i];
     }
     if (pattern.length > 12) act += '...';
@@ -214,7 +214,6 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                                   telegram: '@$userName',
                                 ))));
                   }),
-
                   child: Container(
                     width: 130,
                     height: 130,
@@ -391,8 +390,11 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
 
   @override
   Future<void> onButtonPress() async {
-    await cancelBookOfTicket(ticketId);
-    super.page.setState(() {});
+    var result = await cancelBookOfTicket(ticketId);
+
+    if (result) {
+      super.page.setState(() {});
+    }
   }
 }
 

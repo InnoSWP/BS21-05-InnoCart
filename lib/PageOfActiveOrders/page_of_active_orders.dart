@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '../PageOfActiveOrders/app_bar.dart';
+import '../ServerURL.dart';
 import '../navigation_bar.dart';
 import 'set_ticket.dart';
-import 'package:inno_cart/backend_functions.dart';
+import '../backend_functions.dart';
 import 'package:http/http.dart' as http;
-import 'package:inno_cart/main.dart';
+import '../main.dart';
 
 class PageOfActiveOrders extends StatefulWidget {
   const PageOfActiveOrders({Key? key}) : super(key: key);
@@ -37,7 +38,9 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
                 if (snapshot.hasData) {
                   return ListView(children: snapshot.data!);
                 } else {
-                  return const Text("waiting for data");
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
               }),
         ),

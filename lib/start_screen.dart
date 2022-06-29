@@ -18,13 +18,15 @@ class _StartAnimationState extends State<StartAnimation> {
   _StartAnimationState() {
     Future.delayed(const Duration(milliseconds: 2000), () {
       setState(() {
-        Navigator.push(
+        Navigator.of(context).pushReplacementNamed('/');
+        /*
+        Navigator.pushReplacement(
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 700),
             pageBuilder: (_, __, ___) => const HelloPage(),
           ),
-        );
+        );*/
       });
     });
   }

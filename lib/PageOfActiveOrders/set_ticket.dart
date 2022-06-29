@@ -1,12 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inno_cart/PageOfActiveOrders/pop_up_notify.dart';
-import 'package:inno_cart/backend_functions.dart';
-import 'package:inno_cart/profile_screen.dart';
+import 'pop_up_notify.dart';
+import '../backend_functions.dart';
+import '../profile_screen.dart';
 import '../elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
@@ -15,12 +14,12 @@ class Ticket extends StatelessWidget {
   late int ticketId = 0;
   late int shopperId = 0;
 
-  static const String buttonText = 'Send request';
-  static const String profilePicture = 'assets/images/man1.png';
-  static const String orderImage = 'assets/images/pizza.jpg';
-  late String? orderName;
+  final String buttonText = 'Send request';
+  final String profilePicture = 'assets/images/man1.png';
+  final String orderImage = 'assets/images/pizza.jpg';
+  late String orderName = "";
   late double orderWeight = 3.0;
-  static const String orderDistance = '124 m';
+  final String orderDistance = '124 m';
   late String orderTime = '14:00';
   late String orderDate = '03.06.2022';
   late String reward = '';
@@ -49,7 +48,7 @@ class Ticket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => popUpTicket(context),
+      onTap: () => popUpTicket(context, this),
       child: Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
         padding: const EdgeInsets.all(20),
@@ -79,10 +78,13 @@ class Ticket extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(children: [
-                    Text(
-                      orderName!,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 20),
+                    SizedBox(
+                      width: 170,
+                      child: Text(
+                        orderName,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
                     Container(
                         color: Colors.yellowAccent,
@@ -120,7 +122,7 @@ class Ticket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: const Text(orderDistance)),
+                          child: Text(orderDistance)),
                     ],
                   ),
                   Row(
@@ -160,7 +162,7 @@ class Ticket extends StatelessWidget {
                                         telegram: '@$userName',
                                       ))));
                         }),
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: (20),
                           backgroundImage: AssetImage(profilePicture),
                         ),
@@ -202,13 +204,13 @@ class Ticket extends StatelessWidget {
                       height: 32,
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
                               buttonText,
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.black),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.black,
                               size: 14,

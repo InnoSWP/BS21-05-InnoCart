@@ -2,22 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'set_ticket.dart';
 import '../elevated_button_style.dart';
 import 'pop_up_notify.dart';
 import '../main.dart';
 
-Future popUpTicket(BuildContext context) {
-  String buttonText = 'Send request';
-  String profilePicture = 'assets/images/man1.png';
-  String orderImage = 'assets/images/pizza.jpg';
-  String orderName = 'Pizza';
-  String orderWeight = '3 kg';
-  String orderDistance = '124 m';
-  String orderTime = '14:00';
-  String orderDate = '03.06.2022';
-  String orderPrice = '200';
-  String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
-  String shopperName = 'Amr. T.';
+Future popUpTicket(BuildContext context, Ticket ticket) {
+  String buttonText = ticket.buttonText;
+  String profilePicture = ticket.profilePicture;
+  String orderImage = ticket.orderImage;
+  String orderName = ticket.orderName;
+  double orderWeight = ticket.orderWeight;
+  String orderDistance = ticket.orderDistance;
+  String orderTime = ticket.orderTime;
+  String orderDate = ticket.orderDate;
+  String reward = ticket.reward;
+  String orderInfo = ticket.orderInfo;
+  String shopperName = ticket.userName;
 
   return showDialog(
     context: context,
@@ -33,6 +34,13 @@ Future popUpTicket(BuildContext context) {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(
+                child: Text(
+                  orderName,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,10 +61,6 @@ Future popUpTicket(BuildContext context) {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        orderName,
-                        style: const TextStyle(fontSize: 20),
-                      ),
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -67,7 +71,7 @@ Future popUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderWeight)),
+                              child: Text(orderWeight.toString())),
                         ],
                       ),
                       Row(
@@ -117,7 +121,7 @@ Future popUpTicket(BuildContext context) {
                       padding: const EdgeInsets.all(6),
                       child: Row(
                         children: [
-                          Text(orderPrice),
+                          Text(reward),
                           SvgPicture.asset('assets/icons/Currency.svg'),
                         ],
                       )),
@@ -142,7 +146,7 @@ Future popUpTicket(BuildContext context) {
                           children: [
                             Text(shopperName),
                             RatingBar.builder(
-                              initialRating: 5,
+                              initialRating: ticket.userRating,
                               ignoreGestures: true,
                               direction: Axis.horizontal,
                               allowHalfRating: true,

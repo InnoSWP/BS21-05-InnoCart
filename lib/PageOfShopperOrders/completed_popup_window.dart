@@ -2,20 +2,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'page_of_shopper_orders.dart';
 import '../elevated_button_style.dart';
 import '../main.dart';
 
-Future completedPopUpTicket(BuildContext context) {
-  String buttonText = 'Rate Angel';
+Future completedPopUpTicket(
+    BuildContext context, AbstractHistoryTicket ticket) {
+  String buttonText = ticket.buttonText;
   String profilePicture = 'assets/images/man1.png';
-  String orderImage = 'assets/images/pizza.jpg';
-  String orderName = 'Pizza';
-  String orderWeight = '2 kg';
-  String orderDistance = '124 m';
-  String orderTime = '14:00';
-  String orderDate = '03.06.2022';
-  String orderPrice = '100';
-  String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
+  String orderImage = ticket.orderImage;
+  String orderName = ticket.orderName;
+  double orderWeight = ticket.orderWeight;
+  double orderDistance = ticket.orderDistance;
+  String orderTime = ticket.orderTime;
+  String orderDate = ticket.orderDate;
+  double orderPrice = ticket.orderPrice;
+  String orderDescription = ticket.orderDescription;
   String orderAngel = 'Amr. T.';
 
   return showDialog(
@@ -66,7 +68,7 @@ Future completedPopUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderWeight)),
+                              child: Text(orderWeight.toString())),
                         ],
                       ),
                       Row(
@@ -79,7 +81,7 @@ Future completedPopUpTicket(BuildContext context) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderDistance)),
+                              child: Text(orderDistance.toString())),
                         ],
                       ),
                       Row(
@@ -116,7 +118,7 @@ Future completedPopUpTicket(BuildContext context) {
                       padding: const EdgeInsets.all(6),
                       child: Row(
                         children: [
-                          Text(orderPrice),
+                          Text(orderPrice.toString()),
                           SvgPicture.asset('assets/icons/Currency.svg'),
                         ],
                       )),
@@ -124,7 +126,7 @@ Future completedPopUpTicket(BuildContext context) {
               ),
               Container(
                 alignment: Alignment.topLeft,
-                child: Text(orderInfo),
+                child: Text(orderDescription),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

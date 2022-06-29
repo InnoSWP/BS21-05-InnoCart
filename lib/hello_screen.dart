@@ -19,19 +19,21 @@ class HelloPage extends StatelessWidget {
             height: 150,
             child: Stack(children: [
               Align(
-                alignment: Alignment(0.5, 0),
-                child: Hero(tag:'pochitta', child:Container(
-                        width: 150,
-                        height: 150,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: colors,
-                                stops: [0.2, 1.2])),
-                      ),)
-                  ),
+                  alignment: Alignment(0.5, 0),
+                  child: Hero(
+                    tag: 'pochitta',
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: colors,
+                              stops: [0.2, 1.2])),
+                    ),
+                  )),
               const Align(
                 alignment: Alignment(-0.2, 0.0),
                 child: Text(
@@ -56,7 +58,8 @@ class HelloPage extends StatelessWidget {
               height: 43,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/RegistrationPage');
+                    Navigator.of(context)
+                        .pushReplacementNamed('/RegistrationPage');
                   },
                   style: ElevatedButton.styleFrom(
                       primary: const Color(0xffF2F208)),
@@ -72,7 +75,7 @@ class HelloPage extends StatelessWidget {
               height: 43,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/LogInPage');
+                    Navigator.of(context).pushReplacementNamed('/LogInPage');
                   },
                   style: ElevatedButton.styleFrom(
                       primary: const Color(0xffF2F208)),
