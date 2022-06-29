@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 
-// Will be added in the future
-
-void pageUpdate(int index, BuildContext context){
+void pageUpdate(int index, BuildContext context) {
   {
     if (selectedPage == index) return;
     selectedPage = index;

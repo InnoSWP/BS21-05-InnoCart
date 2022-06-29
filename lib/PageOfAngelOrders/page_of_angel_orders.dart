@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-// import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-// import 'package:inno_cart/PageOfAngelOrders/pop_up_notify.dart';
 import '../backend_functions.dart';
 import 'pop_up_window_with_ticket.dart';
 import '../elevated_button_style.dart';
@@ -24,6 +20,13 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: GestureDetector(
+            onHorizontalDragEnd: ((DragEndDetails details) {
+              if (details.primaryVelocity! < 0.0) {
+                pageUpdate((selectedPage + 1) % 5, context);
+              } else if (details.primaryVelocity! > 0.0) {
+                pageUpdate((selectedPage + 4) % 5, context);
+              }
+            }),
             child: Scaffold(
                 backgroundColor: Colors.white,
                 appBar: appBar(context),
@@ -36,43 +39,40 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
                       } else {
                         return const Text('Waiting for data');
                       }
-                    })),
-            onHorizontalDragEnd: ((DragEndDetails details) {
-              if (details.primaryVelocity! < 0.0) {
-                pageUpdate((selectedPage + 1) % 5, context);
-              } else if (details.primaryVelocity! > 0.0) {
-                pageUpdate((selectedPage + 4) % 5, context);
-              }
-            }))); // This trailing comma makes auto-formatting nicer for build methods.
+                    })))); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
 class Tickets {
   late PageOfAngelOrdersState page;
-  late List<Widget> waitingForAccept;
-  late List<Widget> inProgress;
-  late List<Widget> completed;
-
+  List<Widget> listToReturn = [];
   Tickets(BuildContext context, this.page);
 
   Future<List<Widget>> getTickets() async {
+    listToReturn.clear();
+
     Map<String, dynamic> waitingForAcceptHistoryTickets =
         await getTicketHistory(0, 1);
     Map<String, dynamic> inProgressHistoryTickets =
         await getTicketHistory(1, 1);
     Map<String, dynamic> completedHistoryTickets = await getTicketHistory(2, 1);
-    List<Widget> listToReturn = [];
+
     listToReturn.add(generateHeader('Waiting for accept'));
+
     for (Map<String, dynamic> tokenNote
         in waitingForAcceptHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
+
     listToReturn.add(generateHeader('In progress'));
+
     for (Map<String, dynamic> tokenNote
         in inProgressHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
+
     listToReturn.add(generateHeader('Completed'));
+
     for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
@@ -342,7 +342,9 @@ class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
   }
 
   @override
-  Future<void> onButtonPress() async {}
+  Future<void> onButtonPress() async {
+    await cancelBookOfTicket(ticketId);
+  }
 }
 
 class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
@@ -377,10 +379,8 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
 
   @override
   Future<void> onButtonPress() async {
-    bool result = await cancelBookOfTicket(ticketId);
-    if (result) {
-      Navigator.of(page.context).pushReplacementNamed('/ShopperOrders');
-    }
+    await cancelBookOfTicket(ticketId);
+    super.page.setState(() {});
   }
 }
 

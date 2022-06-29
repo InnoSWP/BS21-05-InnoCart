@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 // import 'package:inno_cart/hello_screen.dart';
 import 'package:inno_cart/profile_screen.dart';
 // import 'package:inno_cart/registration_screen.dart';
-import  'package:inno_cart/PageOfShopperOrders/page_of_shopper_orders.dart';
+import 'package:inno_cart/PageOfShopperOrders/page_of_shopper_orders.dart';
 // import 'package:inno_cart/main.dart';
 import 'package:inno_cart/PageOfActiveOrders/page_of_active_orders.dart';
 import 'package:inno_cart/creating_order_screen.dart';
@@ -20,7 +20,6 @@ import 'package:inno_cart/Messenger/page_messenger.dart';
 // import 'package:inno_cart/profile_change_screen.dart';
 
 void main() {
-
   /// finding problems of the following page:
   testWidgets('PageOfActiveOrders', (WidgetTester tester) async {
     await tester.pumpWidget(const PageOfActiveOrders());
@@ -52,7 +51,7 @@ void main() {
   });
 
   testWidgets('Profile', (WidgetTester tester) async {
-    await tester.pumpWidget(const ProfilePage());
+    await tester.pumpWidget(ProfilePage());
     expect(find.byType(ProfilePage), findsOneWidget);
   });
 }
