@@ -231,3 +231,18 @@ Future<bool> completeOrder(int ticketId) async{
 Future<int> getId(String name) async {
   return 0;
 }
+
+Future<bool> sendOfferToBookTicket(int ticketId) async{
+  Map<String, String> requestArguments = {
+    "angel_id": currentUser.userId.toString(),
+    "angel_token": currentUser.token,
+    "ticket_id": ticketId.toString()
+  };
+  Uri uri = Uri.http(serverURL, "/sendOfferToBookTicket", requestArguments);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    return true;
+  }
+  return false;
+}
+

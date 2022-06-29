@@ -247,3 +247,18 @@ async def completeOrder(ticket_id: int, shopper_id: int, shopper_token: str) -> 
                                             content=traceback.format_exc())
     return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
                                         content=json.dumps(return_data))
+
+
+@backendApp.post('/sendOfferToBookTicket')
+async def sendOfferToBookTicket(angel_id: int,
+                                angel_token: str,
+                                ticket_id: int) -> starlette.responses.Response:
+    try:
+        database.Users.checkTokenSignature(angel_id, angel_token, connection_cursor)
+        data = database.Offers.sendOfferToBookTicket(angel_id, ticket_id, connection_cursor)
+        database_connection.commit()
+    except Exception:
+        return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                            content=traceback.format_exc())
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
+                                        content=json.dumps(data))

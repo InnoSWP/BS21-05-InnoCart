@@ -47,16 +47,6 @@ class Tickets {
   }
 
   Future<List<Widget>> getTickets() async {
-    //waitingForAccept =
-    //    Ticket(context) + Ticket(context) + Ticket(context);
-    // print("Running function get Tickets");
-     /*Map<String, dynamic> args = {
-      "user_id": currentUser.userId,
-      "user_token": currentUser.passwordHash
-    };*/
-    /*print("Map of arguments had been constructed correctly");
-    print(serverURL);
-    print(args);*/
     Uri uri = Uri.parse(
         "http://$serverURL/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}"
     );

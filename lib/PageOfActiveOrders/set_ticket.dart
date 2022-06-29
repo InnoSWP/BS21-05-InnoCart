@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfActiveOrders/pop_up_notify.dart';
 import 'package:inno_cart/backend_functions.dart';
 import '../elevated_button_style.dart';
 import '../main.dart';
@@ -177,9 +178,11 @@ class Ticket extends StatelessWidget{
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              bookTicket(ticketId);
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/PageOfActiveOrders');
+                              // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
+                              popUpRequestSentNotifier(context);
+                              sendOfferToBookTicket(ticketId);
+                              // Navigator.of(context)
+                              //     .pushReplacementNamed('/PageOfActiveOrders');
                             },
                             style: roundedWhite,
                             child: SizedBox(

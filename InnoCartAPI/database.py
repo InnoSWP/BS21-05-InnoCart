@@ -330,3 +330,29 @@ class Tickets:
         print("COMPLETE OF ORDER WAS SUCCESSFUL")
         return Tickets.getTicketInformationById(ticket_id, cursor)
 
+
+class Offers:
+
+    @staticmethod
+    def sendOfferToBookTicket(angel_id, ticket_id, cursor: sqlite3.Cursor) -> dict[str, int]:
+        if Offers.offerIsUnique(angel_id, ticket_id, cursor):
+            sql_request = f"INSERT INTO offers(ticket_id, angel_id, creation_unix_time) " \
+                          f"VALUES ({ticket_id}, {angel_id}, {int(time.time())})"
+            cursor.execute(sql_request)
+        sql_request = f"SELECT * FROM offers WHERE angel_id={angel_id} and ticket_id={ticket_id}"
+        cursor.execute(sql_request)
+        data = cursor.fetchone()
+        return {
+            "offer_id": data[0],
+            "ticket_id": data[1],
+            "angel_id": data[2],
+            "creation_unix_time": data[3]
+        }
+
+    @staticmethod
+    def offerIsUnique(angel_id: int, ticket_id: int,
+                      cursor: sqlite3.Cursor) -> bool:
+        sql_request = f"SELECT * FROM offers WHERE angel_id={angel_id} AND ticket_id={ticket_id}"
+        cursor.execute(sql_request)
+        return cursor.fetchone() is None
+

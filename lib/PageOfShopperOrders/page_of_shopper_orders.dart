@@ -144,9 +144,9 @@ class Tickets {
 
 
 class AbstractHistoryTicket extends StatelessWidget{
-  int ticketId = 0;
-  int shopperId = 0;
-  int type = -1;
+  final int ticketId;
+  final int shopperId;
+  late int type = -1;
 
   String orderImage = 'assets/images/man1.png';
   String orderName = "";
