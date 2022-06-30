@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:inno_cart/PageOfShopperOrders/page_of_shopper_orders.dart';
-import 'package:inno_cart/PageOfShopperOrders/pop_up_notify.dart';
-import 'package:inno_cart/backend_functions.dart';
+import 'page_of_shopper_orders.dart';
+import 'pop_up_notify.dart';
+import '../backend_functions.dart';
+import '../Buttons/elevated_button_style.dart';
 
-import '../elevated_button_style.dart';
-
-Future seeRequestWindow(BuildContext context, int ticketId,
-    PageOfShopperOrdersState page) {
+Future seeRequestWindow(
+    BuildContext context, int ticketId, PageOfShopperOrdersState page) {
   String buttonText = 'Cancel Order';
   return showDialog(
     context: context,
@@ -18,44 +17,42 @@ Future seeRequestWindow(BuildContext context, int ticketId,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.0))),
         child: FutureBuilder<List<Widget>>(
-          future: AngelOffer.getOffers(ticketId, page),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return SizedBox(
-                height: 300,
-                child: Column(
-                  children:
-                  snapshot.data! + [
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      width: 130,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          popUpOrderCanceled(context);
-                        },
-                        style: roundedWhite,
-                        child: Text(
-                          buttonText,
-                          style: const TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            else{
-              return const Text("Waiting for data");
-            }
-          }
-        ),
+            future: AngelOffer.getOffers(ticketId, page),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SizedBox(
+                  height: 300,
+                  child: Column(
+                    children: snapshot.data! +
+                        [
+                          Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            width: 130,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                                popUpOrderCanceled(context);
+                              },
+                              style: roundedWhite,
+                              child: Text(
+                                buttonText,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
+                  ),
+                );
+              } else {
+                return const Text("Waiting for data");
+              }
+            }),
       );
     },
   );
 }
 
-class AngelOffer extends StatelessWidget{
+class AngelOffer extends StatelessWidget {
   static const String buttonText = "Accept";
   static const String profilePicture = "assets/images/man1.png";
   final String shopperName;
@@ -64,26 +61,17 @@ class AngelOffer extends StatelessWidget{
   final PageOfShopperOrdersState page;
 
   const AngelOffer(
-      this.offerId,
-      this.shopperName,
-      this.shopperRating,
-      this.page,
-      {Key? key}
-      ) : super(key: key);
+      this.offerId, this.shopperName, this.shopperRating, this.page,
+      {Key? key})
+      : super(key: key);
 
-  static Future<List<Widget>> getOffers(int ticketId,
-      PageOfShopperOrdersState page) async{
+  static Future<List<Widget>> getOffers(
+      int ticketId, PageOfShopperOrdersState page) async {
     List<Widget> listToReturn = [];
     Map<String, dynamic> data = await getOffersByTicketId(ticketId);
-    for (Map<String, dynamic> offer in data['offers']){
-      listToReturn.add(
-        AngelOffer(
-          offer['offer_id'],
-          offer['angel']['name'],
-          offer['angel']['rating'],
-          page
-        )
-      );
+    for (Map<String, dynamic> offer in data['offers']) {
+      listToReturn.add(AngelOffer(offer['offer_id'], offer['angel']['name'],
+          offer['angel']['rating'], page));
     }
     return listToReturn;
   }
@@ -91,7 +79,7 @@ class AngelOffer extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.only(top: 10),
+        //margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,5 +147,4 @@ class AngelOffer extends StatelessWidget{
           ],
         ));
   }
-
 }

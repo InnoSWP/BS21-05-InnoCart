@@ -7,9 +7,9 @@
 
 // import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inno_cart/logging_page.dart';
-import 'package:inno_cart/hello_screen.dart';
-import 'package:inno_cart/registration_screen.dart';
+import 'package:inno_cart/LogInPage/logging_page.dart';
+import 'package:inno_cart/WelcomePage/hello_screen.dart';
+import 'package:inno_cart/RegistrationPage/registration_screen.dart';
 // import  'package:inno_cart/PageOfShopperOrders/page_of_shopper_orders.dart';
 import 'package:inno_cart/main.dart';
 // import 'package:inno_cart/PageOfActiveOrders/page_of_active_orders.dart';
@@ -17,7 +17,6 @@ import 'package:inno_cart/main.dart';
 // import 'package:inno_cart/Messenger/page_messenger.dart';
 
 void main() {
-
   /// Build our app and trigger a frame.
   testWidgets('Hello page', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());

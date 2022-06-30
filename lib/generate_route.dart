@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'Messenger/page_messenger.dart';
 import 'package:page_transition/page_transition.dart';
-import 'hello_screen.dart';
-import 'profile_change_screen.dart';
-import 'profile_screen.dart';
-import 'registration_screen.dart';
+import 'WelcomePage/hello_screen.dart';
+import 'ProfilePages/profile_change_screen.dart';
+import 'ProfilePages/profile_screen.dart';
+import 'RegistrationPage/registration_screen.dart';
 import 'PageOfActiveOrders/page_of_active_orders.dart';
 import 'PageOfAngelOrders/page_of_angel_orders.dart';
 import 'PageOfShopperOrders/page_of_shopper_orders.dart';
-import 'logging_page.dart';
-import 'creating_order_screen.dart';
-import 'start_screen.dart';
+import 'LogInPage/logging_page.dart';
+import 'CreatingOrderPage/creating_order_screen.dart';
+import 'WelcomePage/start_screen.dart';
 
 Route? generateRoute(RouteSettings settings) {
   // final data = settings.arguments;

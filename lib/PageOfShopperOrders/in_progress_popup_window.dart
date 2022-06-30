@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
-import '../elevated_button_style.dart';
+import '../Buttons/elevated_button_style.dart';
 import '../main.dart';
 
 Future inProgressPopUpTicket(

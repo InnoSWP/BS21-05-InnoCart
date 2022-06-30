@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../backend_functions.dart';
 import 'pop_up_window_with_ticket.dart';
-import '../elevated_button_style.dart';
+import '../Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
-import '../profile_screen.dart';
+import '../ProfilePages/profile_screen.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -302,21 +302,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                 child: SizedBox(
                   width: 150,
                   height: 32,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        buttonText,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 14,
-                      ),
-                    ],
-                  ),
+                  child: TextAndArrowButtonChild(buttonText: buttonText),
                 )),
           ],
         ),
