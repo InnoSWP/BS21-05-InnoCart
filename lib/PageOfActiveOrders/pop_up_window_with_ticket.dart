@@ -2,24 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'set_ticket.dart';
-import '../elevated_button_style.dart';
+import '../ticket.dart';
+import '../Buttons/elevated_button_style.dart';
 import 'pop_up_notify.dart';
 import '../main.dart';
 
 Future popUpTicket(BuildContext context, Ticket ticket) {
-  String buttonText = ticket.buttonText;
-  String profilePicture = ticket.profilePicture;
-  String orderImage = ticket.orderImage;
-  String orderName = ticket.orderName;
-  double orderWeight = ticket.orderWeight;
-  String orderDistance = ticket.orderDistance;
-  String orderTime = ticket.orderTime;
-  String orderDate = ticket.orderDate;
-  String reward = ticket.reward;
-  String orderInfo = ticket.orderInfo;
-  String shopperName = ticket.userName;
-
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -37,7 +25,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
             children: [
               SizedBox(
                 child: Text(
-                  orderName,
+                  ticket.orderName,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 20),
                 ),
@@ -52,7 +40,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                     height: 130,
                     color: Colors.blueGrey,
                     child: Image.asset(
-                      orderImage,
+                      ticket.orderImage,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -72,7 +60,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderWeight.toString())),
+                              child: Text(ticket.orderWeight.toString())),
                         ],
                       ),
                       Row(
@@ -85,7 +73,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderDistance)),
+                              child: Text(ticket.orderDistance)),
                         ],
                       ),
                       Row(
@@ -98,7 +86,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderDate)),
+                              child: Text(ticket.orderDate)),
                         ],
                       ),
                       Row(
@@ -111,7 +99,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderTime)),
+                              child: Text(ticket.orderTime)),
                         ],
                       ),
                     ],
@@ -126,7 +114,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                     children: [
                       SizedBox(
                         child: Text(
-                          reward.toString(),
+                          ticket.reward.toString(),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -135,7 +123,7 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                   )),
               Container(
                 alignment: Alignment.topLeft,
-                child: Text(orderInfo),
+                child: Text(ticket.orderInfo),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,13 +132,13 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                     children: [
                       CircleAvatar(
                         radius: (20),
-                        backgroundImage: AssetImage(profilePicture),
+                        backgroundImage: AssetImage(ticket.profilePicture),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Column(
                           children: [
-                            Text(shopperName),
+                            Text(ticket.userName),
                             RatingBar.builder(
                               initialRating: ticket.userRating,
                               ignoreGestures: true,
@@ -181,21 +169,8 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
                     style: roundedWhite,
                     child: SizedBox(
                       width: 120,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            buttonText,
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.black),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.black,
-                            size: 14,
-                          ),
-                        ],
-                      ),
+                      child: TextAndArrowButtonChild(
+                          buttonText: ticket.buttonText),
                     ),
                   ),
                 ],

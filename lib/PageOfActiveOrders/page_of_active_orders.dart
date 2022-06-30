@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../PageOfActiveOrders/app_bar.dart';
 import '../ServerURL.dart';
 import '../navigation_bar.dart';
+import '../ticket.dart';
 import 'set_ticket.dart';
 import '../backend_functions.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +34,7 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
           appBar: appBar(context, this),
           bottomNavigationBar: makeNavigationBar(context, this),
           body: FutureBuilder<List<Widget>>(
-              future: Tickets(context).getTickets(),
+              future: getTickets(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView(children: snapshot.data!);
@@ -47,46 +48,24 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
       ),
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }
-}
-
-class Tickets {
-  List<Widget> waitingForAccept = [];
-  BuildContext context;
-
-  Tickets(this.context) {
-    // print("Tickets class has been initialized!");
-  }
 
   Future<List<Widget>> getTickets() async {
-    //waitingForAccept =
-    //    Ticket(context) + Ticket(context) + Ticket(context);
-    // print("Running function get Tickets");
-    /*Map<String, dynamic> args = {
-      "user_id": currentUser.userId,
-      "user_token": currentUser.passwordHash
-    };*/
-    /*print("Map of arguments had been constructed correctly");
-    print(serverURL);
-    print(args);*/
+    List<Widget> tickets = [];
 
     Uri uri = Uri.parse(
         "http://$serverURL/getTicketsForUser?user_id=${currentUser.userId}&user_token=${currentUser.token}");
-    // print(uri);
+
     http.Response response = await http.get(uri);
-    // print(response.statusCode);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = jsonDecode(
           response.body.replaceAll("'", '"').replaceAll("None", '""'));
-      // print(jsonData['tickets'][0]);
+
       for (Map<String, dynamic> ticketNote in jsonData['tickets']) {
-        // print(ticketNote);
-        waitingForAccept.add(Ticket(ticketNote));
+        tickets.add(SetTicket(ticket: Ticket(ticketNote)));
       }
-    } else {
-      return [];
     }
-    // print(waitingForAccept);
-    return waitingForAccept;
+
+    return tickets;
   }
 }

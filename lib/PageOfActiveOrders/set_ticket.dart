@@ -1,54 +1,23 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../ticket.dart';
 import 'pop_up_notify.dart';
 import '../backend_functions.dart';
-import '../profile_screen.dart';
-import '../elevated_button_style.dart';
+import '../ProfilePages/profile_screen.dart';
+import '../Buttons/elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
 
-class Ticket extends StatelessWidget {
-  late int ticketId = 0;
-  late int shopperId = 0;
+class SetTicket extends StatelessWidget {
+  final Ticket ticket;
 
-  final String buttonText = 'Send request';
-  final String profilePicture = 'assets/images/man1.png';
-  final String orderImage = 'assets/images/pizza.jpg';
-  late String orderName = "";
-  late double orderWeight = 3.0;
-  final String orderDistance = '124 m';
-  late String orderTime = '14:00';
-  late String orderDate = '03.06.2022';
-  late String reward = '';
-  late String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
-  late String userName = "";
-  late String userSurname = "";
-  late String userNickname = "";
-  late double userRating = 0;
-
-  Ticket(Map<String, dynamic> data, {Key? key}) : super(key: key) {
-    /*print('Initialization of ticket entity');
-    this.shopperName = data['user_id'].toString();
-    this.orderName = data['title'];*/
-    ticketId = data['ticket_id'];
-    shopperId = data['shopper_id'];
-    orderName = data['title'];
-    orderWeight = data['weight'];
-    userName = data['shopper_info']['name'];
-    userSurname = data['shopper_info']['surname'];
-    userNickname = data['shopper_info']['nickname'];
-    userRating = data['shopper_info']['rating'];
-    orderInfo = data['description'];
-    reward = data['reward'].toString();
-  }
+  const SetTicket({Key? key, required this.ticket}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => popUpTicket(context, this),
+      onTap: () => popUpTicket(context, ticket),
       child: Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
         padding: const EdgeInsets.all(20),
@@ -67,7 +36,7 @@ class Ticket extends StatelessWidget {
                 color: Colors.blueGrey,
                 //margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                 child: Image.asset(
-                  orderImage,
+                  ticket.orderImage,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -80,7 +49,7 @@ class Ticket extends StatelessWidget {
                   SizedBox(
                     width: 170,
                     child: Text(
-                      orderName,
+                      ticket.orderName,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 20),
                     ),
@@ -95,7 +64,7 @@ class Ticket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text("$orderWeight KG")),
+                          child: Text("${ticket.orderWeight} KG")),
                     ],
                   ),
                   Row(
@@ -108,7 +77,7 @@ class Ticket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(orderDistance)),
+                          child: Text(ticket.orderDistance)),
                     ],
                   ),
                   Row(
@@ -121,7 +90,7 @@ class Ticket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(orderTime)),
+                          child: Text(ticket.orderTime)),
                     ],
                   ),
                 ],
@@ -134,7 +103,7 @@ class Ticket extends StatelessWidget {
                       SizedBox(
                         width: 50,
                         child: Text(
-                          reward.toString(),
+                          ticket.reward.toString(),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -158,23 +127,23 @@ class Ticket extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: ((context) => ProfilePage(
                                         ok: 1,
-                                        rating: userRating,
-                                        email: '${userSurname}@mail.ru',
-                                        telegram: '@$userName',
+                                        rating: ticket.userRating,
+                                        email: '${ticket.userSurname}@mail.ru',
+                                        telegram: '@${ticket.userName}',
                                       ))));
                         }),
                         child: CircleAvatar(
                           radius: (20),
-                          backgroundImage: AssetImage(profilePicture),
+                          backgroundImage: AssetImage(ticket.profilePicture),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Column(
                           children: [
-                            Text(userName),
+                            Text(ticket.userName),
                             RatingBar.builder(
-                              initialRating: userRating,
+                              initialRating: ticket.userRating,
                               ignoreGestures: true,
                               direction: Axis.horizontal,
                               allowHalfRating: true,
@@ -195,7 +164,7 @@ class Ticket extends StatelessWidget {
                     onPressed: () {
                       // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
                       popUpRequestSentNotifier(context);
-                      sendOfferToBookTicket(ticketId);
+                      sendOfferToBookTicket(ticket.ticketId);
                       // Navigator.of(context)
                       //     .pushReplacementNamed('/PageOfActiveOrders');
                     },
@@ -203,20 +172,8 @@ class Ticket extends StatelessWidget {
                     child: SizedBox(
                       width: 150,
                       height: 32,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              buttonText,
-                              style: const TextStyle(
-                                  fontSize: 14, color: Colors.black),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.black,
-                              size: 14,
-                            ),
-                          ]),
+                      child: TextAndArrowButtonChild(
+                          buttonText: ticket.buttonText),
                     ),
                   ),
                 ]),

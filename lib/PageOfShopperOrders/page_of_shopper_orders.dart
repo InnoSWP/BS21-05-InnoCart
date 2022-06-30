@@ -10,7 +10,7 @@ import '../backend_functions.dart';
 // import 'see_requests_window.dart';
 // import 'completed_popup_window.dart';
 import 'waiting_popup_ticket.dart';
-import '../elevated_button_style.dart';
+import '../Buttons/elevated_button_style.dart';
 
 // import 'in_progress_popup_window.dart';
 import '../navigation_bar.dart';

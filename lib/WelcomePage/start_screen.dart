@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
-import 'hello_screen.dart';
 
 class StartAnimation extends StatefulWidget {
   const StartAnimation({Key? key}) : super(key: key);
