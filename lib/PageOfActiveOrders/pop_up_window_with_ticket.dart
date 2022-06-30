@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:inno_cart/UI/PopUpWindows/ticket_window.dart';
+import '../UI/PopUpWindows/ticket_window.dart';
 import '../ticket.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import 'request_sent.dart';
