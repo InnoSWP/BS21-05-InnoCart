@@ -31,11 +31,11 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 build/
-lib/ServerURL.dart
+
 
 # Web related
 lib/generated_plugin_registrant.dart
-
+ServerURL.dart
 # Symbolication related
 app.*.symbols
 
@@ -49,5 +49,4 @@ app.*.map.json
 /build/
 
 # API adress and DB
-/lib/ServerURL.dart
 /InnoCartAPI/base.db
