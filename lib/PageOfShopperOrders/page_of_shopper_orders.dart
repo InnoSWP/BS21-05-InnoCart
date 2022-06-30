@@ -4,15 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'completed_popup_window.dart';
 import 'in_progress_popup_window.dart';
 import 'see_requests_window.dart';
-
 import '../backend_functions.dart';
-
-// import 'see_requests_window.dart';
-// import 'completed_popup_window.dart';
 import 'waiting_popup_ticket.dart';
-import '../Buttons/elevated_button_style.dart';
-
-// import 'in_progress_popup_window.dart';
+import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
@@ -38,8 +32,8 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
             }),
             child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: appBar(context),
-                bottomNavigationBar: makeNavigationBar(context, this),
+                appBar: const ThisAppBar(),
+                bottomNavigationBar: const MainNavigationBar(),
                 body: FutureBuilder<List<Widget>>(
                     future: Tickets(context, this).getTickets(),
                     builder: (context, snapshot) {
@@ -192,18 +186,15 @@ class AbstractHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                GestureDetector(
-                  onTap: (() {}),
-                  child: Container(
-                    width: 130,
-                    height: 130,
-                    color: Colors.blueGrey,
-                    margin:
-                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                    child: Image.asset(
-                      orderImage,
-                      fit: BoxFit.fill,
-                    ),
+
+                Container(
+                  width: 130,
+                  height: 130,
+                  color: Colors.blueGrey,
+                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                  child: Image.asset(
+                    orderImage,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 //TICKET INFO
@@ -215,6 +206,7 @@ class AbstractHistoryTicket extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
                           orderName,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 20),
                         )),
                     Row(
@@ -281,21 +273,7 @@ class AbstractHistoryTicket extends StatelessWidget {
                 child: SizedBox(
                   width: 150,
                   height: 32,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        buttonText,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 14,
-                      ),
-                    ],
-                  ),
+                  child: TextAndArrowButtonChild(buttonText: buttonText),
                 )),
           ],
         ),

@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
+import 'page_of_angel_orders.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
 
 Future inProgressPopUpTicket(
-    BuildContext context, AbstractHistoryTicket ticket) {
+    BuildContext context, AbstractAngelHistoryTicket ticket) {
   String profilePicture = 'assets/images/man1.png';
   String orderAngel = 'Amr. T.';
 
@@ -159,7 +159,7 @@ Future inProgressPopUpTicket(
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      popUpOrderCanceled(context);
+                      popUpRequestCanceled(context);
                     },
                     style: roundedWhite,
                     child: SizedBox(

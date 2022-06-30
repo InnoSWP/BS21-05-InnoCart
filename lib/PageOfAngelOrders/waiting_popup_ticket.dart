@@ -1,14 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
+import 'page_of_angel_orders.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
 
-Future inProgressPopUpTicket(
-    BuildContext context, AbstractHistoryTicket ticket) {
+Future waitingPopUpTicket(
+    BuildContext context, AbstractAngelHistoryTicket ticket) {
   String profilePicture = 'assets/images/man1.png';
   String orderAngel = 'Amr. T.';
 
@@ -120,72 +118,34 @@ Future inProgressPopUpTicket(
                 alignment: Alignment.topLeft,
                 child: Text(ticket.orderDescription),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  popUpRequestCanceled(context);
+                },
+                style: roundedWhite,
+                child: SizedBox(
+                  width: 120,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
-                        radius: (20),
-                        backgroundImage: AssetImage(profilePicture),
+                      Text(
+                        ticket.buttonText,
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.black),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Column(
-                          children: [
-                            Text(orderAngel),
-                            RatingBar.builder(
-                              initialRating: 5,
-                              ignoreGestures: true,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 10,
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                if (kDebugMode) {
-                                  print(rating);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: 14,
                       ),
                     ],
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      popUpOrderCanceled(context);
-                    },
-                    style: roundedWhite,
-                    child: SizedBox(
-                      width: 120,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            ticket.buttonText,
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.black),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.black,
-                            size: 14,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-              //Button
             ],
           ),
+          //Button
         ),
       );
     },

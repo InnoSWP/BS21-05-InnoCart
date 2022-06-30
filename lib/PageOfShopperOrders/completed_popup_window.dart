@@ -3,21 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'page_of_shopper_orders.dart';
-import '../Buttons/elevated_button_style.dart';
+import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
 
 Future completedPopUpTicket(
     BuildContext context, AbstractHistoryTicket ticket) {
-  String buttonText = ticket.buttonText;
   String profilePicture = 'assets/images/man1.png';
-  String orderImage = ticket.orderImage;
-  String orderName = ticket.orderName;
-  double orderWeight = ticket.orderWeight;
-  double orderDistance = ticket.orderDistance;
-  String orderTime = ticket.orderTime;
-  String orderDate = ticket.orderDate;
-  double orderPrice = ticket.orderPrice;
-  String orderDescription = ticket.orderDescription;
   String orderAngel = 'Amr. T.';
 
   return showDialog(
@@ -44,7 +35,7 @@ Future completedPopUpTicket(
                     height: 130,
                     color: Colors.blueGrey,
                     child: Image.asset(
-                      orderImage,
+                      ticket.orderImage,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -55,7 +46,7 @@ Future completedPopUpTicket(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        orderName,
+                        ticket.orderName,
                         style: const TextStyle(fontSize: 20),
                       ),
                       Row(
@@ -68,7 +59,7 @@ Future completedPopUpTicket(
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderWeight.toString())),
+                              child: Text(ticket.orderWeight.toString())),
                         ],
                       ),
                       Row(
@@ -81,7 +72,7 @@ Future completedPopUpTicket(
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderDistance.toString())),
+                              child: Text(ticket.orderDistance.toString())),
                         ],
                       ),
                       Row(
@@ -94,7 +85,7 @@ Future completedPopUpTicket(
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderDate)),
+                              child: Text(ticket.orderDate)),
                         ],
                       ),
                       Row(
@@ -107,7 +98,7 @@ Future completedPopUpTicket(
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderTime)),
+                              child: Text(ticket.orderTime)),
                         ],
                       ),
                     ],
@@ -118,7 +109,7 @@ Future completedPopUpTicket(
                       padding: const EdgeInsets.all(6),
                       child: Row(
                         children: [
-                          Text(orderPrice.toString()),
+                          Text(ticket.orderPrice.toString()),
                           SvgPicture.asset('assets/icons/Currency.svg'),
                         ],
                       )),
@@ -126,7 +117,7 @@ Future completedPopUpTicket(
               ),
               Container(
                 alignment: Alignment.topLeft,
-                child: Text(orderDescription),
+                child: Text(ticket.orderDescription),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,7 +166,7 @@ Future completedPopUpTicket(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            buttonText,
+                            ticket.buttonText,
                             style: const TextStyle(
                                 fontSize: 14, color: Colors.black),
                           ),

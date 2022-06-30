@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../backend_functions.dart';
-import '../user.dart';
 
 class LogInPage extends StatefulWidget {
-  LogInPage({Key? key}) : super(key: key);
-  Color mistakeColor = Colors.white;
+  const LogInPage({Key? key}) : super(key: key);
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
 
 class _LogInPageState extends State<LogInPage> {
+  Color mistakeColor = Colors.white;
+
   String curPass = "";
   String curNick = "";
   @override
@@ -29,7 +29,7 @@ class _LogInPageState extends State<LogInPage> {
                   'password/nickname are incorrect!',
                   style: TextStyle(
                     color: Colors.white,
-                    backgroundColor: widget.mistakeColor,
+                    backgroundColor: mistakeColor,
                   ),
                 ),
               ),
@@ -90,7 +90,7 @@ class _LogInPageState extends State<LogInPage> {
                             .pushReplacementNamed('/PageOfActiveOrders');
                       } else {
                         setState(() {
-                          widget.mistakeColor = Colors.redAccent;
+                          mistakeColor = Colors.redAccent;
                         });
                       }
                     },
