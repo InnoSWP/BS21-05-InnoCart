@@ -263,3 +263,84 @@ Future<bool> acceptOffer(int offerId) async {
   }
   return false;
 }
+
+
+Future<Map<String, dynamic>> getOfferedTickets() async{
+  Map<String, String> args = {
+    "angel_id": currentUser.userId.toString(),
+    "angel_token": currentUser.token
+  };
+  Uri uri = Uri.http(serverURL, "/getOfferedTickets", args);
+  http.Response response = await http.get(uri);
+  if (response.statusCode == 200){
+    return jsonDecode(response.body);
+  }
+  if (kDebugMode){
+    print(response.body);
+  }
+  return {};
+}
+
+Future<bool> cancelOffer(int ticketId) async{
+  Map<String, String> args = {
+    "angel_id": currentUser.userId.toString(),
+    "angel_token": currentUser.token,
+    "ticket_id": ticketId.toString()
+  };
+  Uri uri = Uri.http(serverURL, '/cancelOffer', args);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    return true;
+  }
+  print(response.body);
+  return false;
+}
+
+Future<bool> cancelOrder(int ticketId) async{
+  Map<String, String> args = {
+    'shopper_id': currentUser.userId.toString(),
+    "shopper_token": currentUser.token,
+    "ticket_id": ticketId.toString()
+  };
+  Uri uri = Uri.http(serverURL, '/cancelOrder', args);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    return true;
+  }
+  if (kDebugMode){
+    print(response.body);
+  }
+  return false;
+}
+
+Future<Map<String, dynamic>> contactUserInformationById(int userId) async{
+  Map<String, String> args = {
+    'contact_user_id': userId.toString()
+  };
+  Uri uri = Uri.http(serverURL, '/userContactInformationById', args);
+  http.Response response = await http.get(uri);
+  if (response.statusCode == 200){
+    return jsonDecode(response.body);
+  }
+  print(response.body);
+  return {};
+}
+
+Future<bool> updateContactInformation(String email, String telegram) async {
+  Map<String, String> args = {
+    "user_id": currentUser.userId.toString(),
+    "user_token": currentUser.token,
+    "email": email,
+    "telegram": telegram
+  };
+  Uri uri = Uri.http(serverURL, '/updateContactInformation', args);
+  http.Response response = await http.post(uri);
+  if (response.statusCode == 200){
+    Map<String, dynamic> userData = jsonDecode(response.body);
+    currentUser.email = userData['email'];
+    currentUser.telegram = userData['telegram'];
+    return true;
+  }
+  if (kDebugMode) print(response.body);
+  return false;
+}

@@ -121,15 +121,18 @@ class SetTicket extends StatelessWidget {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: (() {
+                        onTap: (() async {
+                          Map<String, dynamic> data =
+                          await contactUserInformationById(ticket.shopperId);
+                          print(data);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: ((context) => ProfilePage(
                                         ok: 1,
-                                        rating: ticket.userRating,
-                                        email: '${ticket.userSurname}@mail.ru',
-                                        telegram: '@${ticket.userName}',
+                                        rating: data['rating'],
+                                        email: data['email'],
+                                        telegram: data['telegram'],
                                       ))));
                         }),
                         child: CircleAvatar(

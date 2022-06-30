@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:inno_cart/backend_functions.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 
@@ -12,6 +13,11 @@ class ProfileChangeScreen extends StatefulWidget {
 }
 
 class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
+  Map<String, String> dataToUpdate = {
+    "email": "",
+    "telegram": ""
+  };
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -75,9 +81,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                             height: 30,
                             child: TextField(
                               onChanged: (text) {
-                                if (kDebugMode) {
-                                  print('First text field: $text');
-                                }
+                                dataToUpdate['email'] = text;
                               },
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -110,9 +114,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                             height: 30,
                             child: TextField(
                               onChanged: (text) {
-                                if (kDebugMode) {
-                                  print('First text field: $text');
-                                }
+                                dataToUpdate['telegram'] = text;
                               },
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -166,7 +168,14 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                   primary: Colors.white,
                                   side: const BorderSide(
                                       width: 2.0, color: Colors.black)),
-                              onPressed: () {},
+                              onPressed: () async {
+                                bool result = await updateContactInformation(dataToUpdate['email'] ?? "Unknown",
+                                    dataToUpdate['telegram'] ?? "Unknown");
+                                if (result){
+                                  Navigator.pushReplacementNamed(
+                                      context, '/ProfileScreen');
+                                }
+                              },
                               child: const Text(
                                 'Save',
                                 style: TextStyle(color: Colors.black),

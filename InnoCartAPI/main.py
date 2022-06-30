@@ -67,18 +67,17 @@ async def userPublicInformationById(user_id: int = 0) -> starlette.responses.Res
     except Exception:
         return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
                                             content=traceback.format_exc())
-    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK, content=user_data)
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK, content=json.dumps(user_data))
 
 
 @backendApp.get("/userContactInformationById")
-async def userContactInformationById(contact_user_id: int = 0, user_id: int = 0,
-                                     token: str = "") -> starlette.responses.Response:
+async def userContactInformationById(contact_user_id: int = 0) -> starlette.responses.Response:
     try:
-        user_data: dict = database.Users.contactUserInformationById(contact_user_id, user_id, token, connection_cursor)
+        user_data: dict = database.Users.contactUserInformationById(contact_user_id, connection_cursor)
     except Exception:
         return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
                                             content=traceback.format_exc())
-    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK, content=user_data)
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK, content=json.dumps(user_data))
 
 
 @backendApp.post("/registerNewTicket")
@@ -167,12 +166,24 @@ async def contactDataOccupied(user_nickname: str, user_phone_number: str,
                                         content=str(user_data))
 
 
-@backendApp.get("/getTicketInfoWithShopper")
-async def getTicketInfoWithShopper(ticket_id: int) -> starlette.responses.Response:
+@backendApp.post('/updateContactInformation')
+async def updateContactInformation(user_id: int,
+                                   user_token: str,
+                                   email: str,
+                                   telegram: str) -> starlette.responses.Response:
     try:
-        pass
+        database.Users.checkTokenSignature(user_id, user_token, connection_cursor)
+        database.Users.updateContactInformation(user_id, email, telegram, connection_cursor)
+        return_data = database.Users.contactUserInformationById(user_id, connection_cursor)
+        database_connection.commit()
+
     except Exception:
-        pass
+        return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                            content=traceback.format_exc())
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
+                                        content=json.dumps(return_data))
+
+
 
 
 @backendApp.get('/getTicketsForUser')
@@ -289,3 +300,42 @@ async def acceptOffer(offer_id: int, shopper_id: int, shopper_token: str) -> sta
                                             content=traceback.format_exc())
     return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
                                         content="OK")
+
+
+@backendApp.get('/getOfferedTickets')
+async def getOfferedTickets(angel_id: int, angel_token: str) -> starlette.responses.Response:
+    try:
+        database.Users.checkTokenSignature(angel_id, angel_token, connection_cursor)
+        return_data = database.Offers.getOfferedTickets(angel_id, connection_cursor)
+    except Exception:
+        return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                            content=traceback.format_exc())
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
+                                        content=json.dumps(return_data))
+
+
+@backendApp.post('/cancelOffer')
+async def cancelOffer(angel_id: int, angel_token: str, ticket_id: int) -> starlette.responses.Response:
+    try:
+        database.Users.checkTokenSignature(angel_id, angel_token, connection_cursor)
+        database.Offers.cancelOffer(angel_id, ticket_id, connection_cursor)
+        database_connection.commit()
+    except Exception:
+        return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                            content=traceback.format_exc())
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
+                                        content=json.dumps({"result": "OK"}))
+
+
+@backendApp.post('/cancelOrder')
+async def cancelOrder(shopper_id: int, shopper_token: str, ticket_id: int) -> starlette.responses.Response:
+    try:
+        database.Users.checkTokenSignature(shopper_id, shopper_token, connection_cursor)
+        database.Tickets.checkAccessToTicketEdition(ticket_id, shopper_id, connection_cursor)
+        database.Tickets.cancelOrder(ticket_id, connection_cursor)
+        database_connection.commit()
+    except Exception:
+        return starlette.responses.Response(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                            content=traceback.format_exc())
+    return starlette.responses.Response(status_code=starlette.status.HTTP_200_OK,
+                                        content=json.dumps({"result": "OK"}))

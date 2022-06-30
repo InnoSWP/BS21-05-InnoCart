@@ -98,10 +98,8 @@ class Users:
         assert token_from_database == token
 
     @staticmethod
-    def contactUserInformationById(user_id: int, requester_id: int, requester_token: str,
-                                   cursor: sqlite3.Cursor, ) -> dict:
-        assert Users.checkTokenSignature(requester_id, requester_token, cursor)
-        assert Users.__checkAccessToContactInformation__(user_id, requester_id, cursor)
+    def contactUserInformationById(user_id: int,
+                                   cursor: sqlite3.Cursor) -> dict:
         data = Users.userInformationById(user_id, cursor)
         return {
             "user_id": data[0],
@@ -165,6 +163,13 @@ class Users:
         cursor.execute(sql_request_1)
         return cursor.fetchone() is not None
 
+    @staticmethod
+    def updateContactInformation(user_id, email, telegram, cursor: sqlite3.Cursor):
+        cursor.execute(
+            f"UPDATE users SET email='{email}', telegram='{telegram}' WHERE user_id={user_id}"
+        )
+
+
 
 class Tickets:
 
@@ -208,7 +213,7 @@ class Tickets:
         return Tickets.getTicketInformationById(ticket_id, cursor)
 
     @staticmethod
-    def getTicketInformationById(ticket_id: int, cursor: sqlite3.Cursor) -> dict[str, typing.Union[str, float, int]]:
+    def getTicketInformationById(ticket_id: int, cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
         cursor.execute(
             f"SELECT * FROM tickets WHERE ticket_id={ticket_id}"
         )
@@ -232,8 +237,11 @@ class Tickets:
 
     @staticmethod
     def getTicketInformationWithUser(ticket_id: int,
-                                     cursor: sqlite3.Cursor) -> dict[str, typing.Union[str, int, float]]:
-        pass
+                                     cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
+        returnData = Tickets.getTicketInformationById(ticket_id, cursor)
+        returnData['shopper_info'] = Users.publicUserInformationById(returnData['shopper_id'], cursor)
+        return returnData
+
 
     @staticmethod
     def getListOfTicketsForUser(user_id: int, user_token: str,
@@ -327,8 +335,20 @@ class Tickets:
     def completeOrder(ticket_id: int, cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
         sql_request = f"UPDATE tickets SET status=2 WHERE ticket_id={ticket_id}"
         cursor.execute(sql_request)
+        cursor.execute(
+            f"DELETE FROM offers WHERE ticket_id={ticket_id}"
+        )
         print("COMPLETE OF ORDER WAS SUCCESSFUL")
         return Tickets.getTicketInformationById(ticket_id, cursor)
+
+    @staticmethod
+    def cancelOrder(ticket_id: int, cursor: sqlite3.Cursor):
+        cursor.execute(
+            f"DELETE FROM tickets WHERE ticket_id={ticket_id}"
+        )
+        cursor.execute(
+            f"DELETE FROM offers WHERE ticket_id={ticket_id}"
+        )
 
 
 class Offers:
@@ -381,6 +401,29 @@ class Offers:
         offer_id, ticket_id, angel_id, creation_time = cursor.fetchone()
         sql_request2 = f"UPDATE tickets SET status=1, angel_id={angel_id} WHERE ticket_id={ticket_id}"
         cursor.execute(sql_request2)
+
+    @staticmethod
+    def getOfferedTickets(angel_id: int, cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
+        cursor.execute(
+            f"SELECT * FROM offers WHERE angel_id={angel_id}"
+        )
+        returnData = {"tickets": []}
+        for offerData in cursor.fetchall():
+            ticketData = Tickets.getTicketInformationWithUser(offerData[1], cursor)
+            if ticketData['status'] == 0:
+                returnData['tickets'].append(ticketData)
+        return returnData
+
+    @staticmethod
+    def cancelOffer(angel_id: int, ticket_id: int, cursor):
+        cursor.execute(
+            f"delete from offers where angel_id={angel_id} and ticket_id={ticket_id}"
+        )
+        ticketInfo = Tickets.getTicketInformationWithUser(ticket_id, cursor)
+        if ticketInfo['status'] == 1 and ticketInfo['angel_id'] == angel_id:
+            cursor.execute(
+                f"UPDATE tickets SET angel_id = Null, status = 0 where ticket_id = {ticket_id}"
+            )
 
 
 

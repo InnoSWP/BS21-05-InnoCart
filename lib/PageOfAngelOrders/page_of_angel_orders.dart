@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfAngelOrders/pop_up_notify.dart';
 import '../backend_functions.dart';
 import 'pop_up_window_with_ticket.dart';
 import '../Buttons/elevated_button_style.dart';
@@ -54,7 +55,7 @@ class Tickets {
     listToReturn.clear();
 
     Map<String, dynamic> waitingForAcceptHistoryTickets =
-        await getTicketHistory(0, 1);
+        await getOfferedTickets();
     Map<String, dynamic> inProgressHistoryTickets =
         await getTicketHistory(1, 1);
     Map<String, dynamic> completedHistoryTickets = await getTicketHistory(2, 1);
@@ -203,15 +204,17 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
               children: [
                 //PICTURE
                 GestureDetector(
-                  onTap: (() {
+                  onTap: (() async {
+                    Map<String, dynamic> userData = await
+                    contactUserInformationById(shopperId);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: ((context) => ProfilePage(
                                   ok: 1,
-                                  rating: 4,
-                                  email: '${userSurname}@mail.ru',
-                                  telegram: '@$userName',
+                                  rating: userData['rating'],
+                                  email: userData['email'],
+                                  telegram: userData['telegram'],
                                 ))));
                   }),
                   child: Container(
@@ -340,7 +343,10 @@ class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
 
   @override
   Future<void> onButtonPress() async {
-    await cancelBookOfTicket(ticketId);
+    // await cancelBookOfTicket(ticketId);
+    await cancelOffer(ticketId);
+    popUpRequestCanceled(page.context);
+    page.setState(() {});
   }
 }
 
@@ -377,9 +383,9 @@ class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
   @override
   Future<void> onButtonPress() async {
     var result = await cancelBookOfTicket(ticketId);
-
     if (result) {
-      super.page.setState(() {});
+      popUpRequestCanceled(page.context);
+      super.page.setState(() => {});
     }
   }
 }

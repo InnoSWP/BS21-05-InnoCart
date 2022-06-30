@@ -30,8 +30,15 @@ Future seeRequestWindow(
                             width: 130,
                             child: ElevatedButton(
                               onPressed: () async {
-                                Navigator.of(context).pop();
-                                popUpOrderCanceled(context);
+                                // Navigator.of(context).pop();
+                                bool result = await cancelOrder(ticketId);
+                                if (result){
+                                  Navigator.of(context).pop();
+                                  popUpOrderCanceled(context);
+                                  page.setState(() {
+                                  });
+                                }
+
                               },
                               style: roundedWhite,
                               child: Text(

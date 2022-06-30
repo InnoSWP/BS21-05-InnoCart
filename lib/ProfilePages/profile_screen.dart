@@ -7,17 +7,18 @@ import '../user.dart';
 import '../main.dart';
 
 class ProfilePage extends StatefulWidget {
-  late final int ok;
-  late final double rating;
-  late final String telegram;
-  late final String email;
+  final int ok;
+  final double rating;
+  final String telegram;
+  final String email;
 
-  ProfilePage(
+  const ProfilePage(
+
       {Key? key,
       this.ok = 0,
       this.rating = 4,
-      this.telegram = 'anekdot',
-      this.email = 'ivanovinvan@gmail.com'})
+      this.telegram = "",
+      this.email = ""})
       : super(key: key);
 
   @override

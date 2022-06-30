@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inno_cart/backend_functions.dart';
 import 'Messenger/page_messenger.dart';
 import 'package:page_transition/page_transition.dart';
 import 'WelcomePage/hello_screen.dart';
@@ -39,7 +40,9 @@ Route? generateRoute(RouteSettings settings) {
           child: const OrderFactoryPage(), type: PageTransitionType.fade);
     case '/ProfileScreen':
       return PageTransition(
-          child: ProfilePage(), type: PageTransitionType.fade);
+          child: ProfilePage(ok: 0, rating: currentUser.rating,
+              email: currentUser.email,
+              telegram: currentUser.telegram), type: PageTransitionType.fade);
     case '/ProfileChangeScreen':
       return MaterialPageRoute(builder: (_) => const ProfileChangeScreen());
     case '/Messenger':

@@ -47,4 +47,6 @@ app.*.map.json
 /android/app/release
 /build/
 
-# Database
+# API adress and DB
+/lib/ServerURL.dart
+/InnoCartAPI/base.db
