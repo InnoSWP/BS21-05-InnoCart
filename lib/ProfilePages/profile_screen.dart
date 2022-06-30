@@ -13,7 +13,6 @@ class ProfilePage extends StatefulWidget {
   final String email;
 
   const ProfilePage(
-
       {Key? key,
       this.ok = 0,
       this.rating = 4,
@@ -37,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
           }
         }),
         child: Scaffold(
-          bottomNavigationBar: makeNavigationBar(context, this),
+          bottomNavigationBar: const MainNavigationBar(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70),

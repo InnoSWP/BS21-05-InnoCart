@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inno_cart/backend_functions.dart';
+import 'backend_functions.dart';
 import 'Messenger/page_messenger.dart';
 import 'package:page_transition/page_transition.dart';
 import 'WelcomePage/hello_screen.dart';
@@ -16,10 +16,10 @@ import 'WelcomePage/start_screen.dart';
 Route? generateRoute(RouteSettings settings) {
   // final data = settings.arguments;
   switch (settings.name) {
-    case '/start':
+    case '/':
       return PageTransition(
           child: const StartAnimation(), type: PageTransitionType.fade);
-    case '/':
+    case '/start':
       return PageTransition(
           child: const HelloPage(), type: PageTransitionType.fade);
     case '/PageOfActiveOrders':
@@ -34,15 +34,19 @@ Route? generateRoute(RouteSettings settings) {
     case '/RegistrationPage':
       return PageTransition(child: RegScreen(), type: PageTransitionType.fade);
     case '/LogInPage':
-      return PageTransition(child: LogInPage(), type: PageTransitionType.fade);
+      return PageTransition(
+          child: const LogInPage(), type: PageTransitionType.fade);
     case '/CreatingOrderScreen':
       return PageTransition(
           child: const OrderFactoryPage(), type: PageTransitionType.fade);
     case '/ProfileScreen':
       return PageTransition(
-          child: ProfilePage(ok: 0, rating: currentUser.rating,
+          child: ProfilePage(
+              ok: 0,
+              rating: currentUser.rating,
               email: currentUser.email,
-              telegram: currentUser.telegram), type: PageTransitionType.fade);
+              telegram: currentUser.telegram),
+          type: PageTransitionType.fade);
     case '/ProfileChangeScreen':
       return MaterialPageRoute(builder: (_) => const ProfileChangeScreen());
     case '/Messenger':

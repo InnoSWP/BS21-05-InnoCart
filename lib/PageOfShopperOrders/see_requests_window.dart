@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
 import '../backend_functions.dart';
-import '../Buttons/elevated_button_style.dart';
+import '../UI/Buttons/elevated_button_style.dart';
 
 Future seeRequestWindow(
     BuildContext context, int ticketId, PageOfShopperOrdersState page) {
@@ -32,13 +32,11 @@ Future seeRequestWindow(
                               onPressed: () async {
                                 // Navigator.of(context).pop();
                                 bool result = await cancelOrder(ticketId);
-                                if (result){
+                                if (result) {
                                   Navigator.of(context).pop();
                                   popUpOrderCanceled(context);
-                                  page.setState(() {
-                                  });
+                                  page.setState(() {});
                                 }
-
                               },
                               style: roundedWhite,
                               child: Text(

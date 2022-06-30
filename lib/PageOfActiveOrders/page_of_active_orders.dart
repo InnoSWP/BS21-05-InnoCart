@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import '../PageOfActiveOrders/app_bar.dart';
 import '../ServerURL.dart';
@@ -31,8 +30,8 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
         }),
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: appBar(context, this),
-          bottomNavigationBar: makeNavigationBar(context, this),
+          appBar: const ThisAppBar(),
+          bottomNavigationBar: const MainNavigationBar(),
           body: FutureBuilder<List<Widget>>(
               future: getTickets(),
               builder: (context, snapshot) {
@@ -46,7 +45,7 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
               }),
         ),
       ),
-    ); // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 
   Future<List<Widget>> getTickets() async {

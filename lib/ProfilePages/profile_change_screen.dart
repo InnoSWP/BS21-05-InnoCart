@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:inno_cart/backend_functions.dart';
+import '../backend_functions.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 
@@ -13,10 +13,7 @@ class ProfileChangeScreen extends StatefulWidget {
 }
 
 class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
-  Map<String, String> dataToUpdate = {
-    "email": "",
-    "telegram": ""
-  };
+  Map<String, String> dataToUpdate = {"email": "", "telegram": ""};
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
           }
         }),
         child: Scaffold(
-          bottomNavigationBar: makeNavigationBar(context, this),
+          bottomNavigationBar: const MainNavigationBar(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70),
@@ -169,9 +166,10 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                   side: const BorderSide(
                                       width: 2.0, color: Colors.black)),
                               onPressed: () async {
-                                bool result = await updateContactInformation(dataToUpdate['email'] ?? "Unknown",
+                                bool result = await updateContactInformation(
+                                    dataToUpdate['email'] ?? "Unknown",
                                     dataToUpdate['telegram'] ?? "Unknown");
-                                if (result){
+                                if (result) {
                                   Navigator.pushReplacementNamed(
                                       context, '/ProfileScreen');
                                 }

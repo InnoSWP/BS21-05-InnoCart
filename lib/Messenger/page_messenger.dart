@@ -13,18 +13,18 @@ class PageMessengerState extends State<PageMessenger> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: GestureDetector(
-            child: Scaffold(
-              bottomNavigationBar: makeNavigationBar(context, this),
-              body: const Center(
-                child: Text('In development\n:('),
-              ),
-            ),
             onHorizontalDragEnd: ((DragEndDetails details) {
               if (details.primaryVelocity! > 0.0) {
                 pageUpdate((selectedPage + 1) % 5, context);
               } else if (details.primaryVelocity! < 0.0) {
                 pageUpdate((selectedPage + 4) % 5, context);
               }
-            })));
+            }),
+            child: const Scaffold(
+              bottomNavigationBar: MainNavigationBar(),
+              body: Center(
+                child: Text('In development\n:('),
+              ),
+            )));
   }
 }

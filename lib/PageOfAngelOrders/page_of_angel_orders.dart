@@ -1,15 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inno_cart/PageOfAngelOrders/pop_up_notify.dart';
+import 'pop_up_notify.dart';
 import '../backend_functions.dart';
-import 'pop_up_window_with_ticket.dart';
-import '../Buttons/elevated_button_style.dart';
+import 'completed_popup_window.dart';
+import 'in_progress_popup_window.dart';
+import 'waiting_popup_ticket.dart';
+import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
-import '../ProfilePages/profile_screen.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -32,8 +31,8 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
             }),
             child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: appBar(context),
-                bottomNavigationBar: makeNavigationBar(context, this),
+                appBar: const ThisAppBar(),
+                bottomNavigationBar: const MainNavigationBar(),
                 body: FutureBuilder<List<Widget>>(
                     future: Tickets(context, this).getTickets(),
                     builder: (context, snapshot) {
@@ -149,17 +148,18 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
   int shopperId = 0;
   int type = -1;
 
-  String orderImage = 'assets/images/man1.png';
+  String orderImage = 'assets/images/pizza.jpg';
   String orderName = "";
   double orderWeight = 0;
   String userName = 'kek';
   String userSurname = 'kek';
-  static const double orderDistance = 100; // OVERRIDE IN MVP V2
-  static const String orderTime = "23.06.2022"; // OVERRIDE IN MVP V2
+  final double orderDistance = 100; // OVERRIDE IN MVP V2
+  final String orderTime = "14:00"; // OVERRIDE IN MVP V2
   double orderPrice = 0;
   String buttonText = "";
   late PageOfAngelOrdersState page;
   String orderDescription = "";
+  String orderDate = "23.07.2022";
 
   AbstractAngelHistoryTicket(
       this.ticketId,
@@ -177,20 +177,19 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
 
   Future<void> onButtonPress() async {}
 
-  String shortName(String pattern) {
-    String act = '';
-    for (int i = 0; i < min(12, pattern.length); i++) {
-      act += pattern[i];
-    }
-    if (pattern.length > 12) act += '...';
-    return act;
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return GestureDetector(
-      onTap: () => popUpTicket(context),
+      onTap: () {
+        if (this is AngelWaitingForAcceptHistoryTicket) {
+          waitingPopUpTicket(context, this);
+        } else if (this is AngelInProgressHistoryTicket) {
+          inProgressPopUpTicket(context, this);
+        } else {
+          completedPopUpTicket(context, this);
+        }
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
         width: 345,
@@ -203,30 +202,15 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-                GestureDetector(
-                  onTap: (() async {
-                    Map<String, dynamic> userData = await
-                    contactUserInformationById(shopperId);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => ProfilePage(
-                                  ok: 1,
-                                  rating: userData['rating'],
-                                  email: userData['email'],
-                                  telegram: userData['telegram'],
-                                ))));
-                  }),
-                  child: Container(
-                    width: 130,
-                    height: 130,
-                    color: Colors.blueGrey,
-                    margin:
-                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                    child: Image.asset(
-                      orderImage,
-                      fit: BoxFit.fill,
-                    ),
+
+                Container(
+                  width: 130,
+                  height: 130,
+                  color: Colors.blueGrey,
+                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                  child: Image.asset(
+                    orderImage,
+                    fit: BoxFit.fill,
                   ),
                 ),
 
@@ -238,7 +222,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
-                          shortName(orderName),
+                          orderName,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 20),
                         )),
                     Row(
@@ -277,7 +262,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                         ),
                         Container(
                             margin: const EdgeInsets.only(left: 10),
-                            child: const Text(orderTime)),
+                            child: Text(orderTime)),
                       ],
                     ),
                   ],

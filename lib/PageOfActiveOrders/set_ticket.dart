@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../ticket.dart';
-import 'pop_up_notify.dart';
+import 'request_sent.dart';
 import '../backend_functions.dart';
 import '../ProfilePages/profile_screen.dart';
-import '../Buttons/elevated_button_style.dart';
+import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
 import 'pop_up_window_with_ticket.dart';
 
@@ -123,8 +123,8 @@ class SetTicket extends StatelessWidget {
                       GestureDetector(
                         onTap: (() async {
                           Map<String, dynamic> data =
-                          await contactUserInformationById(ticket.shopperId);
-                          print(data);
+                              await contactUserInformationById(
+                                  ticket.shopperId);
                           Navigator.push(
                               context,
                               MaterialPageRoute(

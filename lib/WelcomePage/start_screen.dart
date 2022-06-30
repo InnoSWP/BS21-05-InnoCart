@@ -17,7 +17,7 @@ class _StartAnimationState extends State<StartAnimation> {
   _StartAnimationState() {
     Future.delayed(const Duration(milliseconds: 2000), () {
       setState(() {
-        Navigator.of(context).pushReplacementNamed('/');
+        Navigator.of(context).pushReplacementNamed('/start');
         /*
         Navigator.pushReplacement(
           context,

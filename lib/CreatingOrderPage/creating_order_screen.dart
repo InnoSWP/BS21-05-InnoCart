@@ -29,7 +29,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
           }
         }),
         child: Scaffold(
-          bottomNavigationBar: makeNavigationBar(context, this),
+          bottomNavigationBar: const MainNavigationBar(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
