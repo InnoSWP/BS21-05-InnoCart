@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfShopperOrders/page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
 import '../backend_functions.dart';
 import 'completed_popup_window.dart';
@@ -9,6 +10,7 @@ import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
+import 'package:flip_card/flip_card.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
             }),
             child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: const ThisAppBar(),
+                appBar:  ThisAppBar(PageOfShopperOrders.cardKey),
                 bottomNavigationBar: const MainNavigationBar(),
                 body: FutureBuilder<List<Widget>>(
                     future: Tickets(context, this).getTickets(),
