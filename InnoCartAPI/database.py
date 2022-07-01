@@ -341,6 +341,61 @@ class Tickets:
         print("COMPLETE OF ORDER WAS SUCCESSFUL")
         return Tickets.getTicketInformationById(ticket_id, cursor)
 
+
+class Offers:
+
+    @staticmethod
+    def sendOfferToBookTicket(angel_id, ticket_id, cursor: sqlite3.Cursor) -> dict[str, int]:
+        if Offers.offerIsUnique(angel_id, ticket_id, cursor):
+            sql_request = f"INSERT INTO offers(ticket_id, angel_id, creation_unix_time) " \
+                          f"VALUES ({ticket_id}, {angel_id}, {int(time.time())})"
+            cursor.execute(sql_request)
+        sql_request = f"SELECT * FROM offers WHERE angel_id={angel_id} and ticket_id={ticket_id}"
+        cursor.execute(sql_request)
+        data = cursor.fetchone()
+        return {
+            "offer_id": data[0],
+            "ticket_id": data[1],
+            "angel_id": data[2],
+            "creation_unix_time": data[3]
+        }
+
+    @staticmethod
+    def offerIsUnique(angel_id: int, ticket_id: int,
+                      cursor: sqlite3.Cursor) -> bool:
+        sql_request = f"SELECT * FROM offers WHERE angel_id={angel_id} AND ticket_id={ticket_id}"
+        cursor.execute(sql_request)
+        return cursor.fetchone() is None
+
+    @staticmethod
+    def getOffersByTicketId(ticket_id: int, cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
+        sql_request = f"SELECT * FROM offers WHERE ticket_id = {ticket_id}"
+        data = {'offers': []}
+        cursor.execute(sql_request)
+        offersData = cursor.fetchall()
+        for offerData in offersData:
+            data['offers'].append(
+                {
+                    "offer_id": offerData[0],
+                    "ticket_id": offerData[1],
+                    "angel_id": offerData[2],
+                    "creation_unix_time": offerData[3],
+                    "angel": Users.publicUserInformationById(offerData[2], cursor)
+                }
+            )
+        return data
+
+    @staticmethod
+    def acceptOffer(offer_id: int, cursor: sqlite3.Cursor):
+        sql_request = f"SELECT * FROM offers WHERE offer_id={offer_id}"
+        cursor.execute(sql_request)
+        offer_id, ticket_id, angel_id, creation_time = cursor.fetchone()
+        sql_request2 = f"UPDATE tickets SET status=1, angel_id={angel_id} WHERE ticket_id={ticket_id}"
+        cursor.execute(sql_request2)
+
+
+
+
     @staticmethod
     def cancelOrder(ticket_id: int, cursor: sqlite3.Cursor):
         cursor.execute(

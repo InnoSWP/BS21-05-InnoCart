@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'hello_screen.dart';
 
 class StartAnimation extends StatefulWidget {
   const StartAnimation({Key? key}) : super(key: key);
@@ -18,14 +19,14 @@ class _StartAnimationState extends State<StartAnimation> {
     Future.delayed(const Duration(milliseconds: 2000), () {
       setState(() {
         Navigator.of(context).pushReplacementNamed('/start');
-        /*
+
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 700),
             pageBuilder: (_, __, ___) => const HelloPage(),
           ),
-        );*/
+        );
       });
     });
   }

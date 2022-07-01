@@ -220,6 +220,7 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                        width: 140,
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
                           orderName,

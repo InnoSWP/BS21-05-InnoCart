@@ -47,7 +47,7 @@ class SetTicket extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 170,
+                    width: 120,
                     child: Text(
                       ticket.orderName,
                       overflow: TextOverflow.ellipsis,
