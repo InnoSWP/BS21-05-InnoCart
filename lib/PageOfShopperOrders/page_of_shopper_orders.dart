@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfAngelOrders/page_of_angel_orders.dart';
 import 'completed_popup_window.dart';
 import 'in_progress_popup_window.dart';
 import 'see_requests_window.dart';
@@ -10,39 +11,50 @@ import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
+import 'package:flip_card/flip_card.dart';
 
 class PageOfShopperOrders extends StatefulWidget {
   const PageOfShopperOrders({Key? key}) : super(key: key);
+  static  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
 
   @override
   State<PageOfShopperOrders> createState() => PageOfShopperOrdersState();
 }
 
 class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return FlipCard(
+      key: PageOfShopperOrders.cardKey,
+      flipOnTouch: false,
+      front: SafeArea(
         child: GestureDetector(
-            onHorizontalDragEnd: ((DragEndDetails details) {
-              if (details.primaryVelocity! < 0.0) {
-                pageUpdate((selectedPage + 1) % 5, context);
-              } else if (details.primaryVelocity! > 0.0) {
-                pageUpdate((selectedPage + 4) % 5, context);
-              }
-            }),
-            child: Scaffold(
-                backgroundColor: Colors.white,
-                appBar: const ThisAppBar(),
-                bottomNavigationBar: const MainNavigationBar(),
-                body: FutureBuilder<List<Widget>>(
-                    future: Tickets(context, this).getTickets(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView(children: snapshot.data!);
-                      } else {
-                        return const Text('Waiting for data');
-                      }
-                    })))); // This trailing comma makes auto-formatting nicer for build methods.
+          onHorizontalDragEnd: ((DragEndDetails details) {
+            if (details.primaryVelocity! < 0.0) {
+              pageUpdate((selectedPage + 1) % 5, context);
+            } else if (details.primaryVelocity! > 0.0) {
+              pageUpdate((selectedPage + 4) % 5, context);
+            }
+          }),
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar:  ThisAppBar(PageOfShopperOrders.cardKey),
+            bottomNavigationBar: const MainNavigationBar(),
+            body: FutureBuilder<List<Widget>>(
+                future: Tickets(context, this).getTickets(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView(children: snapshot.data!);
+                  } else {
+                    return const Text('Waiting for data');
+                  }
+                }),
+          ),
+        ),
+      ),
+      back: const PageOfAngelOrders(),
+    ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
@@ -285,6 +297,7 @@ class AbstractHistoryTicket extends StatelessWidget {
 
 class ShopperWaitingForAcceptHistoryTicket extends AbstractHistoryTicket {
   static const int type = 1;
+
   const ShopperWaitingForAcceptHistoryTicket(
       int ticketId,
       int shopperId,
@@ -335,6 +348,7 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
             orderDescription,
             "Complete order",
             page);
+
   @override
   Future<void> onButtonPress() async {
     if (kDebugMode) {
@@ -349,6 +363,7 @@ class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
 class ShopperCompletedHistoryTicket extends AbstractHistoryTicket {
   final int angelId;
   static const int type = 3;
+
   const ShopperCompletedHistoryTicket(
       int ticketId,
       int shopperId,

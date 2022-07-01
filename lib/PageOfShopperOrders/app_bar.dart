@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flip_card/flip_card.dart';
 class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ThisAppBar({Key? key}) : super(key: key);
+  GlobalKey<FlipCardState> cardKey;
+  ThisAppBar(this.cardKey,{Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -12,9 +13,9 @@ class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
-      title: ElevatedButton(
+      title: Center ( child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed('/AngelOrders');
+          cardKey.currentState?.toggleCard();
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.yellowAccent,
@@ -37,7 +38,7 @@ class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
             ],
           ),
         ),
-      ),
+      ),),
     );
   }
 }
