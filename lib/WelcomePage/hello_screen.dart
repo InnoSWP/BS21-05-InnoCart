@@ -15,10 +15,10 @@ class HelloPage extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 150,
-            child: Stack(children: [
-              Align(
-                  alignment: Alignment(0.5, 0),
-                  child: Hero(
+            child: Center( child: Stack(children: [
+              Padding(
+                  padding:EdgeInsets.only(left: 100)
+                  ,child: Hero(
                     tag: 'pochitta',
                     child: Container(
                       width: 150,
@@ -32,15 +32,15 @@ class HelloPage extends StatelessWidget {
                               stops: [0.2, 1.2])),
                     ),
                   )),
-              const Align(
-                alignment: Alignment(-0.2, 0.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 0, top: 45),
                 child: Text(
                   'Innocart',
                   style: TextStyle(fontSize: 50),
                 ),
               ),
             ]),
-          ),
+          ),),
           const SizedBox(
             height: 50,
           ),

@@ -29,10 +29,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onHorizontalDragEnd: ((DragEndDetails details) {
-          if (details.primaryVelocity! < 0.0) {
-            pageUpdate((selectedPage + 1) % 5, context);
-          } else if (details.primaryVelocity! > 0.0) {
-            pageUpdate((selectedPage + 4) % 5, context);
+          if (widget.ok == 0) {
+            if (details.primaryVelocity! < 0.0) {
+              pageUpdate((selectedPage + 1) % 5, context);
+            } else if (details.primaryVelocity! > 0.0) {
+              pageUpdate((selectedPage + 4) % 5, context);
+            }
           }
         }),
         child: Scaffold(

@@ -203,6 +203,7 @@ class AbstractHistoryTicket extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                        width: 130,
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
                           orderName,
