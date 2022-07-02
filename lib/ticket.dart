@@ -30,3 +30,9 @@ class Ticket {
     reward = data['reward'].toString();
   }
 }
+
+enum TicketType {
+  waitingForAccept,
+  inProgress,
+  completed,
+}

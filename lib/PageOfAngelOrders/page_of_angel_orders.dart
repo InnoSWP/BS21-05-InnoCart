@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/ticket.dart';
 import 'pop_up_notify.dart';
 import '../backend_functions.dart';
 import 'completed_popup_window.dart';
@@ -81,54 +82,33 @@ class Tickets {
     return listToReturn;
   }
 
-  AbstractAngelHistoryTicket createTicketFromData(Map<String, dynamic> data) {
+  TicketTMP createTicketFromData(Map<String, dynamic> data) {
+    int type = 0;
+    String buttonText = '';
+
     if (data['status'] == 0) {
-      return AngelWaitingForAcceptHistoryTicket(
-          data['ticket_id'],
-          data['shopper_id'],
-          data['title'],
-          data['weight'],
-          data['reward'],
-          data['description'],
-          data['shopper_info']['surname'],
-          data['shopper_info']['name'],
-          page);
+      type = 0;
+      buttonText = "Cancel request";
     } else if (data['status'] == 1) {
-      return AngelInProgressHistoryTicket(
-          data['ticket_id'],
-          data['shopper_id'],
-          data['angel_id'],
-          data['title'],
-          data['weight'],
-          data['reward'],
-          data['description'],
-          data['shopper_info']['surname'],
-          data['shopper_info']['name'],
-          page);
+      type = 1;
+      buttonText = "Cancel (Rewrite)";
     } else if (data['status'] == 2) {
-      return AngelCompletedHistoryTicket(
-          data['ticket_id'],
-          data['shopper_id'],
-          data['angel_id'],
-          data['title'],
-          data['weight'],
-          data['reward'],
-          data['description'],
-          data['shopper_info']['surname'],
-          data['shopper_info']['name'],
-          page);
+      type = 3;
+      buttonText = "Rate Shopper";
     }
-    return AbstractAngelHistoryTicket(
-        data['ticket_id'],
-        data['shopper_id'],
-        data['title'],
-        data['weight'],
-        data['reward'],
-        data['description'],
-        data['shopper_info']['surname'],
-        data['shopper_info']['name'],
-        "UNKNOWN ERROR",
-        page);
+    return TicketTMP(
+      type,
+      data['ticket_id'],
+      data['shopper_id'],
+      data['title'],
+      data['weight'],
+      data['reward'],
+      data['description'],
+      buttonText,
+      data['shopper_info']['surname'],
+      data['shopper_info']['name'],
+      page,
+    );
   }
 
   Widget generateHeader(String text) {
@@ -143,10 +123,11 @@ class Tickets {
   }
 }
 
-class AbstractAngelHistoryTicket extends StatelessWidget {
+class TicketTMP extends StatelessWidget {
   int ticketId = 0;
   int shopperId = 0;
-  int type = -1;
+  int angelId = 0;
+  final int type;
 
   String orderImage = 'assets/images/pizza.jpg';
   String orderName = "";
@@ -161,7 +142,8 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
   String orderDescription = "";
   String orderDate = "23.07.2022";
 
-  AbstractAngelHistoryTicket(
+  TicketTMP(
+      this.type,
       this.ticketId,
       this.shopperId,
       this.orderName,
@@ -175,18 +157,15 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
       {Key? key})
       : super(key: key);
 
-  Future<void> onButtonPress() async {}
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return GestureDetector(
       onTap: () {
-        if (this is AngelWaitingForAcceptHistoryTicket) {
+        if (type == 0) {
           waitingPopUpTicket(context, this);
-        } else if (this is AngelInProgressHistoryTicket) {
+        } else if (type == 1) {
           inProgressPopUpTicket(context, this);
-        } else {
+        } else if (type == 3) {
           completedPopUpTicket(context, this);
         }
       },
@@ -202,89 +181,116 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-
-                Container(
-                  width: 130,
-                  height: 130,
-                  color: Colors.blueGrey,
-                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                  child: Image.asset(
-                    orderImage,
-                    fit: BoxFit.fill,
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                    width: 130,
+                    height: 130,
+                    color: Colors.blueGrey,
+                    margin:
+                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                    child: Image.asset(
+                      orderImage,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
 
                 //TICKET INFO
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.only(top: 12),
-                        child: Text(
-                          orderName,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 20),
-                        )),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Bag_alt_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderWeight.toString())),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Pin_alt_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderDistance.toString())),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Time_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderTime)),
-                      ],
-                    ),
-                  ],
+                Flexible(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.only(top: 12),
+                          child: Text(
+                            orderName,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 20),
+                          )),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/Bag_alt_light.svg',
+                            color: Colors.black,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text(orderWeight.toString())),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/Pin_alt_light.svg',
+                            color: Colors.black,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text(orderDistance.toString())),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/Time_light.svg',
+                            color: Colors.black,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text(orderTime)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-
-                Container(
-                    margin: const EdgeInsets.all(12),
-                    color: Colors.yellowAccent,
-                    padding: const EdgeInsets.all(6),
-                    child: Row(
-                      children: [
-                        Text(orderPrice.toString()),
-                        SvgPicture.asset('assets/icons/Currency.svg'),
-                      ],
-                    )),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                      margin: const EdgeInsets.all(12),
+                      color: Colors.yellowAccent,
+                      padding: const EdgeInsets.all(7),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: Text(
+                              orderPrice.toString(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child:
+                                SvgPicture.asset('assets/icons/Currency.svg'),
+                          ),
+                        ],
+                      )),
+                ),
               ],
             ),
             //Button
 
             ElevatedButton(
-                onPressed: () {
-                  onButtonPress();
+                onPressed: () async {
+                  if (type == 0) {
+                    await cancelOffer(ticketId);
+                    popUpRequestCanceled(page.context);
+                    page.setState(() {});
+                  } else if (type == 1) {
+                    var result = await cancelBookOfTicket(ticketId);
+                    if (result) {
+                      popUpRequestCanceled(page.context);
+                      page.setState(() => {});
+                    }
+                  } else if (type == 3) {}
                 },
                 style: roundedWhite,
                 child: SizedBox(
@@ -297,114 +303,4 @@ class AbstractAngelHistoryTicket extends StatelessWidget {
       ),
     );
   }
-}
-
-class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
-  AngelWaitingForAcceptHistoryTicket(
-      int ticketId,
-      int shopperId,
-      String orderName,
-      double orderWeight,
-      double orderPrice,
-      String orderDescription,
-      String userName,
-      String userSurname,
-      PageOfAngelOrdersState page,
-      {Key? key})
-      : super(
-            key: key,
-            ticketId,
-            shopperId,
-            orderName,
-            orderWeight,
-            orderPrice,
-            orderDescription,
-            "Cancel request",
-            userName,
-            userSurname,
-            page) {
-    super.type = 0;
-  }
-
-  @override
-  Future<void> onButtonPress() async {
-    // await cancelBookOfTicket(ticketId);
-    await cancelOffer(ticketId);
-    popUpRequestCanceled(page.context);
-    page.setState(() {});
-  }
-}
-
-class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
-  int angelId = 0;
-
-  AngelInProgressHistoryTicket(
-      int ticketId,
-      int shopperId,
-      this.angelId,
-      String orderName,
-      double orderWeight,
-      double orderPrice,
-      String orderDescription,
-      String userName,
-      String userSurname,
-      PageOfAngelOrdersState page,
-      {Key? key})
-      : super(
-            key: key,
-            ticketId,
-            shopperId,
-            orderName,
-            orderWeight,
-            orderPrice,
-            orderDescription,
-            "Cancel (Rewrite)",
-            userName,
-            userSurname,
-            page) {
-    super.type = 1;
-  }
-
-  @override
-  Future<void> onButtonPress() async {
-    var result = await cancelBookOfTicket(ticketId);
-    if (result) {
-      popUpRequestCanceled(page.context);
-      super.page.setState(() => {});
-    }
-  }
-}
-
-class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket {
-  int angelId = 0;
-
-  AngelCompletedHistoryTicket(
-      int ticketId,
-      int shopperId,
-      this.angelId,
-      String orderName,
-      double orderWeight,
-      double orderPrice,
-      String orderDescription,
-      String userName,
-      String userSurname,
-      PageOfAngelOrdersState page,
-      {Key? key})
-      : super(
-            key: key,
-            ticketId,
-            shopperId,
-            orderName,
-            orderWeight,
-            orderPrice,
-            orderDescription,
-            "Rate Shopper",
-            userName,
-            userSurname,
-            page) {
-    super.type = 3;
-  }
-
-  @override
-  Future<void> onButtonPress() async {}
 }

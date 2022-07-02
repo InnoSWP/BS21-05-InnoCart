@@ -16,6 +16,71 @@ class SetTicket extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget lowBar = Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Row(
+          children: [
+            GestureDetector(
+              onTap: (() async {
+                Map<String, dynamic> data =
+                    await contactUserInformationById(ticket.shopperId);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => ProfilePage(
+                              ok: 1,
+                              rating: data['rating'],
+                              email: data['email'],
+                              telegram: data['telegram'],
+                            ))));
+              }),
+              child: CircleAvatar(
+                radius: (20),
+                backgroundImage: AssetImage(ticket.profilePicture),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Column(
+                children: [
+                  Text(ticket.userName),
+                  RatingBar.builder(
+                    initialRating: ticket.userRating,
+                    ignoreGestures: true,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemSize: 10,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (double value) {},
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        ElevatedButton(
+          onPressed: () {
+            // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
+            popUpRequestSentNotifier(context);
+            sendOfferToBookTicket(ticket.ticketId);
+            // Navigator.of(context)
+            //     .pushReplacementNamed('/PageOfActiveOrders');
+          },
+          style: roundedWhite,
+          child: SizedBox(
+            width: 150,
+            height: 32,
+            child: TextAndArrowButtonChild(buttonText: ticket.buttonText),
+          ),
+        ),
+      ]),
+    );
+
     return GestureDetector(
       onTap: () => popUpTicket(context, ticket),
       child: Container(
@@ -112,75 +177,7 @@ class SetTicket extends StatelessWidget {
                   )),
             ],
           ),
-          //Button
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: (() async {
-                          Map<String, dynamic> data =
-                              await contactUserInformationById(
-                                  ticket.shopperId);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => ProfilePage(
-                                        ok: 1,
-                                        rating: data['rating'],
-                                        email: data['email'],
-                                        telegram: data['telegram'],
-                                      ))));
-                        }),
-                        child: CircleAvatar(
-                          radius: (20),
-                          backgroundImage: AssetImage(ticket.profilePicture),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Column(
-                          children: [
-                            Text(ticket.userName),
-                            RatingBar.builder(
-                              initialRating: ticket.userRating,
-                              ignoreGestures: true,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 10,
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (double value) {},
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // bookTicket(ticketId); REPLACEMENT TO OFFER REQUEST
-                      popUpRequestSentNotifier(context);
-                      sendOfferToBookTicket(ticket.ticketId);
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed('/PageOfActiveOrders');
-                    },
-                    style: roundedWhite,
-                    child: SizedBox(
-                      width: 150,
-                      height: 32,
-                      child: TextAndArrowButtonChild(
-                          buttonText: ticket.buttonText),
-                    ),
-                  ),
-                ]),
-          ),
+          lowBar,
         ]),
       ),
     );

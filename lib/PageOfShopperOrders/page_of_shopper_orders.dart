@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/ticket.dart';
 import 'completed_popup_window.dart';
 import 'in_progress_popup_window.dart';
 import 'see_requests_window.dart';
@@ -48,9 +49,6 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
 
 class Tickets {
   late PageOfShopperOrdersState page;
-  late List<Widget> waitingForAccept;
-  late List<Widget> inProgress;
-  late List<Widget> completed;
 
   Tickets(BuildContext context, this.page);
 
@@ -78,46 +76,31 @@ class Tickets {
     return listToReturn;
   }
 
-  AbstractHistoryTicket createTicketFromData(Map<String, dynamic> data) {
-    if (data['status'] == 0) {
-      return ShopperWaitingForAcceptHistoryTicket(
-          data['ticket_id'],
-          data['shopper_id'],
-          data['title'],
-          data['weight'],
-          data['reward'],
-          data['description'],
-          page);
-    } else if (data['status'] == 1) {
-      return ShopperInProgressHistoryTicket(
-          data['ticket_id'],
-          data['shopper_id'],
-          data['angel_id'],
-          data['title'],
-          data['weight'],
-          data['reward'],
-          data['description'],
-          page);
-    } else if (data['status'] == 2) {
-      return ShopperCompletedHistoryTicket(
-          data['ticket_id'],
-          data['shopper_id'],
-          data['angel_id'],
-          data['title'],
-          data['weight'],
-          data['reward'],
-          data['description'],
-          page);
+  TicketTMP createTicketFromData(Map<String, dynamic> data) {
+    final int type = data['status'] + 1;
+    int angelId = -1;
+    String buttonText = "See requests";
+
+    if (type == 2) {
+      buttonText = "Complete order";
+      angelId = data['angel_id'];
+    } else {
+      buttonText = "Rate Angel";
+      angelId = data['angel_id'];
     }
-    return AbstractHistoryTicket(
-        data['ticket_id'],
-        data['shopper_id'],
-        data['title'],
-        data['weight'],
-        data['reward'],
-        data['description'],
-        "UNKNOWN ERROR",
-        page);
+
+    return TicketTMP(
+      type,
+      data['ticket_id'],
+      angelId,
+      data['shopper_id'],
+      data['title'],
+      data['weight'],
+      data['reward'],
+      data['description'],
+      buttonText,
+      page,
+    );
   }
 
   Widget generateHeader(String text) {
@@ -132,9 +115,11 @@ class Tickets {
   }
 }
 
-class AbstractHistoryTicket extends StatelessWidget {
+class TicketTMP extends StatelessWidget {
+  final int type;
   final int ticketId;
   final int shopperId;
+  final int angelId;
 
   final String orderImage = 'assets/images/rolls.jpg';
   final String orderName;
@@ -147,8 +132,10 @@ class AbstractHistoryTicket extends StatelessWidget {
   final PageOfShopperOrdersState page;
   final String orderDescription;
 
-  const AbstractHistoryTicket(
+  TicketTMP(
+      this.type,
       this.ticketId,
+      this.angelId,
       this.shopperId,
       this.orderName,
       this.orderWeight,
@@ -159,16 +146,13 @@ class AbstractHistoryTicket extends StatelessWidget {
       {Key? key})
       : super(key: key);
 
-  Future<void> onButtonPress() async {}
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return GestureDetector(
       onTap: () {
-        if (this is ShopperWaitingForAcceptHistoryTicket) {
+        if (type == 1) {
           waitingPopUpTicket(context, this);
-        } else if (this is ShopperInProgressHistoryTicket) {
+        } else if (type == 2) {
           inProgressPopUpTicket(context, this);
         } else {
           completedPopUpTicket(context, this);
@@ -186,88 +170,118 @@ class AbstractHistoryTicket extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
-
-                Container(
-                  width: 130,
-                  height: 130,
-                  color: Colors.blueGrey,
-                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                  child: Image.asset(
-                    orderImage,
-                    fit: BoxFit.fill,
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                    width: 130,
+                    height: 130,
+                    color: Colors.blueGrey,
+                    margin:
+                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                    child: Image.asset(
+                      orderImage,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
+
                 //TICKET INFO
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.only(top: 12),
-                        child: Text(
-                          orderName,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 20),
-                        )),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Bag_alt_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderWeight.toString())),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Pin_alt_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderDistance.toString())),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/Time_light.svg',
-                          color: Colors.black,
-                          width: 24,
-                          height: 24,
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 10),
-                            child: Text(orderTime)),
-                      ],
-                    ),
-                  ],
+                Flexible(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.only(top: 12),
+                          child: Text(
+                            orderName,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 20),
+                          )),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/Bag_alt_light.svg',
+                            color: Colors.black,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text(orderWeight.toString())),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/Pin_alt_light.svg',
+                            color: Colors.black,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text(orderDistance.toString())),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/Time_light.svg',
+                            color: Colors.black,
+                            width: 24,
+                            height: 24,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Text(orderTime)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-
-                Container(
-                    margin: const EdgeInsets.all(12),
-                    color: Colors.yellowAccent,
-                    padding: const EdgeInsets.all(6),
-                    child: Row(
-                      children: [
-                        Text(orderPrice.toString()),
-                        SvgPicture.asset('assets/icons/Currency.svg'),
-                      ],
-                    )),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                      margin: const EdgeInsets.all(12),
+                      color: Colors.yellowAccent,
+                      padding: const EdgeInsets.all(7),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: Text(
+                              orderPrice.toString(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child:
+                                SvgPicture.asset('assets/icons/Currency.svg'),
+                          ),
+                        ],
+                      )),
+                ),
               ],
             ),
             //Button
 
             ElevatedButton(
-                onPressed: () {
-                  onButtonPress();
+                onPressed: () async {
+                  if (type == 1) {
+                    seeRequestWindow(page.context, ticketId, page);
+                  } else if (type == 2) {
+                    if (kDebugMode) {
+                      print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
+                    }
+                    bool result = await completeOrder(ticketId);
+                    if (result) {
+                      Navigator.of(page.context)
+                          .pushReplacementNamed('/ShopperOrders');
+                    }
+                  }
+                  //onButtonPress();
                 },
                 style: roundedWhite,
                 child: SizedBox(
@@ -280,95 +294,4 @@ class AbstractHistoryTicket extends StatelessWidget {
       ),
     );
   }
-}
-
-class ShopperWaitingForAcceptHistoryTicket extends AbstractHistoryTicket {
-  static const int type = 1;
-  const ShopperWaitingForAcceptHistoryTicket(
-      int ticketId,
-      int shopperId,
-      String orderName,
-      double orderWeight,
-      double orderPrice,
-      String orderDescription,
-      PageOfShopperOrdersState page,
-      {Key? key})
-      : super(
-            key: key,
-            ticketId,
-            shopperId,
-            orderName,
-            orderWeight,
-            orderPrice,
-            orderDescription,
-            "See requests",
-            page);
-
-  @override
-  Future<void> onButtonPress() async {
-    seeRequestWindow(page.context, ticketId, page);
-  }
-}
-
-class ShopperInProgressHistoryTicket extends AbstractHistoryTicket {
-  final int angelId;
-  static const int type = 2;
-
-  const ShopperInProgressHistoryTicket(
-      int ticketId,
-      int shopperId,
-      this.angelId,
-      String orderName,
-      double orderWeight,
-      double orderPrice,
-      String orderDescription,
-      PageOfShopperOrdersState page,
-      {Key? key})
-      : super(
-            key: key,
-            ticketId,
-            shopperId,
-            orderName,
-            orderWeight,
-            orderPrice,
-            orderDescription,
-            "Complete order",
-            page);
-  @override
-  Future<void> onButtonPress() async {
-    if (kDebugMode) {
-      print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
-    }
-    bool result = await completeOrder(ticketId);
-    if (result)
-      Navigator.of(page.context).pushReplacementNamed('/ShopperOrders');
-  }
-}
-
-class ShopperCompletedHistoryTicket extends AbstractHistoryTicket {
-  final int angelId;
-  static const int type = 3;
-  const ShopperCompletedHistoryTicket(
-      int ticketId,
-      int shopperId,
-      this.angelId,
-      String orderName,
-      double orderWeight,
-      double orderPrice,
-      String orderDescription,
-      PageOfShopperOrdersState page,
-      {Key? key})
-      : super(
-            key: key,
-            ticketId,
-            shopperId,
-            orderName,
-            orderWeight,
-            orderPrice,
-            orderDescription,
-            "Rate Angel",
-            page);
-
-  @override
-  Future<void> onButtonPress() async {}
 }

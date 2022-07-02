@@ -6,8 +6,7 @@ import 'page_of_shopper_orders.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
 
-Future completedPopUpTicket(
-    BuildContext context, AbstractHistoryTicket ticket) {
+Future completedPopUpTicket(BuildContext context, TicketTMP ticket) {
   String profilePicture = 'assets/images/man1.png';
   String orderAngel = 'Amr. T.';
 
