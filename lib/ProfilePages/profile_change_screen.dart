@@ -94,6 +94,8 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                       BorderRadius.all(Radius.circular(7.0)),
                                 ),
                                 hintText: 'Enter E-mail',
+                                contentPadding: EdgeInsets.only(top: 7, left: 5),
+
                               ),
                             ),
                           ),
@@ -127,6 +129,8 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                       BorderRadius.all(Radius.circular(7.0)),
                                 ),
                                 hintText: 'Enter alias',
+                                contentPadding: EdgeInsets.only(top: 7, left: 5),
+
                               ),
                             ),
                           ),
@@ -142,7 +146,7 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width: 125,
+                            width: 115,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.white,
@@ -152,10 +156,11 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                 Navigator.pushReplacementNamed(
                                     context, '/ProfileScreen');
                               },
-                              child: const Text(
-                                'Go back',
-                                style: TextStyle(color: Colors.black),
-                              ),
+                              child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                  children:  [Icon(Icons.arrow_back_ios_outlined, color: Colors.black,),const Text(
+                                    'Go back',
+                                    style: TextStyle(color: Colors.black),
+                                  )])
                             ),
                           ),
                           SizedBox(
@@ -174,10 +179,11 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                       context, '/ProfileScreen');
                                 }
                               },
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(color: Colors.black),
-                              ),
+                              child: Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                  children:  [const Text(
+                                    'Save',
+                                    style: TextStyle(color: Colors.black),
+                                  ), Icon(Icons.check, color: Colors.black,)])
                             ),
                           )
                         ],

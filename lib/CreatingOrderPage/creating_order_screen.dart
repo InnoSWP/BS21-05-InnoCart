@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../UI/Buttons/elevated_button_style.dart';
 import '../backend_functions.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:file_picker/file_picker.dart';
+import '../firebase_functions.dart';
 
 class OrderFactoryPage extends StatefulWidget {
   const OrderFactoryPage({Key? key}) : super(key: key);
@@ -12,14 +16,35 @@ class OrderFactoryPage extends StatefulWidget {
 }
 
 class _OrderFactoryPageState extends State<OrderFactoryPage> {
+  PlatformFile? pickedFile;
   String title = "";
   String description = "";
   String type = "";
   double reward = 0.0;
   double weight = 0.0;
 
+
+  Future selectFile() async{
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    setState((){pickedFile = result.files.first;});
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime selectedDate = DateTime.now();
+
+    Future<void> selectDate() async {
+      final DateTime? picked = await showDatePicker(
+          context: context,
+          initialDate: selectedDate,
+          firstDate: selectedDate,
+          lastDate: DateTime(2101));
+      if (picked != null && picked != selectedDate) {
+        selectedDate = picked;
+      }
+    }
+
     return GestureDetector(
         onHorizontalDragEnd: ((DragEndDetails details) {
           if (details.primaryVelocity! < 0.0) {
@@ -59,6 +84,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                 BorderRadius.all(Radius.circular(7.0)),
                           ),
                           hintText: 'Name',
+                          contentPadding: EdgeInsets.only(top: 7, left: 5),
                         ),
                       )),
                   const SizedBox(
@@ -69,12 +95,15 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: 130,
-                          height: 130,
-                          color: Colors.blueGrey,
-                          margin: const EdgeInsets.only(
-                              top: 12, left: 12, bottom: 10),
+                        OutlinedButton(
+                          onPressed: () => selectFile(),
+                          child: Container(
+
+                            padding: EdgeInsets.all(0.0),
+                            width: 130,
+                            height: 130,
+                            child: Text(pickedFile == null?'хуй':pickedFile!.name),
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
@@ -108,6 +137,12 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                       BorderRadius.all(Radius.circular(7.0)),
                                 ),
                                 hintText: 'Enter weight',
+                                suffix: Padding(
+                                  padding: EdgeInsets.only(right: 5),
+                                  child: Text('KG'),
+                                ),
+                                contentPadding:
+                                    EdgeInsets.only(top: 7, left: 5),
                               ),
                             ),
                           ),
@@ -135,6 +170,8 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                       BorderRadius.all(Radius.circular(7.0)),
                                 ),
                                 hintText: 'Add location',
+                                contentPadding:
+                                    EdgeInsets.only(top: 7, left: 5),
                               ),
                             ),
                           ),
@@ -189,6 +226,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                           borderRadius: BorderRadius.all(Radius.circular(7.0)),
                         ),
                         hintText: 'Type',
+                        contentPadding: EdgeInsets.only(top: 7, left: 5),
                       ),
                     ),
                   ),
@@ -212,7 +250,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                 reward = 0;
                               }
                             },
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7.0)),
@@ -225,7 +263,12 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7.0)),
                               ),
-                              hintText: 'In rubles',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(right: 0, top: 0),
+                                child: SvgPicture.asset(
+                                    'assets/icons/Currency.svg'),
+                              ),
+                              contentPadding: EdgeInsets.only(top: 7, left: 5),
                             ),
                           ),
                         ),
@@ -238,37 +281,39 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                   SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Deadline'),
-                        SizedBox(
-                          width: 100,
-                          height: 30,
-                          child: TextField(
-                            onChanged: (text) {},
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(7.0)),
-                                borderSide:
-                                    BorderSide(color: Colors.black, width: 2.0),
+                        ElevatedButton(
+                            onPressed: () => selectDate(),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.black, width: 2.0),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(7.0)),
-                              ),
-                              hintText: 'Set date',
+                              elevation: 0,
+                              side: const BorderSide(
+                                  color: Colors.black, width: 2),
                             ),
-                          ),
-                        ),
+                            child: SizedBox(
+                                width: 130,
+                                height: 30,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/Calendar_light.svg'),
+                                    const Text(
+                                      'Date',
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 20),
+                                    ),
+                                  ],
+                                ))),
                         SizedBox(
                           width: 100,
                           height: 30,
                           child: TextField(
                             onChanged: (text) {},
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7.0)),
@@ -281,7 +326,10 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7.0)),
                               ),
-                              hintText: 'Set time',
+                              hintText: 'Time',
+                              prefixIcon: SvgPicture.asset(
+                                  'assets/icons/Time_light.svg'),
+                              contentPadding: EdgeInsets.only(top: 7, left: 5),
                             ),
                           ),
                         ),
@@ -302,13 +350,14 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                           if (kDebugMode) {
                             print("Button had been pressed");
                           }
-                          await registerNewTicket({
+                          Map<String, dynamic> result = await registerNewTicket({
                             "title": title,
                             "description": description,
                             "weight": weight.toString().replaceAll('.', ','),
                             "product_type": type,
                             "reward": reward.toString().replaceAll('.', ',')
                           });
+                          await pushFirebaseStorage(result['ticket_id'], pickedFile);
                           Navigator.of(context)
                               .pushReplacementNamed('/PageOfActiveOrders');
                         },

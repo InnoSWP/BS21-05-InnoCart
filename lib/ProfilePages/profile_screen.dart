@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import '../backend_functions.dart';
 import '../navigation_bar.dart';
 import '../user.dart';
@@ -107,6 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               Center(
                                 child: SizedBox(
+                                  width: 130,
                                   height: 35,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -117,15 +119,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Navigator.pushReplacementNamed(
                                           context, '/ProfileChangeScreen');
                                     },
-                                    child: const Text(
+                                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        children:  [const Text(
                                       'Edit profile',
                                       style: TextStyle(color: Colors.black),
-                                    ),
+                                    ), SvgPicture.asset('assets/icons/Pencil.svg')]),
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 15,),
                               Center(
                                 child: SizedBox(
+                                  width: 115,
                                   height: 35,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -140,10 +145,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Navigator.pushReplacementNamed(
                                           context, '/start');
                                     },
-                                    child: const Text(
-                                      'Log out',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
+                                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        children:  [const Text(
+                                          'Log out',
+                                          style: TextStyle(color: Colors.black),
+                                        ), Icon(Icons.logout, color: Colors.black,)])
                                   ),
                                 ),
                               )
