@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       initialRoute: '/',
       onGenerateRoute: generateRoute,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
