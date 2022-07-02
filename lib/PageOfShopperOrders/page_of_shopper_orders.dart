@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inno_cart/ticket.dart';
+import '../ticket.dart';
 import 'completed_popup_window.dart';
 import 'in_progress_popup_window.dart';
 import 'see_requests_window.dart';
@@ -84,7 +84,7 @@ class Tickets {
     if (type == 2) {
       buttonText = "Complete order";
       angelId = data['angel_id'];
-    } else {
+    } else if (type == 3) {
       buttonText = "Rate Angel";
       angelId = data['angel_id'];
     }
