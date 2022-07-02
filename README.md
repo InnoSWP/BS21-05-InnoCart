@@ -52,7 +52,7 @@ Please use the link.
 
 ----
 
-## Licence
+## License
 
 The application is signed and protected by the freely redistributable [MIT license](https://github.com/InnoSWP/BS21-05-InnoCart/blob/main/LICENSE). The creators of the application waive intellectual rights to the project, distribution, modification, commercial and non-commercial use are free for everyone. The source code of the application, all executable files are in the public domain in this repository. Also, the creators of the application disclaim liability for direct or indirect damage associated with the use of the application.
 
