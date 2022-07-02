@@ -1,33 +1,71 @@
 class Ticket {
-  late int ticketId = 0;
-  late int shopperId = 0;
+  late final int ticketId;
+  late final int shopperId;
+  late int angelId = -1;
+  late final String title;
+  late final String description;
+  late final double weight;
+  final String distance = '124 m';
+  final String ticketImage = 'assets/images/pizza.jpg';
+  final String type = 'Food';
+  late final String reward;
+  final String deadlineUnixTime = '14:00';
+  final String creationUnixTime = '14:00';
+  final String deadlineDate = '23.03.2022';
+  late final TicketType status;
 
+  late final TickerUser shopper;
+  late final TickerUser angel;
+
+  //Will be deleted
   final String buttonText = 'Send request';
-  final String profilePicture = 'assets/images/man1.png';
-  final String orderImage = 'assets/images/pizza.jpg';
-  late String orderName = "";
-  late double orderWeight = 3.0;
-  final String orderDistance = '124 m';
-  late String orderTime = '14:00';
-  late String orderDate = '03.06.2022';
-  late String reward = '';
-  late String orderInfo = 'I want two DoDo peperoni pizzas, thank you!';
-  late String userName = "";
-  late String userSurname = "";
-  late String userNickname = "";
-  late double userRating = 0;
 
   Ticket(Map<String, dynamic> data) {
     ticketId = data['ticket_id'];
     shopperId = data['shopper_id'];
-    orderName = data['title'];
-    orderWeight = data['weight'];
-    userName = data['shopper_info']['name'];
-    userSurname = data['shopper_info']['surname'];
-    userNickname = data['shopper_info']['nickname'];
-    userRating = data['shopper_info']['rating'];
-    orderInfo = data['description'];
+    title = data['title'];
+    description = data['description'];
+    weight = data['weight'];
     reward = data['reward'].toString();
+
+    if (data['status'] == 0) {
+      status = TicketType.waitingForAccept;
+    } else if (data['status'] == 1) {
+      status = TicketType.inProgress;
+    } else if (data['status'] == 2) {
+      status = TicketType.completed;
+    }
+    print(data);
+
+    shopper = TickerUser(
+      data['shopper_id'],
+      data['shopper_info']['nickname'],
+      data['shopper_info']['name'],
+      data['shopper_info']['surname'],
+      data['shopper_info']['email'],
+      data['shopper_info']['phone_number'],
+      data['shopper_info']['telegram'],
+      //data['shopper_info']['profile_image'],
+      data['shopper_info']['rating'],
+    );
+    print("shopper is fine");
+    print(data);
+    if (status != TicketType.waitingForAccept) {
+      angel = TickerUser(
+        data['angel_id'],
+        data['angel_info']['nickname'],
+        data['angel_info']['name'],
+        data['angel_info']['surname'],
+        data['angel_info']['email'],
+        data['angel_info']['phone_number'],
+        data['angel_info']['telegram'],
+        //data['angel_info']['profile_image'],
+        data['angel_info']['rating'],
+      );
+      print("angel has been initialized");
+    } else {
+      angel = TickerUser(0, '', '', '', '', '', '', 0.0);
+    }
   }
 }
 
@@ -35,4 +73,18 @@ enum TicketType {
   waitingForAccept,
   inProgress,
   completed,
+}
+
+class TickerUser {
+  final int id;
+  final String nickname;
+  final String name;
+  String surname;
+  String email = '';
+  String phoneNumber = '';
+  String telegram = '';
+  String profileImage = 'assets/images/man1.png';
+  final double rating;
+  TickerUser(this.id, this.nickname, this.name, this.surname, this.email,
+      this.phoneNumber, this.telegram, this.rating);
 }

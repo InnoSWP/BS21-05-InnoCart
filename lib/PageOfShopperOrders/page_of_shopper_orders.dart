@@ -36,7 +36,7 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
                 appBar: const ThisAppBar(),
                 bottomNavigationBar: const MainNavigationBar(),
                 body: FutureBuilder<List<Widget>>(
-                    future: Tickets(context, this).getTickets(),
+                    future: getTickets(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return ListView(children: snapshot.data!);
@@ -45,12 +45,6 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
                       }
                     })))); // This trailing comma makes auto-formatting nicer for build methods.
   }
-}
-
-class Tickets {
-  late PageOfShopperOrdersState page;
-
-  Tickets(BuildContext context, this.page);
 
   Future<List<Widget>> getTickets() async {
     Map<String, dynamic> waitingForAcceptHistoryTickets =
@@ -64,6 +58,7 @@ class Tickets {
         in waitingForAcceptHistoryTickets['tickets']) {
       listToReturn.add(createTicketFromData(tokenNote));
     }
+
     listToReturn.add(generateHeader('In progress'));
     for (Map<String, dynamic> tokenNote
         in inProgressHistoryTickets['tickets']) {
@@ -76,31 +71,8 @@ class Tickets {
     return listToReturn;
   }
 
-  TicketTMP createTicketFromData(Map<String, dynamic> data) {
-    final int type = data['status'] + 1;
-    int angelId = -1;
-    String buttonText = "See requests";
-
-    if (type == 2) {
-      buttonText = "Complete order";
-      angelId = data['angel_id'];
-    } else if (type == 3) {
-      buttonText = "Rate Angel";
-      angelId = data['angel_id'];
-    }
-
-    return TicketTMP(
-      type,
-      data['ticket_id'],
-      angelId,
-      data['shopper_id'],
-      data['title'],
-      data['weight'],
-      data['reward'],
-      data['description'],
-      buttonText,
-      page,
-    );
+  SetTicket createTicketFromData(Map<String, dynamic> data) {
+    return SetTicket(Ticket(data));
   }
 
   Widget generateHeader(String text) {
@@ -115,48 +87,22 @@ class Tickets {
   }
 }
 
-class TicketTMP extends StatelessWidget {
-  final int type;
-  final int ticketId;
-  final int shopperId;
-  final int angelId;
-
-  final String orderImage = 'assets/images/rolls.jpg';
-  final String orderName;
-  final double orderWeight;
-  final double orderDistance = 100; // OVERRIDE IN MVP V2
-  final String orderDate = "23.06.2022"; // OVERRIDE IN MVP V2
-  final String orderTime = "14:00";
-  final double orderPrice;
-  final String buttonText;
-  final PageOfShopperOrdersState page;
-  final String orderDescription;
-
-  TicketTMP(
-      this.type,
-      this.ticketId,
-      this.angelId,
-      this.shopperId,
-      this.orderName,
-      this.orderWeight,
-      this.orderPrice,
-      this.orderDescription,
-      this.buttonText,
-      this.page,
-      {Key? key})
-      : super(key: key);
+class SetTicket extends StatelessWidget {
+  final Ticket ticket;
+  final String buttonText = 'test';
+  const SetTicket(this.ticket, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (type == 1) {
+        /*if (type == 1) {
           waitingPopUpTicket(context, this);
         } else if (type == 2) {
           inProgressPopUpTicket(context, this);
         } else {
           completedPopUpTicket(context, this);
-        }
+        }*/
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
@@ -179,7 +125,7 @@ class TicketTMP extends StatelessWidget {
                     margin:
                         const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                     child: Image.asset(
-                      orderImage,
+                      ticket.ticketImage,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -194,7 +140,7 @@ class TicketTMP extends StatelessWidget {
                       Container(
                           margin: const EdgeInsets.only(top: 12),
                           child: Text(
-                            orderName,
+                            ticket.title,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 20),
                           )),
@@ -208,7 +154,7 @@ class TicketTMP extends StatelessWidget {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderWeight.toString())),
+                              child: Text(ticket.weight.toString())),
                         ],
                       ),
                       Row(
@@ -221,7 +167,7 @@ class TicketTMP extends StatelessWidget {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderDistance.toString())),
+                              child: Text(ticket.distance.toString())),
                         ],
                       ),
                       Row(
@@ -234,7 +180,7 @@ class TicketTMP extends StatelessWidget {
                           ),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: Text(orderTime)),
+                              child: Text(ticket.deadlineUnixTime)),
                         ],
                       ),
                     ],
@@ -251,7 +197,7 @@ class TicketTMP extends StatelessWidget {
                           Flexible(
                             flex: 2,
                             child: Text(
-                              orderPrice.toString(),
+                              ticket.reward.toString(),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -269,7 +215,7 @@ class TicketTMP extends StatelessWidget {
 
             ElevatedButton(
                 onPressed: () async {
-                  if (type == 1) {
+                  /*if (type == 1) {
                     seeRequestWindow(page.context, ticketId, page);
                   } else if (type == 2) {
                     if (kDebugMode) {
@@ -281,7 +227,7 @@ class TicketTMP extends StatelessWidget {
                           .pushReplacementNamed('/ShopperOrders');
                     }
                   }
-                  //onButtonPress();
+                  //onButtonPress();*/
                 },
                 style: roundedWhite,
                 child: SizedBox(

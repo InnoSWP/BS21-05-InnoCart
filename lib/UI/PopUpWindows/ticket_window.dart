@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../main.dart';
 import '../../ticket.dart';
-
+/*
 class TicketWindow extends StatelessWidget {
   final Ticket ticket;
   final Widget lowBar;
@@ -128,3 +128,4 @@ class TicketWindow extends StatelessWidget {
     );
   }
 }
+*/

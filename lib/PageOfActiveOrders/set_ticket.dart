@@ -11,7 +11,7 @@ import 'pop_up_window_with_ticket.dart';
 
 class SetTicket extends StatelessWidget {
   final Ticket ticket;
-
+  final String buttonText = 'Send request';
   const SetTicket({Key? key, required this.ticket}) : super(key: key);
 
   @override
@@ -37,16 +37,16 @@ class SetTicket extends StatelessWidget {
               }),
               child: CircleAvatar(
                 radius: (20),
-                backgroundImage: AssetImage(ticket.profilePicture),
+                backgroundImage: AssetImage(ticket.shopper.profileImage),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Column(
                 children: [
-                  Text(ticket.userName),
+                  Text(ticket.shopper.name),
                   RatingBar.builder(
-                    initialRating: ticket.userRating,
+                    initialRating: ticket.shopper.rating,
                     ignoreGestures: true,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
@@ -75,14 +75,16 @@ class SetTicket extends StatelessWidget {
           child: SizedBox(
             width: 150,
             height: 32,
-            child: TextAndArrowButtonChild(buttonText: ticket.buttonText),
+            child: TextAndArrowButtonChild(buttonText: buttonText),
           ),
         ),
       ]),
     );
 
     return GestureDetector(
-      onTap: () => popUpTicket(context, ticket),
+      onTap: () {
+        //popUpTicket(context, ticket);
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: bottomPadding),
         padding: const EdgeInsets.all(20),
@@ -101,7 +103,7 @@ class SetTicket extends StatelessWidget {
                 color: Colors.blueGrey,
                 //margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
                 child: Image.asset(
-                  ticket.orderImage,
+                  ticket.ticketImage,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -114,7 +116,7 @@ class SetTicket extends StatelessWidget {
                   SizedBox(
                     width: 170,
                     child: Text(
-                      ticket.orderName,
+                      ticket.title,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 20),
                     ),
@@ -129,7 +131,7 @@ class SetTicket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text("${ticket.orderWeight} KG")),
+                          child: Text("${ticket.weight} KG")),
                     ],
                   ),
                   Row(
@@ -142,7 +144,7 @@ class SetTicket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.orderDistance)),
+                          child: Text(ticket.distance)),
                     ],
                   ),
                   Row(
@@ -155,7 +157,7 @@ class SetTicket extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.orderTime)),
+                          child: Text(ticket.deadlineUnixTime)),
                     ],
                   ),
                 ],

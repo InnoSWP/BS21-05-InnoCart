@@ -4,7 +4,7 @@ import '../UI/PopUpWindows/ticket_window.dart';
 import '../ticket.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import 'request_sent.dart';
-
+/*
 Future popUpTicket(BuildContext context, Ticket ticket) {
   Widget lowBar = Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,3 +64,4 @@ Future popUpTicket(BuildContext context, Ticket ticket) {
     },
   );
 }
+*/
