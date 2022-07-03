@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../backend_functions.dart';
 import '../../ticket.dart';
 import '../page_of_shopper_orders.dart';
 import '../../UI/PopUpWindows/order_canceled.dart';
@@ -45,10 +46,13 @@ Widget inProgress(BuildContext context, Ticket ticket, String buttonText,
         ],
       ),
       ElevatedButton(
-        onPressed: () {
-          Navigator.pop(context);
-          popUpOrderCanceled(context);
-          page.setState(() {});
+        onPressed: () async {
+          bool result = await cancelOrder(ticket.ticketId);
+          if (result) {
+            Navigator.of(context).pop();
+            popUpOrderCanceled(context);
+            page.setState(() {});
+          }
         },
         style: roundedWhite,
         child: SizedBox(
