@@ -55,16 +55,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 70,
                   ),
-                  CircleAvatar(
-                    radius: 90,
-                    backgroundImage: pickedFile != null
-                        ? Image.file(
-                            File(pickedFile!.path!),
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ).image
-                        : Image.asset('assets/images/pizza.jpg').image,
-                  ),
+
+                  CircleAvatar(radius: 90, backgroundImage:pickedFile != null
+                      ? Image.file(
+                    File(pickedFile!.path!),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ).image
+                      : Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU').image,),
+
                   const SizedBox(
                     height: 15,
                   ),

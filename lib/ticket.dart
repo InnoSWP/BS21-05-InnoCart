@@ -6,18 +6,18 @@ class Ticket {
   late final String description;
   late final double weight;
   final String distance = '124 m';
-  final String ticketImage = 'assets/images/pizza.jpg';
+  final String ticketImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
   final String type = 'Food';
   late final String reward;
   final String deadlineUnixTime = '14:00';
   final String creationUnixTime = '14:00';
   final String deadlineDate = '23.03.2022';
   late final TicketType status;
-
+  late final String url;
   late final TickerUser shopper;
   late final TickerUser angel;
 
-  Ticket(Map<String, dynamic> data) {
+  Ticket(Map<String, dynamic> data, this.url) {
     ticketId = data['ticket_id'];
     shopperId = data['shopper_id'];
     title = data['title'];

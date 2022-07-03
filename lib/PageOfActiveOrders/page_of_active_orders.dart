@@ -8,6 +8,7 @@ import 'set_ticket.dart';
 import '../backend_functions.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+import '../firebase_functions.dart';
 
 class PageOfActiveOrders extends StatefulWidget {
   const PageOfActiveOrders({Key? key}) : super(key: key);
@@ -61,7 +62,11 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
           response.body.replaceAll("'", '"').replaceAll("None", '""'));
 
       for (Map<String, dynamic> ticketNote in jsonData['tickets']) {
-        tickets.add(SetTicket(ticket: Ticket(ticketNote)));
+        String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+        if (await ticketExists(ticketNote['ticket_id'])){
+          url = await getUrlByTicketId(ticketNote['ticket_id']);
+    }
+    tickets.add(SetTicket(ticket: Ticket(ticketNote, url)));
       }
     }
 

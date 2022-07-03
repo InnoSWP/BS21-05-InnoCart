@@ -12,7 +12,6 @@ class SetTicket extends StatelessWidget {
   final Ticket ticket;
   final String buttonText = 'Send request';
   const SetTicket({Key? key, required this.ticket}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final Widget lowBar = Container(

@@ -9,7 +9,6 @@ class TicketBlock extends StatelessWidget {
   final Ticket ticket;
   final Widget lowBar;
   final Widget windowLowBar;
-
   const TicketBlock(
       {Key? key,
       required this.ticket,
@@ -37,7 +36,7 @@ class TicketBlock extends StatelessWidget {
                 Flexible(
                   flex: 3,
                   child: Image.network(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU'),
+                      ticket.url),
                 ),
 
                 //TICKET INFO
