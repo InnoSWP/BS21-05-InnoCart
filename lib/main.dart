@@ -6,9 +6,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:file_picker/file_picker.dart';
 
 bool ok = false;
-
+PlatformFile? pickedFile = null;
 Future<void> calc() async {
   final directory = await getApplicationDocumentsDirectory();
   File file = File('${directory.path}/data.json');

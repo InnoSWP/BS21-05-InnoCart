@@ -30,7 +30,6 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-PlatformFile? pickedFile = null;
 
 class _ProfilePageState extends State<ProfilePage> {
   @override

@@ -65,8 +65,12 @@ class PageOfActiveOrdersState extends State<PageOfActiveOrders> {
         String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
         if (await ticketExists(ticketNote['ticket_id'])){
           url = await getUrlByTicketId(ticketNote['ticket_id']);
-    }
-    tickets.add(SetTicket(ticket: Ticket(ticketNote, url)));
+        }
+        String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+        if (await userExists(ticketNote['shopper_id'])){
+          url1 = await getUrlByUserId(ticketNote['shopper_id']);
+        }
+    tickets.add(SetTicket(ticket: Ticket(ticketNote, url, url1)));
       }
     }
 

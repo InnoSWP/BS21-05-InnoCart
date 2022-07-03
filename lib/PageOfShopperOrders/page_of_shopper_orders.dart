@@ -65,7 +65,11 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      listToReturn.add(createTicketFromData(tokenNote, this, url));
+      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['angel_id'])){
+        url1 = await getUrlByUserId(tokenNote['angel_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
     }
 
     listToReturn.add(generateHeader('In progress'));
@@ -76,7 +80,11 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      listToReturn.add(createTicketFromData(tokenNote, this, url));
+      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['angel_id'])){
+        url1 = await getUrlByUserId(tokenNote['angel_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
     }
     listToReturn.add(generateHeader('Completed'));
     for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
@@ -85,14 +93,18 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      listToReturn.add(createTicketFromData(tokenNote, this, url));
+      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['angel_id'])){
+        url1 = await getUrlByUserId(tokenNote['angel_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
     }
     return listToReturn;
   }
 
   SetTicket createTicketFromData(
-      Map<String, dynamic> data, PageOfShopperOrdersState page, String url) {
-    return SetTicket(Ticket(data, url), page);
+      Map<String, dynamic> data, PageOfShopperOrdersState page, String url, String shopperPicture) {
+    return SetTicket(Ticket(data, url, shopperPicture), page);
   }
 
   Widget generateHeader(String text) {

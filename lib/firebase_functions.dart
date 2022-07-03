@@ -36,10 +36,6 @@ Future<bool> ticketExists(int ticketId) async {
       .collection('ticket_data')
       .doc('$ticketId')
       .get();
-  if (cur_doc.exists == true){
-    print('huy');
-    print(await FirebaseStorage.instance.ref().child("files/$ticketId").getDownloadURL());
-  }
   return cur_doc.exists;
 }
 
@@ -48,3 +44,14 @@ Future<String> getUrlByTicketId(int ticketId) async{
 
 }
 
+Future<bool> userExists(int userId) async {
+  dynamic cur_doc = await FirebaseFirestore.instance
+      .collection('user_data')
+      .doc('$userId')
+      .get();
+  return cur_doc.exists;
+}
+
+Future<String> getUrlByUserId(int userId) async{
+  return await FirebaseStorage.instance.ref().child("avatars/$userId").getDownloadURL();
+}

@@ -17,7 +17,7 @@ class Ticket {
   late final TickerUser shopper;
   late final TickerUser angel;
 
-  Ticket(Map<String, dynamic> data, url) {
+  Ticket(Map<String, dynamic> data, url, shopperPicture) {
     ticketId = data['ticket_id'];
     shopperId = data['shopper_id'];
     title = data['title'];
@@ -47,6 +47,7 @@ class Ticket {
       //data['shopper_info']['profile_image'],
       data['shopper_info']['rating'],
     );
+    shopper.profileImage = shopperPicture;
     print("shopper is fine");
     print(data);
     if (status != TicketType.waitingForAccept) {
@@ -82,7 +83,7 @@ class TickerUser {
   String email = '';
   String phoneNumber = '';
   String telegram = '';
-  String profileImage = 'assets/images/man1.png';
+  String profileImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
   final double rating;
   TickerUser(this.id, this.nickname, this.name, this.surname, this.email,
       this.phoneNumber, this.telegram, this.rating);

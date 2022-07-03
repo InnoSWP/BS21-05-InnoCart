@@ -66,7 +66,11 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      listToReturn.add(createTicketFromData(tokenNote, this, url));
+      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['shopper_id'])){
+        url1 = await getUrlByUserId(tokenNote['shopper_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
     }
 
     listToReturn.add(generateHeader('In progress'));
@@ -78,7 +82,11 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      listToReturn.add(createTicketFromData(tokenNote, this, url));
+      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['shopper_id'])){
+        url1 = await getUrlByUserId(tokenNote['shopper_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
     }
 
     listToReturn.add(generateHeader('Completed'));
@@ -89,7 +97,11 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      listToReturn.add(createTicketFromData(tokenNote, this, url));
+      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['shopper_id'])){
+        url1 = await getUrlByUserId(tokenNote['shopper_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
     }
     return listToReturn;
   }
@@ -106,9 +118,9 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   }
 
   SetTicket createTicketFromData(
-      Map<String, dynamic> data, PageOfAngelOrdersState page, String url) {
+      Map<String, dynamic> data, PageOfAngelOrdersState page, String url, String shopperPicture) {
     return SetTicket(
-      Ticket(data, url),
+      Ticket(data, url, shopperPicture),
       page,
     );
   }
