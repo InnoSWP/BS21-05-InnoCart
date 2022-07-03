@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../UI/PopUpWindows/ticket_window.dart';
 import '../ticket.dart';
 import '../UI/Buttons/elevated_button_style.dart';
-import 'PageOfActiveOrders/request_sent.dart';
+import 'UI/PopUpWindows/request_sent.dart';
 
 Future popUpTicket(BuildContext context, Ticket ticket, Widget windowLowBar) {
   return showDialog(

@@ -85,3 +85,8 @@ class TickerUser {
   TickerUser(this.id, this.nickname, this.name, this.surname, this.email,
       this.phoneNumber, this.telegram, this.rating);
 }
+
+enum UserType {
+  angel,
+  shopper,
+}

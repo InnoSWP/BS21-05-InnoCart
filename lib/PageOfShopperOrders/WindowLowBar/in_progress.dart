@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../ticket.dart';
-import 'page_of_shopper_orders.dart';
-import 'pop_up_notify.dart';
-import '../UI/Buttons/elevated_button_style.dart';
+import '../../ticket.dart';
+import '../page_of_shopper_orders.dart';
+import '../../UI/PopUpWindows/order_canceled.dart';
+import '../../UI/Buttons/elevated_button_style.dart';
 
 Widget inProgress(BuildContext context, Ticket ticket, String buttonText,
     PageOfShopperOrdersState page) {

@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:inno_cart/UI/PopUpWindows/rate_window.dart';
 import '../UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
-import 'pop_up_notify.dart';
+import '../UI/PopUpWindows/request_canceled.dart';
 import '../backend_functions.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
@@ -121,7 +122,10 @@ class SetTicket extends StatelessWidget {
               popUpRequestCanceled(page.context);
               page.setState(() => {});
             }
-          } else if (ticket.status == TicketType.completed) {}
+          } else if (ticket.status == TicketType.completed) {
+            rateWindow(context, ticket, UserType.angel);
+            page.setState(() => {});
+          }
         },
         style: roundedWhite,
         child: SizedBox(
@@ -178,7 +182,11 @@ class SetTicket extends StatelessWidget {
                 popUpRequestCanceled(page.context);
                 page.setState(() => {});
               }
-            } else if (ticket.status == TicketType.completed) {}
+            } else if (ticket.status == TicketType.completed) {
+              Navigator.pop(context);
+              rateWindow(context, ticket, UserType.angel);
+              page.setState(() => {});
+            }
           },
           style: roundedWhite,
           child: SizedBox(

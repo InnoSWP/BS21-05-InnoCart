@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inno_cart/UI/PopUpWindows/rate_window.dart';
 import '../UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
-import 'completed_popup_window.dart';
-import 'in_progress_popup_window.dart';
+import 'WindowLowBar/completed.dart';
+import 'WindowLowBar/in_progress.dart';
 import 'see_requests_window.dart';
 import '../backend_functions.dart';
-import 'waiting_popup_ticket.dart';
+import 'WindowLowBar/waiting.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
@@ -118,6 +119,9 @@ class SetTicket extends StatelessWidget {
             if (result) {
               page.setState(() {});
             }
+          } else if (ticket.status == TicketType.completed) {
+            rateWindow(context, ticket, UserType.shopper);
+            page.setState(() => {});
           }
         },
         style: roundedWhite,

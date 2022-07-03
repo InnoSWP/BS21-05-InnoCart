@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../ticket.dart';
-import 'page_of_shopper_orders.dart';
-import '../UI/Buttons/elevated_button_style.dart';
+import '../../UI/PopUpWindows/rate_window.dart';
+import '../../ticket.dart';
+import '../page_of_shopper_orders.dart';
+import '../../UI/Buttons/elevated_button_style.dart';
 
 Widget completed(BuildContext context, Ticket ticket, String buttonText,
     PageOfShopperOrdersState page) {
@@ -46,6 +47,7 @@ Widget completed(BuildContext context, Ticket ticket, String buttonText,
       ElevatedButton(
         onPressed: () {
           Navigator.pop(context);
+          rateWindow(context, ticket, UserType.shopper);
           page.setState(() {});
         },
         style: roundedWhite,
