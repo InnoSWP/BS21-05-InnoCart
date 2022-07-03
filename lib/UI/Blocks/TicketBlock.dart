@@ -26,11 +26,10 @@ class TicketBlock extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: bottomPadding),
         padding: const EdgeInsets.all(20),
         color: Colors.white,
-        child: Column(children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
             margin: const EdgeInsets.only(bottom: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //PICTURE
@@ -44,7 +43,8 @@ class TicketBlock extends StatelessWidget {
                 Flexible(
                   flex: 5,
                   child: Container(
-                    margin: const EdgeInsets.all(10),
+                    alignment: Alignment.topLeft,
+                    margin: const EdgeInsets.only(left: 10, right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
