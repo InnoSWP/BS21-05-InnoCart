@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inno_cart/backend_functions.dart';
 import 'generate_route.dart';
 import 'dart:convert';
@@ -20,7 +21,7 @@ Future<void> calc() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   calc().then((value) => runApp(const MyApp()));
 }
 
