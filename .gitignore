@@ -30,11 +30,13 @@ migrate_working_dir/
 .packages
 .pub-cache/
 .pub/
-/build/
+build/
+
+lib/ServerURL.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
-
+ServerURL.dart
 # Symbolication related
 app.*.symbols
 
@@ -45,3 +47,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/build/
+
+# Database
+
+# API adress and DB
+/InnoCartAPI/base.db
