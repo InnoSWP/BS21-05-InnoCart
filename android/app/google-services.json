@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1091739724877",
+    "project_id": "innocart-4ebb6",
+    "storage_bucket": "innocart-4ebb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091739724877:android:3de68ed99a970c8d304004",
+        "android_client_info": {
+          "package_name": "com.example.inno_cart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091739724877-nv76ghtui876ofm6hfkecif6rdrck6ip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqodl4bpUQ5uVicNXHPfoYq4GAkVjXMnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091739724877-nv76ghtui876ofm6hfkecif6rdrck6ip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
