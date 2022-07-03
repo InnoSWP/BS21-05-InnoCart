@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inno_cart/backend_functions.dart';
 import 'generate_route.dart';
-import 'WelcomePage/start_screen.dart';
-import 'package:page_transition/page_transition.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'ServerURL.dart';
-import 'package:http/http.dart' as http;
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 bool ok = false;
@@ -36,9 +30,10 @@ const double bottomPadding = 29;
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static List<Route<dynamic>> maybeskip(String initialRoute) {
-    if (ok) return [generateRoute(RouteSettings(name: '/PageOfActiveOrders'))!];
-    return [generateRoute(RouteSettings(name: '/'))!];
+  static List<Route<dynamic>> maybeSkip(String initialRoute) {
+    if (ok)
+      return [generateRoute(const RouteSettings(name: '/PageOfActiveOrders'))!];
+    return [generateRoute(const RouteSettings(name: '/'))!];
   }
 
   @override
@@ -46,7 +41,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       initialRoute: '/',
       onGenerateRoute: generateRoute,
-      onGenerateInitialRoutes: maybeskip,
+      onGenerateInitialRoutes: maybeSkip,
       debugShowCheckedModeBanner: false,
     );
   }

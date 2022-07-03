@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:inno_cart/main.dart';
 import '../UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
 import '../UI/PopUpWindows/request_sent.dart';
@@ -21,9 +22,10 @@ class SetTicket extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: (() async {
+                selectedPage = 4;
                 Map<String, dynamic> data =
                     await contactUserInformationById(ticket.shopperId);
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: ((context) => ProfilePage(
