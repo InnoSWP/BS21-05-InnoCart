@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
 import 'request_sent.dart';
 import '../backend_functions.dart';
 import '../ProfilePages/profile_screen.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
-import 'pop_up_window_with_ticket.dart';
 
 class SetTicket extends StatelessWidget {
   final Ticket ticket;
@@ -81,107 +81,56 @@ class SetTicket extends StatelessWidget {
       ]),
     );
 
-    return GestureDetector(
-      onTap: () {
-        //popUpTicket(context, ticket);
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: bottomPadding),
-        padding: const EdgeInsets.all(20),
-        width: 345,
-        height: 230,
-        color: Colors.white,
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //PICTURE
-              Container(
-                width: 130,
-                height: 130,
-                color: Colors.blueGrey,
-                //margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                child: Image.asset(
-                  ticket.ticketImage,
-                  fit: BoxFit.fill,
-                ),
-              ),
-
-              //TICKET INFO
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    Widget windowLowBar = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              radius: (20),
+              backgroundImage: AssetImage(ticket.shopper.profileImage),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Column(
                 children: [
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                      ticket.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 20),
+                  Text(ticket.shopper.name),
+                  RatingBar.builder(
+                    initialRating: ticket.shopper.rating,
+                    ignoreGestures: true,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemSize: 10,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
                     ),
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/Bag_alt_light.svg',
-                        color: Colors.black,
-                        width: 24,
-                        height: 24,
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          child: Text("${ticket.weight} KG")),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/Pin_alt_light.svg',
-                        color: Colors.black,
-                        width: 24,
-                        height: 24,
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.distance)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/Time_light.svg',
-                        color: Colors.black,
-                        width: 24,
-                        height: 24,
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.deadlineUnixTime)),
-                    ],
+                    onRatingUpdate: (rating) {},
                   ),
                 ],
               ),
-              Container(
-                  color: Colors.yellowAccent,
-                  padding: const EdgeInsets.all(6),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 50,
-                        child: Text(
-                          ticket.reward.toString(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SvgPicture.asset('assets/icons/Currency.svg'),
-                    ],
-                  )),
-            ],
+            ),
+          ],
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+            popUpRequestSentNotifier(context);
+          },
+          style: roundedWhite,
+          child: SizedBox(
+            width: 120,
+            child: TextAndArrowButtonChild(buttonText: buttonText),
           ),
-          lowBar,
-        ]),
-      ),
+        ),
+      ],
+    );
+
+    return TicketBlock(
+      ticket: ticket,
+      lowBar: lowBar,
+      windowLowBar: windowLowBar,
     );
   }
 }

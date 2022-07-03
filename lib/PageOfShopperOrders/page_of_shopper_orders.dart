@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
 import 'completed_popup_window.dart';
 import 'in_progress_popup_window.dart';
@@ -56,23 +58,24 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
     listToReturn.add(generateHeader('Waiting for accept'));
     for (Map<String, dynamic> tokenNote
         in waitingForAcceptHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote));
+      listToReturn.add(createTicketFromData(tokenNote, this));
     }
 
     listToReturn.add(generateHeader('In progress'));
     for (Map<String, dynamic> tokenNote
         in inProgressHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote));
+      listToReturn.add(createTicketFromData(tokenNote, this));
     }
     listToReturn.add(generateHeader('Completed'));
     for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote));
+      listToReturn.add(createTicketFromData(tokenNote, this));
     }
     return listToReturn;
   }
 
-  SetTicket createTicketFromData(Map<String, dynamic> data) {
-    return SetTicket(Ticket(data));
+  SetTicket createTicketFromData(
+      Map<String, dynamic> data, PageOfShopperOrdersState page) {
+    return SetTicket(Ticket(data), page);
   }
 
   Widget generateHeader(String text) {
@@ -89,155 +92,57 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
 
 class SetTicket extends StatelessWidget {
   final Ticket ticket;
-  final String buttonText = 'test';
-  const SetTicket(this.ticket, {Key? key}) : super(key: key);
+  late final String buttonText;
+  final PageOfShopperOrdersState page;
+
+  SetTicket(this.ticket, this.page, {Key? key}) : super(key: key) {
+    if (ticket.status == TicketType.waitingForAccept) {
+      buttonText = 'See requests';
+    } else if (ticket.status == TicketType.inProgress) {
+      buttonText = 'Cancel Order';
+    } else if (ticket.status == TicketType.completed) {
+      buttonText = 'Rate Angel';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        /*if (type == 1) {
-          waitingPopUpTicket(context, this);
-        } else if (type == 2) {
-          inProgressPopUpTicket(context, this);
-        } else {
-          completedPopUpTicket(context, this);
-        }*/
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: bottomPadding),
-        width: 345,
-        height: 208,
-        color: Colors.white,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //PICTURE
-                Flexible(
-                  flex: 3,
-                  child: Container(
-                    width: 130,
-                    height: 130,
-                    color: Colors.blueGrey,
-                    margin:
-                        const EdgeInsets.only(top: 12, left: 12, bottom: 10),
-                    child: Image.asset(
-                      ticket.ticketImage,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
+    final Widget lowBar = ElevatedButton(
+        onPressed: () async {
+          if (ticket.status == TicketType.waitingForAccept) {
+            seeRequestWindow(context, ticket.ticketId, page);
+          } else if (ticket.status == TicketType.inProgress) {
+            if (kDebugMode) {
+              print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
+            }
+            bool result = await completeOrder(ticket.ticketId);
 
-                //TICKET INFO
-                Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          margin: const EdgeInsets.only(top: 12),
-                          child: Text(
-                            ticket.title,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 20),
-                          )),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/Bag_alt_light.svg',
-                            color: Colors.black,
-                            width: 24,
-                            height: 24,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: Text(ticket.weight.toString())),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/Pin_alt_light.svg',
-                            color: Colors.black,
-                            width: 24,
-                            height: 24,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: Text(ticket.distance.toString())),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/Time_light.svg',
-                            color: Colors.black,
-                            width: 24,
-                            height: 24,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 10),
-                              child: Text(ticket.deadlineUnixTime)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                      margin: const EdgeInsets.all(12),
-                      color: Colors.yellowAccent,
-                      padding: const EdgeInsets.all(7),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 2,
-                            child: Text(
-                              ticket.reward.toString(),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child:
-                                SvgPicture.asset('assets/icons/Currency.svg'),
-                          ),
-                        ],
-                      )),
-                ),
-              ],
-            ),
-            //Button
+            if (result) {
+              page.setState(() {});
+            }
+          }
+        },
+        style: roundedWhite,
+        child: SizedBox(
+          width: 150,
+          height: 32,
+          child: TextAndArrowButtonChild(buttonText: buttonText),
+        ));
 
-            ElevatedButton(
-                onPressed: () async {
-                  /*if (type == 1) {
-                    seeRequestWindow(page.context, ticketId, page);
-                  } else if (type == 2) {
-                    if (kDebugMode) {
-                      print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
-                    }
-                    bool result = await completeOrder(ticketId);
-                    if (result) {
-                      Navigator.of(page.context)
-                          .pushReplacementNamed('/ShopperOrders');
-                    }
-                  }
-                  //onButtonPress();*/
-                },
-                style: roundedWhite,
-                child: SizedBox(
-                  width: 150,
-                  height: 32,
-                  child: TextAndArrowButtonChild(buttonText: buttonText),
-                )),
-          ],
-        ),
-      ),
+    late final Widget windowLowBar;
+
+    if (ticket.status == TicketType.waitingForAccept) {
+      windowLowBar = waiting(context, ticket, 'Cancel Order', page);
+    } else if (ticket.status == TicketType.inProgress) {
+      windowLowBar = inProgress(context, ticket, buttonText, page);
+    } else {
+      windowLowBar = completed(context, ticket, buttonText, page);
+    }
+
+    return TicketBlock(
+      ticket: ticket,
+      lowBar: lowBar,
+      windowLowBar: windowLowBar,
     );
   }
 }

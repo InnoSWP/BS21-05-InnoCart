@@ -17,9 +17,6 @@ class Ticket {
   late final TickerUser shopper;
   late final TickerUser angel;
 
-  //Will be deleted
-  final String buttonText = 'Send request';
-
   Ticket(Map<String, dynamic> data) {
     ticketId = data['ticket_id'];
     shopperId = data['shopper_id'];

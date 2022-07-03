@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../main.dart';
 import '../../ticket.dart';
-/*
+
 class TicketWindow extends StatelessWidget {
   final Ticket ticket;
   final Widget lowBar;
@@ -18,11 +18,11 @@ class TicketWindow extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             child: Text(
-              ticket.orderName,
+              ticket.title,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 20),
             ),
@@ -37,7 +37,7 @@ class TicketWindow extends StatelessWidget {
                 height: 130,
                 color: Colors.blueGrey,
                 child: Image.asset(
-                  ticket.orderImage,
+                  ticket.ticketImage,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -57,7 +57,7 @@ class TicketWindow extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.orderWeight.toString())),
+                          child: Text(ticket.weight.toString())),
                     ],
                   ),
                   Row(
@@ -70,7 +70,7 @@ class TicketWindow extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.orderDistance)),
+                          child: Text(ticket.distance)),
                     ],
                   ),
                   Row(
@@ -83,7 +83,7 @@ class TicketWindow extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.orderDate)),
+                          child: Text(ticket.deadlineDate)),
                     ],
                   ),
                   Row(
@@ -96,7 +96,7 @@ class TicketWindow extends StatelessWidget {
                       ),
                       Container(
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(ticket.orderTime)),
+                          child: Text(ticket.deadlineUnixTime)),
                     ],
                   ),
                 ],
@@ -104,23 +104,28 @@ class TicketWindow extends StatelessWidget {
             ],
           ),
           Container(
-              color: Colors.yellowAccent,
-              padding: const EdgeInsets.all(6),
+              alignment: Alignment.topLeft,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  Container(
+                    color: Colors.yellowAccent,
+                    padding: const EdgeInsets.all(8),
                     child: Text(
                       ticket.reward.toString(),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SvgPicture.asset('assets/icons/Currency.svg'),
+                  Container(
+                    color: Colors.yellowAccent,
+                    padding: const EdgeInsets.all(8),
+                    child: SvgPicture.asset('assets/icons/Currency.svg'),
+                  ),
                 ],
               )),
           Container(
             alignment: Alignment.topLeft,
-            child: Text(ticket.orderInfo),
+            child: Text(ticket.description),
           ),
           lowBar,
         ],
@@ -128,4 +133,3 @@ class TicketWindow extends StatelessWidget {
     );
   }
 }
-*/
