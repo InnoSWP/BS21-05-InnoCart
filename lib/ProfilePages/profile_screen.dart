@@ -94,9 +94,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 15,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text('E-mail'),
+                          const Text('E-mail: '),
                           Text(widget.email),
                         ],
                       ),
@@ -104,18 +104,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 15,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Text('Telegram'), Text(widget.telegram)],
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text('Telegram: @'),
+                          Text(widget.telegram)
+                        ],
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                       Builder(builder: (BuildContext context) {
                         if (widget.ok == 0) {
                           return Column(
                             children: [
                               Center(
-                                child: SizedBox(
+                                child: Container(
+                                  margin: const EdgeInsets.only(bottom: 15),
                                   width: 130,
                                   height: 35,
                                   child: ElevatedButton(
@@ -141,9 +145,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ]),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 15,
                               ),
                               Center(
                                 child: SizedBox(
