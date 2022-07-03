@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inno_cart/UI/Blocks/TicketBlock.dart';
+import '../UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
 import 'completed_popup_window.dart';
 import 'in_progress_popup_window.dart';

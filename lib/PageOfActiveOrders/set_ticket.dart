@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../UI/Blocks/TicketBlock.dart';
 import '../ticket.dart';
 import 'request_sent.dart';
 import '../backend_functions.dart';
 import '../ProfilePages/profile_screen.dart';
 import '../UI/Buttons/elevated_button_style.dart';
-import '../main.dart';
 
 class SetTicket extends StatelessWidget {
   final Ticket ticket;

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../backend_functions.dart';
 import '../ticket.dart';
 import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
 import '../UI/Buttons/elevated_button_style.dart';
-import '../main.dart';
 
 Widget waiting(BuildContext context, Ticket ticket, String buttonText,
     PageOfShopperOrdersState page) {
