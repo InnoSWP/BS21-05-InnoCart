@@ -14,9 +14,9 @@ class PageMessengerState extends State<PageMessenger> {
     return SafeArea(
         child: GestureDetector(
             onHorizontalDragEnd: ((DragEndDetails details) {
-              if (details.primaryVelocity! > 0.0) {
+              if (details.primaryVelocity! < 0.0) {
                 pageUpdate((selectedPage + 1) % 5, context);
-              } else if (details.primaryVelocity! < 0.0) {
+              } else if (details.primaryVelocity! > 0.0) {
                 pageUpdate((selectedPage + 4) % 5, context);
               }
             }),
