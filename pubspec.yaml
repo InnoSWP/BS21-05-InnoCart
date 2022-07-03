@@ -41,8 +41,12 @@ dependencies:
   page_transition: ^2.0.9
   animations: ^2.0.3
   flutter_gradient_colors: ^2.1.1
+  file_picker: ^4.6.1
   flutter_fadein: ^2.0.0
   flip_card: ^0.6.0
+  firebase_storage: ^10.3.1
+  cloud_firestore: ^3.2.1
+  firebase_core: ^1.19.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -85,6 +89,10 @@ flutter:
     - assets/icons/RequestSent.svg
     - assets/icons/close_ring_light.svg
     - assets/images/rolls.jpg
+    - assets/icons/Pencil.svg
+    - assets/images/h.jpg
+    - assets/images/xiaomi.jpg
+    - assets/images/mac.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

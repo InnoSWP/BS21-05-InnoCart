@@ -8,6 +8,9 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'ServerURL.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 bool ok = false;
 
@@ -22,6 +25,8 @@ Future<void> calc() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   calc().then((value) => runApp(const MyApp()));
 }
 
@@ -42,6 +47,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: generateRoute,
       onGenerateInitialRoutes: maybeskip,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

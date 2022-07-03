@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import '../backend_functions.dart';
 import '../navigation_bar.dart';
 import '../user.dart';
@@ -8,6 +9,7 @@ import '../main.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   final int ok;
@@ -26,6 +28,8 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
+PlatformFile? pickedFile = null;
+
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -50,12 +54,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 70,
                   ),
-                  Container(
-                    width: 130,
-                    height: 160,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blueGrey),
-                  ),
+                  CircleAvatar(radius: 90, backgroundImage:pickedFile != null
+                      ? Image.file(
+                    File(pickedFile!.path!),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ).image
+                      : Image.asset('assets/images/pizza.jpg').image,),
                   const SizedBox(
                     height: 15,
                   ),
@@ -107,6 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               Center(
                                 child: SizedBox(
+                                  width: 130,
                                   height: 35,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -117,15 +123,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Navigator.pushReplacementNamed(
                                           context, '/ProfileChangeScreen');
                                     },
-                                    child: const Text(
+                                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        children:  [const Text(
                                       'Edit profile',
                                       style: TextStyle(color: Colors.black),
-                                    ),
+                                    ), SvgPicture.asset('assets/icons/Pencil.svg')]),
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 15,),
                               Center(
                                 child: SizedBox(
+                                  width: 115,
                                   height: 35,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -140,10 +149,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Navigator.pushReplacementNamed(
                                           context, '/start');
                                     },
-                                    child: const Text(
-                                      'Log out',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
+                                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        children:  [const Text(
+                                          'Log out',
+                                          style: TextStyle(color: Colors.black),
+                                        ), Icon(Icons.logout, color: Colors.black,)])
                                   ),
                                 ),
                               )

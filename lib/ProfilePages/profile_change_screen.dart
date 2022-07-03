@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:inno_cart/firebase_functions.dart';
 import '../backend_functions.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'profile_screen.dart';
 
 class ProfileChangeScreen extends StatefulWidget {
   const ProfileChangeScreen({Key? key}) : super(key: key);
@@ -14,6 +18,14 @@ class ProfileChangeScreen extends StatefulWidget {
 
 class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
   Map<String, String> dataToUpdate = {"email": "", "telegram": ""};
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +47,36 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                   const SizedBox(
                     height: 70,
                   ),
-                  Container(
-                    width: 130,
-                    height: 160,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blueGrey),
+                  CircleAvatar(radius: 90, backgroundImage:pickedFile != null
+                      ? Image.file(
+                    File(pickedFile!.path!),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ).image
+                      : Image.asset('assets/images/pizza.jpg').image,),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    width: 150,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            side: const BorderSide(
+                                width: 2.0, color: Colors.black)),
+                        onPressed: (() async => selectFile()),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Text(
+                                'Change avatar',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              Icon(
+                                Icons.account_box,
+                                color: Colors.black,
+                              )
+                            ])),
                   ),
                   const SizedBox(
                     height: 15,
@@ -94,6 +131,8 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                       BorderRadius.all(Radius.circular(7.0)),
                                 ),
                                 hintText: 'Enter E-mail',
+                                contentPadding:
+                                    EdgeInsets.only(top: 7, left: 5),
                               ),
                             ),
                           ),
@@ -127,6 +166,8 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                       BorderRadius.all(Radius.circular(7.0)),
                                 ),
                                 hintText: 'Enter alias',
+                                contentPadding:
+                                    EdgeInsets.only(top: 7, left: 5),
                               ),
                             ),
                           ),
@@ -142,43 +183,60 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width: 125,
+                            width: 115,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  side: const BorderSide(
-                                      width: 2.0, color: Colors.black)),
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/ProfileScreen');
-                              },
-                              child: const Text(
-                                'Go back',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    side: const BorderSide(
+                                        width: 2.0, color: Colors.black)),
+                                onPressed: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/ProfileScreen');
+                                },
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Icon(
+                                        Icons.arrow_back_ios_outlined,
+                                        color: Colors.black,
+                                      ),
+                                      const Text(
+                                        'Go back',
+                                        style: TextStyle(color: Colors.black),
+                                      )
+                                    ])),
                           ),
                           SizedBox(
                             width: 125,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  side: const BorderSide(
-                                      width: 2.0, color: Colors.black)),
-                              onPressed: () async {
-                                bool result = await updateContactInformation(
-                                    dataToUpdate['email'] ?? "Unknown",
-                                    dataToUpdate['telegram'] ?? "Unknown");
-                                if (result) {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/ProfileScreen');
-                                }
-                              },
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    side: const BorderSide(
+                                        width: 2.0, color: Colors.black)),
+                                onPressed: () async {
+                                  bool result = await updateContactInformation(
+                                      dataToUpdate['email'] ?? "Unknown",
+                                      dataToUpdate['telegram'] ?? "Unknown");
+                                  if (result) {
+                                    pushAvatarFirebaseStorage(pickedFile, currentUser.userId);
+                                    Navigator.pushReplacementNamed(
+                                        context, '/ProfileScreen');
+                                  }
+                                },
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      const Text(
+                                        'Save',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      Icon(
+                                        Icons.check,
+                                        color: Colors.black,
+                                      )
+                                    ])),
                           )
                         ],
                       )
