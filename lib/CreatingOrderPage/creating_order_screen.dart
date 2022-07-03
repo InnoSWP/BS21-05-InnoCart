@@ -7,6 +7,7 @@ import '../main.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:file_picker/file_picker.dart';
 import '../firebase_functions.dart';
+import 'dart:io';
 
 class OrderFactoryPage extends StatefulWidget {
   const OrderFactoryPage({Key? key}) : super(key: key);
@@ -23,11 +24,12 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
   double reward = 0.0;
   double weight = 0.0;
 
-
-  Future selectFile() async{
+  Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
     if (result == null) return;
-    setState((){pickedFile = result.files.first;});
+    setState(() {
+      pickedFile = result.files.first;
+    });
   }
 
   @override
@@ -55,7 +57,8 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
         }),
         child: Scaffold(
           bottomNavigationBar: const MainNavigationBar(),
-          body: SingleChildScrollView(
+            body:
+           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
@@ -98,12 +101,16 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                         OutlinedButton(
                           onPressed: () => selectFile(),
                           child: Container(
-
-                            padding: EdgeInsets.all(0.0),
-                            width: 130,
-                            height: 130,
-                            child: Text(pickedFile == null?'хуй':pickedFile!.name),
-                          ),
+                              padding: EdgeInsets.all(0.0),
+                              width: 130,
+                              height: 130,
+                              child: pickedFile != null
+                                  ? Image.file(
+                                      File(pickedFile!.path!),
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset('assets/images/pizza.jpg')),
                         ),
                         const SizedBox(
                           width: 10,
@@ -350,14 +357,16 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                           if (kDebugMode) {
                             print("Button had been pressed");
                           }
-                          Map<String, dynamic> result = await registerNewTicket({
+                          Map<String, dynamic> result =
+                              await registerNewTicket({
                             "title": title,
                             "description": description,
                             "weight": weight.toString().replaceAll('.', ','),
                             "product_type": type,
                             "reward": reward.toString().replaceAll('.', ',')
                           });
-                          await pushFirebaseStorage(result['ticket_id'], pickedFile);
+                          await pushFirebaseStorage(
+                              result['ticket_id'], pickedFile, currentUser.userId);
                           Navigator.of(context)
                               .pushReplacementNamed('/PageOfActiveOrders');
                         },

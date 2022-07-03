@@ -9,6 +9,7 @@ import '../main.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   final int ok;
@@ -27,6 +28,8 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
+PlatformFile? pickedFile = null;
+
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -51,12 +54,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 70,
                   ),
-                  Container(
-                    width: 130,
-                    height: 160,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blueGrey),
-                  ),
+                  CircleAvatar(radius: 90, backgroundImage:pickedFile != null
+                      ? Image.file(
+                    File(pickedFile!.path!),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ).image
+                      : Image.asset('assets/images/pizza.jpg').image,),
                   const SizedBox(
                     height: 15,
                   ),
