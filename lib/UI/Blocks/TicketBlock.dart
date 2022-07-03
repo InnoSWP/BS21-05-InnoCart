@@ -34,9 +34,15 @@ class TicketBlock extends StatelessWidget {
               children: [
                 //PICTURE
                 Flexible(
-                  flex: 3,
-                  child: Image.network(
-                      ticket.url),
+                  flex: 4,
+                  child: SizedBox(
+                    width: 130,
+                    height: 130,
+                    child: Image.network(
+                      ticket.ticketImage,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
 
                 //TICKET INFO

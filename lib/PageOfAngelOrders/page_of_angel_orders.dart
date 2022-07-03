@@ -41,7 +41,9 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
                       if (snapshot.hasData) {
                         return ListView(children: snapshot.data!);
                       } else {
-                        return const Text('Waiting for data');
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
                     })))); // This trailing comma makes auto-formatting nicer for build methods.
   }
@@ -59,20 +61,21 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
 
     for (Map<String, dynamic> tokenNote
         in waitingForAcceptHistoryTickets['tickets']) {
-      String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
-      if (await ticketExists(tokenNote['ticket_id'])){
+      String url =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
       listToReturn.add(createTicketFromData(tokenNote, this, url));
     }
 
-
     listToReturn.add(generateHeader('In progress'));
 
     for (Map<String, dynamic> tokenNote
         in inProgressHistoryTickets['tickets']) {
-      String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
-      if (await ticketExists(tokenNote['ticket_id'])){
+      String url =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
       listToReturn.add(createTicketFromData(tokenNote, this, url));
@@ -81,8 +84,9 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
     listToReturn.add(generateHeader('Completed'));
 
     for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
-      String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
-      if (await ticketExists(tokenNote['ticket_id'])){
+      String url =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
       listToReturn.add(createTicketFromData(tokenNote, this, url));
@@ -103,7 +107,10 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
 
   SetTicket createTicketFromData(
       Map<String, dynamic> data, PageOfAngelOrdersState page, String url) {
-    return SetTicket(Ticket(data, url), page,);
+    return SetTicket(
+      Ticket(data, url),
+      page,
+    );
   }
 }
 

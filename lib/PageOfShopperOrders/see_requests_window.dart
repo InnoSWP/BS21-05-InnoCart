@@ -49,7 +49,9 @@ Future seeRequestWindow(
                   ),
                 );
               } else {
-                return const Text("Waiting for data");
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
             }),
       );

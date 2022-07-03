@@ -36,7 +36,7 @@ class TicketWindow extends StatelessWidget {
                 width: 130,
                 height: 130,
                 color: Colors.blueGrey,
-                child: Image.asset(
+                child: Image.network(
                   ticket.ticketImage,
                   fit: BoxFit.fill,
                 ),
