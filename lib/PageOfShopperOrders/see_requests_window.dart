@@ -5,7 +5,7 @@ import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
 import '../backend_functions.dart';
 import '../UI/Buttons/elevated_button_style.dart';
-
+/*
 Future seeRequestWindow(
     BuildContext context, int ticketId, PageOfShopperOrdersState page) {
   String buttonText = 'Cancel Order';
@@ -153,3 +153,4 @@ class AngelOffer extends StatelessWidget {
         ));
   }
 }
+*/

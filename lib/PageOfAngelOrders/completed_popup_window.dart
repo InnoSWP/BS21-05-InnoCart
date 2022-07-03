@@ -5,9 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'page_of_angel_orders.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
-
-Future completedPopUpTicket(
-    BuildContext context, AbstractAngelHistoryTicket ticket) {
+/*
+Future completedPopUpTicket(BuildContext context, TicketTMP ticket) {
   String profilePicture = 'assets/images/man1.png';
   String orderAngel = 'Amr. T.';
 
@@ -188,4 +187,4 @@ Future completedPopUpTicket(
       );
     },
   );
-}
+}*/

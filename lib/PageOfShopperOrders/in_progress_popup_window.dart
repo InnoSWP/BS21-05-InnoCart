@@ -6,9 +6,8 @@ import 'page_of_shopper_orders.dart';
 import 'pop_up_notify.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../main.dart';
-
-Future inProgressPopUpTicket(
-    BuildContext context, AbstractHistoryTicket ticket) {
+/*
+Future inProgressPopUpTicket(BuildContext context, TicketTMP ticket) {
   String profilePicture = 'assets/images/man1.png';
   String orderAngel = 'Amr. T.';
 
@@ -191,3 +190,4 @@ Future inProgressPopUpTicket(
     },
   );
 }
+*/
