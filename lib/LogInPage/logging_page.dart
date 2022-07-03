@@ -1,8 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import '../backend_functions.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
+
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
@@ -12,6 +18,9 @@ class _LogInPageState extends State<LogInPage> {
 
   String curPass = "";
   String curNick = "";
+  int? groupValue;
+  int? shouldSave;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -85,7 +94,21 @@ class _LogInPageState extends State<LogInPage> {
                         primary: const Color(0xffF2F208)),
                     onPressed: () async {
                       if (await dataIsCorrect(curNick, curPass)) {
-                        //       var user = User(await getDataByNick(curNick));
+                        if (shouldSave == 1) {
+                          Map<String, dynamic> data = {
+                            'nickname': curNick,
+                            'password_hash': getHash(curPass),
+                          };
+                          final directory =
+                              await getApplicationDocumentsDirectory();
+                          File file = File('${directory.path}/data.json');
+                          if (await file.exists() == false) {
+                            await file.create();
+                          }
+                          await file.delete();
+                          await file.create();
+                          await file.writeAsString(jsonEncode(data));
+                        }
                         Navigator.of(context)
                             .pushReplacementNamed('/PageOfActiveOrders');
                       } else {
@@ -100,7 +123,27 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(children: [
+                Radio<int>(
+                    activeColor: const Color(0xff000000),
+                    toggleable: true,
+                    value: 1,
+                    groupValue: groupValue,
+                    onChanged: (int? value) {
+                      setState(() {
+                        groupValue = value;
+                        shouldSave = value;
+                      });
+                    }),
+                const Text(
+                  'Remember me',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ]),
             ],
           ),
         ),

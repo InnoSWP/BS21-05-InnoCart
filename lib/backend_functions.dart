@@ -8,11 +8,12 @@ User currentUser = User(getEmptyMap());
 
 //test
 /// this function craves for implementation...
-Future<bool> dataIsCorrect(String nick, String pass) async {
+Future<bool> dataIsCorrect(String nick, String pass, [ok = 0]) async {
   Map<String, dynamic> requestParameters = {
     "nickname": nick,
-    "password_hash": getHash(pass)
+    "password_hash": ok == 1 ? pass : getHash(pass)
   };
+  print(requestParameters['password_hash']);
   Uri uri = Uri.http(serverURL, '/loginByNickname', requestParameters);
   if (kDebugMode) {
     print(uri);
@@ -264,24 +265,23 @@ Future<bool> acceptOffer(int offerId) async {
   return false;
 }
 
-
-Future<Map<String, dynamic>> getOfferedTickets() async{
+Future<Map<String, dynamic>> getOfferedTickets() async {
   Map<String, String> args = {
     "angel_id": currentUser.userId.toString(),
     "angel_token": currentUser.token
   };
   Uri uri = Uri.http(serverURL, "/getOfferedTickets", args);
   http.Response response = await http.get(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return jsonDecode(response.body);
   }
-  if (kDebugMode){
+  if (kDebugMode) {
     print(response.body);
   }
   return {};
 }
 
-Future<bool> cancelOffer(int ticketId) async{
+Future<bool> cancelOffer(int ticketId) async {
   Map<String, String> args = {
     "angel_id": currentUser.userId.toString(),
     "angel_token": currentUser.token,
@@ -289,14 +289,14 @@ Future<bool> cancelOffer(int ticketId) async{
   };
   Uri uri = Uri.http(serverURL, '/cancelOffer', args);
   http.Response response = await http.post(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return true;
   }
   print(response.body);
   return false;
 }
 
-Future<bool> cancelOrder(int ticketId) async{
+Future<bool> cancelOrder(int ticketId) async {
   Map<String, String> args = {
     'shopper_id': currentUser.userId.toString(),
     "shopper_token": currentUser.token,
@@ -304,22 +304,20 @@ Future<bool> cancelOrder(int ticketId) async{
   };
   Uri uri = Uri.http(serverURL, '/cancelOrder', args);
   http.Response response = await http.post(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return true;
   }
-  if (kDebugMode){
+  if (kDebugMode) {
     print(response.body);
   }
   return false;
 }
 
-Future<Map<String, dynamic>> contactUserInformationById(int userId) async{
-  Map<String, String> args = {
-    'contact_user_id': userId.toString()
-  };
+Future<Map<String, dynamic>> contactUserInformationById(int userId) async {
+  Map<String, String> args = {'contact_user_id': userId.toString()};
   Uri uri = Uri.http(serverURL, '/userContactInformationById', args);
   http.Response response = await http.get(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     return jsonDecode(response.body);
   }
   print(response.body);
@@ -335,7 +333,7 @@ Future<bool> updateContactInformation(String email, String telegram) async {
   };
   Uri uri = Uri.http(serverURL, '/updateContactInformation', args);
   http.Response response = await http.post(uri);
-  if (response.statusCode == 200){
+  if (response.statusCode == 200) {
     Map<String, dynamic> userData = jsonDecode(response.body);
     currentUser.email = userData['email'];
     currentUser.telegram = userData['telegram'];

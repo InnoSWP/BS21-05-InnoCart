@@ -15,31 +15,33 @@ class HelloPage extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 150,
-            child: Stack(children: [
-              Align(
-                  alignment: Alignment(0.5, 0),
-                  child: Hero(
-                    tag: 'pochitta',
-                    child: Container(
-                      width: 150,
-                      height: 150,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: colors,
-                              stops: [0.2, 1.2])),
-                    ),
-                  )),
-              const Align(
-                alignment: Alignment(-0.2, 0.0),
-                child: Text(
-                  'Innocart',
-                  style: TextStyle(fontSize: 50),
+            child: Center(
+              child: Stack(children: [
+                Padding(
+                    padding: EdgeInsets.only(left: 100),
+                    child: Hero(
+                      tag: 'pochitta',
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: colors,
+                                stops: [0.2, 1.2])),
+                      ),
+                    )),
+                const Padding(
+                  padding: EdgeInsets.only(left: 0, top: 45),
+                  child: Text(
+                    'Innocart',
+                    style: TextStyle(fontSize: 50),
+                  ),
                 ),
-              ),
-            ]),
+              ]),
+            ),
           ),
           const SizedBox(
             height: 50,

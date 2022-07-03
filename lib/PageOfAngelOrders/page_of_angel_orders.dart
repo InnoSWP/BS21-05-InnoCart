@@ -1,15 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:inno_cart/UI/PopUpWindows/rate_window.dart';
-import '../UI/Blocks/TicketBlock.dart';
-import '../ticket.dart';
-import '../UI/PopUpWindows/request_canceled.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inno_cart/PageOfShopperOrders/page_of_shopper_orders.dart';
+import 'pop_up_notify.dart';
 import '../backend_functions.dart';
+import 'completed_popup_window.dart';
+import 'in_progress_popup_window.dart';
+import 'waiting_popup_ticket.dart';
 import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
+import 'package:flip_card/flip_card.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -32,10 +33,10 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
             }),
             child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: const ThisAppBar(),
+                appBar: ThisAppBar(PageOfShopperOrders.cardKey),
                 bottomNavigationBar: const MainNavigationBar(),
                 body: FutureBuilder<List<Widget>>(
-                    future: getTickets(),
+                    future: Tickets(context, this).getTickets(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return ListView(children: snapshot.data!);
@@ -44,9 +45,15 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
                       }
                     })))); // This trailing comma makes auto-formatting nicer for build methods.
   }
+}
+
+class Tickets {
+  late PageOfAngelOrdersState page;
+  List<Widget> listToReturn = [];
+  Tickets(BuildContext context, this.page);
 
   Future<List<Widget>> getTickets() async {
-    List<Widget> listToReturn = [];
+    listToReturn.clear();
 
     Map<String, dynamic> waitingForAcceptHistoryTickets =
         await getOfferedTickets();
@@ -58,22 +65,72 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
 
     for (Map<String, dynamic> tokenNote
         in waitingForAcceptHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote, this));
+      listToReturn.add(createTicketFromData(tokenNote));
     }
 
     listToReturn.add(generateHeader('In progress'));
 
     for (Map<String, dynamic> tokenNote
         in inProgressHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote, this));
+      listToReturn.add(createTicketFromData(tokenNote));
     }
 
     listToReturn.add(generateHeader('Completed'));
 
     for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote, this));
+      listToReturn.add(createTicketFromData(tokenNote));
     }
     return listToReturn;
+  }
+
+  AbstractAngelHistoryTicket createTicketFromData(Map<String, dynamic> data) {
+    if (data['status'] == 0) {
+      return AngelWaitingForAcceptHistoryTicket(
+          data['ticket_id'],
+          data['shopper_id'],
+          data['title'],
+          data['weight'],
+          data['reward'],
+          data['description'],
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
+          page);
+    } else if (data['status'] == 1) {
+      return AngelInProgressHistoryTicket(
+          data['ticket_id'],
+          data['shopper_id'],
+          data['angel_id'],
+          data['title'],
+          data['weight'],
+          data['reward'],
+          data['description'],
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
+          page);
+    } else if (data['status'] == 2) {
+      return AngelCompletedHistoryTicket(
+          data['ticket_id'],
+          data['shopper_id'],
+          data['angel_id'],
+          data['title'],
+          data['weight'],
+          data['reward'],
+          data['description'],
+          data['shopper_info']['surname'],
+          data['shopper_info']['name'],
+          page);
+    }
+    return AbstractAngelHistoryTicket(
+        data['ticket_id'],
+        data['shopper_id'],
+        data['title'],
+        data['weight'],
+        data['reward'],
+        data['description'],
+        data['shopper_info']['surname'],
+        data['shopper_info']['name'],
+        "UNKNOWN ERROR",
+        page);
   }
 
   Widget generateHeader(String text) {
@@ -86,134 +143,271 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
           style: const TextStyle(fontSize: 20),
         ));
   }
-
-  SetTicket createTicketFromData(
-      Map<String, dynamic> data, PageOfAngelOrdersState page) {
-    return SetTicket(Ticket(data), page);
-  }
 }
 
-class SetTicket extends StatelessWidget {
-  final PageOfAngelOrdersState page;
-  final Ticket ticket;
-  late final String buttonText;
+class AbstractAngelHistoryTicket extends StatelessWidget {
+  int ticketId = 0;
+  int shopperId = 0;
+  int type = -1;
 
-  SetTicket(this.ticket, this.page, {Key? key}) : super(key: key) {
-    if (ticket.status == TicketType.waitingForAccept) {
-      buttonText = 'Cancel Request';
-    } else if (ticket.status == TicketType.inProgress) {
-      buttonText = 'Open Chat';
-    } else if (ticket.status == TicketType.completed) {
-      buttonText = 'Rate Shopper';
-    }
-  }
+  String orderImage = 'assets/images/pizza.jpg';
+  String orderName = "";
+  double orderWeight = 0;
+  String userName = 'kek';
+  String userSurname = 'kek';
+  final double orderDistance = 100; // OVERRIDE IN MVP V2
+  final String orderTime = "14:00"; // OVERRIDE IN MVP V2
+  double orderPrice = 0;
+  String buttonText = "";
+  late PageOfAngelOrdersState page;
+  String orderDescription = "";
+  String orderDate = "23.07.2022";
+
+  AbstractAngelHistoryTicket(
+      this.ticketId,
+      this.shopperId,
+      this.orderName,
+      this.orderWeight,
+      this.orderPrice,
+      this.orderDescription,
+      this.buttonText,
+      this.userName,
+      this.userSurname,
+      this.page,
+      {Key? key})
+      : super(key: key);
+
+  Future<void> onButtonPress() async {}
 
   @override
   Widget build(BuildContext context) {
-    final lowBar = ElevatedButton(
-        onPressed: () async {
-          if (ticket.status == TicketType.waitingForAccept) {
-            await cancelOffer(ticket.ticketId);
-            popUpRequestCanceled(page.context);
-            page.setState(() {});
-          } else if (ticket.status == TicketType.inProgress) {
-            var result = await cancelBookOfTicket(ticket.ticketId);
-            if (result) {
-              popUpRequestCanceled(page.context);
-              page.setState(() => {});
-            }
-          } else if (ticket.status == TicketType.completed) {
-            rateWindow(context, ticket, UserType.angel);
-            page.setState(() => {});
-          }
-        },
-        style: roundedWhite,
-        child: SizedBox(
-          width: 150,
-          height: 32,
-          child: TextAndArrowButtonChild(buttonText: buttonText),
-        ));
-
-    final Widget windowLowBar = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
+    // TODO: implement build
+    return GestureDetector(
+      onTap: () {
+        if (this is AngelWaitingForAcceptHistoryTicket) {
+          waitingPopUpTicket(context, this);
+        } else if (this is AngelInProgressHistoryTicket) {
+          inProgressPopUpTicket(context, this);
+        } else {
+          completedPopUpTicket(context, this);
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: bottomPadding),
+        width: 345,
+        height: 208,
+        color: Colors.white,
+        child: Column(
           children: [
-            CircleAvatar(
-              radius: (20),
-              backgroundImage: AssetImage(ticket.shopper.profileImage),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Column(
-                children: [
-                  Text(ticket.shopper.name),
-                  RatingBar.builder(
-                    initialRating: 5,
-                    ignoreGestures: true,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 10,
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      if (kDebugMode) {
-                        print(rating);
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            if (ticket.status == TicketType.waitingForAccept) {
-              await cancelOffer(ticket.ticketId);
-              popUpRequestCanceled(page.context);
-              page.setState(() {});
-            } else if (ticket.status == TicketType.inProgress) {
-              var result = await cancelBookOfTicket(ticket.ticketId);
-              if (result) {
-                popUpRequestCanceled(page.context);
-                page.setState(() => {});
-              }
-            } else if (ticket.status == TicketType.completed) {
-              Navigator.pop(context);
-              rateWindow(context, ticket, UserType.angel);
-              page.setState(() => {});
-            }
-          },
-          style: roundedWhite,
-          child: SizedBox(
-            width: 120,
-            child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  buttonText,
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
+                //PICTURE
+
+                Container(
+                  width: 130,
+                  height: 130,
+                  color: Colors.blueGrey,
+                  margin: const EdgeInsets.only(top: 12, left: 12, bottom: 10),
+                  child: Image.asset(
+                    orderImage,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black,
-                  size: 14,
+
+                //TICKET INFO
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        width: 140,
+                        margin: const EdgeInsets.only(top: 12),
+                        child: Text(
+                          orderName,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 20),
+                        )),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/Bag_alt_light.svg',
+                          color: Colors.black,
+                          width: 24,
+                          height: 24,
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            child: Text(orderWeight.toString())),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/Pin_alt_light.svg',
+                          color: Colors.black,
+                          width: 24,
+                          height: 24,
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            child: Text(orderDistance.toString())),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/Time_light.svg',
+                          color: Colors.black,
+                          width: 24,
+                          height: 24,
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            child: Text(orderTime)),
+                      ],
+                    ),
+                  ],
                 ),
+
+                Container(
+                    margin: const EdgeInsets.all(12),
+                    color: Colors.yellowAccent,
+                    padding: const EdgeInsets.all(6),
+                    child: Row(
+                      children: [
+                        Text(orderPrice.toString()),
+                        SvgPicture.asset('assets/icons/Currency.svg'),
+                      ],
+                    )),
               ],
             ),
-          ),
-        ),
-      ],
-    );
+            //Button
 
-    return TicketBlock(
-      ticket: ticket,
-      lowBar: lowBar,
-      windowLowBar: windowLowBar,
+            ElevatedButton(
+                onPressed: () {
+                  onButtonPress();
+                },
+                style: roundedWhite,
+                child: SizedBox(
+                  width: 150,
+                  height: 32,
+                  child: TextAndArrowButtonChild(buttonText: buttonText),
+                )),
+          ],
+        ),
+      ),
     );
   }
+}
+
+class AngelWaitingForAcceptHistoryTicket extends AbstractAngelHistoryTicket {
+  AngelWaitingForAcceptHistoryTicket(
+      int ticketId,
+      int shopperId,
+      String orderName,
+      double orderWeight,
+      double orderPrice,
+      String orderDescription,
+      String userName,
+      String userSurname,
+      PageOfAngelOrdersState page,
+      {Key? key})
+      : super(
+            key: key,
+            ticketId,
+            shopperId,
+            orderName,
+            orderWeight,
+            orderPrice,
+            orderDescription,
+            "Cancel request",
+            userName,
+            userSurname,
+            page) {
+    super.type = 0;
+  }
+
+  @override
+  Future<void> onButtonPress() async {
+    // await cancelBookOfTicket(ticketId);
+    await cancelOffer(ticketId);
+    popUpRequestCanceled(page.context);
+    page.setState(() {});
+  }
+}
+
+class AngelInProgressHistoryTicket extends AbstractAngelHistoryTicket {
+  int angelId = 0;
+
+  AngelInProgressHistoryTicket(
+      int ticketId,
+      int shopperId,
+      this.angelId,
+      String orderName,
+      double orderWeight,
+      double orderPrice,
+      String orderDescription,
+      String userName,
+      String userSurname,
+      PageOfAngelOrdersState page,
+      {Key? key})
+      : super(
+            key: key,
+            ticketId,
+            shopperId,
+            orderName,
+            orderWeight,
+            orderPrice,
+            orderDescription,
+            "Cancel (Rewrite)",
+            userName,
+            userSurname,
+            page) {
+    super.type = 1;
+  }
+
+  @override
+  Future<void> onButtonPress() async {
+    var result = await cancelBookOfTicket(ticketId);
+    if (result) {
+      popUpRequestCanceled(page.context);
+      super.page.setState(() => {});
+    }
+  }
+}
+
+class AngelCompletedHistoryTicket extends AbstractAngelHistoryTicket {
+  int angelId = 0;
+
+  AngelCompletedHistoryTicket(
+      int ticketId,
+      int shopperId,
+      this.angelId,
+      String orderName,
+      double orderWeight,
+      double orderPrice,
+      String orderDescription,
+      String userName,
+      String userSurname,
+      PageOfAngelOrdersState page,
+      {Key? key})
+      : super(
+            key: key,
+            ticketId,
+            shopperId,
+            orderName,
+            orderWeight,
+            orderPrice,
+            orderDescription,
+            "Rate Shopper",
+            userName,
+            userSurname,
+            page) {
+    super.type = 3;
+  }
+
+  @override
+  Future<void> onButtonPress() async {}
 }
