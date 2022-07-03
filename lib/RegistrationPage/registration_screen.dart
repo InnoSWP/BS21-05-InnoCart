@@ -155,12 +155,14 @@ class _RegScreenState extends State<RegScreen> {
               SizedBox(
                 height: 40,
                 child: TextField(
+                  obscureText: true,
                   onChanged: (text) {
                     rawData['password'] = text;
                   },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter password',
+
                   ),
                 ),
               ),

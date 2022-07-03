@@ -290,7 +290,9 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('Deadline'),
-                        ElevatedButton(
+                        Flexible(flex: 1, child: Container(margin: EdgeInsets.only(
+                          left: 15
+                        ),child:ElevatedButton(
                             onPressed: () => selectDate(),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.white,
@@ -301,7 +303,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                               side: const BorderSide(
                                   color: Colors.black, width: 2),
                             ),
-                            child: SizedBox(
+                            child: Container(
                                 width: 130,
                                 height: 30,
                                 child: Row(
@@ -314,11 +316,10 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                           color: Colors.grey, fontSize: 20),
                                     ),
                                   ],
-                                ))),
-                        SizedBox(
-                          width: 100,
-                          height: 30,
-                          child: TextField(
+                                ))))),
+                        Flexible(
+                          flex: 1,
+                          child: Container(margin: EdgeInsets.only(left: 15), child: TextField(
                             onChanged: (text) {},
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -338,7 +339,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                   'assets/icons/Time_light.svg'),
                               contentPadding: EdgeInsets.only(top: 7, left: 5),
                             ),
-                          ),
+                          ),),
                         ),
                       ],
                     ),

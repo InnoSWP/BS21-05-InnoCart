@@ -38,9 +38,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return GestureDetector(
         onHorizontalDragEnd: ((DragEndDetails details) {
           if (widget.ok == 0) {
-            if (details.primaryVelocity! < 0.0) {
+            if (details.primaryVelocity! < 3.0) {
               pageUpdate((selectedPage + 1) % 5, context);
-            } else if (details.primaryVelocity! > 0.0) {
+            } else if (details.primaryVelocity! > 3.0) {
               pageUpdate((selectedPage + 4) % 5, context);
             }
           }

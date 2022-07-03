@@ -74,6 +74,7 @@ class _LogInPageState extends State<LogInPage> {
               SizedBox(
                 height: 40,
                 child: TextField(
+                  obscureText: true,
                   onChanged: (text) {
                     curPass = text;
                   },
