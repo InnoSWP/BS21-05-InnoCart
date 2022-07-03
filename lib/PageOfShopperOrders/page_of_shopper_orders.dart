@@ -25,10 +25,7 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
 
   @override
   Widget build(BuildContext context) {
-    return FlipCard(
-      key: PageOfShopperOrders.cardKey,
-      flipOnTouch: false,
-      front: SafeArea(
+    return  SafeArea(
         child: GestureDetector(
           onHorizontalDragEnd: ((DragEndDetails details) {
             if (details.primaryVelocity! < 0.0) {
@@ -39,7 +36,7 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
           }),
           child: Scaffold(
             backgroundColor: Colors.white,
-            appBar:  ThisAppBar(PageOfShopperOrders.cardKey),
+            appBar:  ThisAppBar(),
             bottomNavigationBar: const MainNavigationBar(),
             body: FutureBuilder<List<Widget>>(
                 future: Tickets(context, this).getTickets(),
@@ -51,10 +48,8 @@ class PageOfShopperOrdersState extends State<PageOfShopperOrders> {
                   }
                 }),
           ),
-        ),
-      ),
-      back: const PageOfAngelOrders(),
-    ); // This trailing comma makes auto-formatting nicer for build methods.
+        ));
+      // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 

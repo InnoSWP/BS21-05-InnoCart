@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flip_card/flip_card.dart';
 class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
-  GlobalKey<FlipCardState> cardKey;
-  ThisAppBar(this.cardKey,{Key? key}) : super(key: key);
+  ThisAppBar({Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -15,7 +13,7 @@ class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Center ( child: ElevatedButton(
         onPressed: () {
-          cardKey.currentState?.toggleCard();
+          Navigator.of(context).pushReplacementNamed('/ShopperOrders');
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.yellowAccent,
