@@ -10,6 +10,7 @@ import '../UI/Buttons/elevated_button_style.dart';
 import '../navigation_bar.dart';
 import '../main.dart';
 import 'app_bar.dart';
+import '../firebase_functions.dart';
 
 class PageOfAngelOrders extends StatefulWidget {
   const PageOfAngelOrders({Key? key}) : super(key: key);
@@ -58,20 +59,33 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
 
     for (Map<String, dynamic> tokenNote
         in waitingForAcceptHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote, this));
+      String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await ticketExists(tokenNote['ticket_id'])){
+        url = await getUrlByTicketId(tokenNote['ticket_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url));
     }
+
 
     listToReturn.add(generateHeader('In progress'));
 
     for (Map<String, dynamic> tokenNote
         in inProgressHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote, this));
+      String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await ticketExists(tokenNote['ticket_id'])){
+        url = await getUrlByTicketId(tokenNote['ticket_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url));
     }
 
     listToReturn.add(generateHeader('Completed'));
 
     for (Map<String, dynamic> tokenNote in completedHistoryTickets['tickets']) {
-      listToReturn.add(createTicketFromData(tokenNote, this));
+      String url ='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await ticketExists(tokenNote['ticket_id'])){
+        url = await getUrlByTicketId(tokenNote['ticket_id']);
+      }
+      listToReturn.add(createTicketFromData(tokenNote, this, url));
     }
     return listToReturn;
   }
@@ -88,8 +102,8 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   }
 
   SetTicket createTicketFromData(
-      Map<String, dynamic> data, PageOfAngelOrdersState page) {
-    return SetTicket(Ticket(data), page);
+      Map<String, dynamic> data, PageOfAngelOrdersState page, String url) {
+    return SetTicket(Ticket(data, url), page,);
   }
 }
 

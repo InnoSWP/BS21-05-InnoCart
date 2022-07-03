@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ).image
-                      : Image.asset('assets/images/pizza.jpg').image,),
+                      : Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU').image,),
                   const SizedBox(
                     height: 15,
                   ),

@@ -26,3 +26,20 @@ Future<void> pushAvatarFirebaseStorage(PlatformFile? pickedFile, int userId)asyn
     data.collection('user_data').doc('$userId').set({'firePath': 'avatars/${userId}', 'user_id':userId});
   }
 }
+
+Future<bool> ticketExists(int ticketId) async {
+  dynamic cur_doc = await FirebaseFirestore.instance
+      .collection('ticket_data')
+      .doc('$ticketId')
+      .get();
+  if (cur_doc.exists == true){
+    print('huy');
+    print(await FirebaseStorage.instance.ref().child("files/$ticketId").getDownloadURL());
+  }
+  return cur_doc.exists;
+}
+
+Future<String> getUrlByTicketId(int ticketId) async{
+  return await FirebaseStorage.instance.ref().child("files/$ticketId").getDownloadURL();
+
+}
