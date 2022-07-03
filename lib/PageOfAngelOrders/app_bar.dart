@@ -12,8 +12,10 @@ class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      title: Center( child :ElevatedButton(
-        onPressed: () => Navigator.of(context).pushReplacementNamed('/ShopperOrders'),
+      centerTitle: true,
+      title: ElevatedButton(
+        onPressed: () =>
+            Navigator.of(context).pushReplacementNamed('/ShopperOrders'),
         style: ElevatedButton.styleFrom(primary: Colors.yellowAccent),
         child: SizedBox(
           width: 270,
@@ -33,7 +35,7 @@ class ThisAppBar extends StatelessWidget implements PreferredSizeWidget {
             ],
           ),
         ),
-      ),),
+      ),
     );
   }
 }

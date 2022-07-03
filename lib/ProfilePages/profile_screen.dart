@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:inno_cart/UI/Buttons/elevated_button_style.dart';
 import '../backend_functions.dart';
 import '../navigation_bar.dart';
 import '../user.dart';
@@ -28,8 +29,8 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
-PlatformFile? pickedFile = null;
 
+PlatformFile? pickedFile = null;
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -54,13 +55,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 70,
                   ),
-                  CircleAvatar(radius: 90, backgroundImage:pickedFile != null
-                      ? Image.file(
-                    File(pickedFile!.path!),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ).image
-                      : Image.asset('assets/images/pizza.jpg').image,),
+                  CircleAvatar(
+                    radius: 90,
+                    backgroundImage: pickedFile != null
+                        ? Image.file(
+                            File(pickedFile!.path!),
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ).image
+                        : Image.asset('assets/images/pizza.jpg').image,
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -123,44 +127,73 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Navigator.pushReplacementNamed(
                                           context, '/ProfileChangeScreen');
                                     },
-                                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                        children:  [const Text(
-                                      'Edit profile',
-                                      style: TextStyle(color: Colors.black),
-                                    ), SvgPicture.asset('assets/icons/Pencil.svg')]),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            'Edit profile',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          SvgPicture.asset(
+                                              'assets/icons/Pencil.svg')
+                                        ]),
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 15,),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Center(
                                 child: SizedBox(
                                   width: 115,
                                   height: 35,
                                   child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.white,
-                                        side: const BorderSide(
-                                            width: 2.0, color: Colors.black)),
-                                    onPressed: () async {
-                                      currentUser = User(getEmptyMap());
-                                      final directory = await getApplicationDocumentsDirectory();
-                                      File file = File('${directory.path}/data.json');
-                                      file.delete();
-                                      Navigator.pushReplacementNamed(
-                                          context, '/start');
-                                    },
-                                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                        children:  [const Text(
-                                          'Log out',
-                                          style: TextStyle(color: Colors.black),
-                                        ), Icon(Icons.logout, color: Colors.black,)])
-                                  ),
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                          side: const BorderSide(
+                                              width: 2.0, color: Colors.black)),
+                                      onPressed: () async {
+                                        currentUser = User(getEmptyMap());
+                                        final directory =
+                                            await getApplicationDocumentsDirectory();
+                                        File file =
+                                            File('${directory.path}/data.json');
+                                        file.delete();
+                                        Navigator.pushReplacementNamed(
+                                            context, '/start');
+                                      },
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              'Log out',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                            Icon(
+                                              Icons.logout,
+                                              color: Colors.black,
+                                            )
+                                          ])),
                                 ),
                               )
                             ],
                           );
+                        } else {
+                          return ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/ProfileScreen');
+                            },
+                            style: roundedWhite,
+                            child: const TextAndArrowButtonChild(
+                              buttonText: 'Return to profile',
+                            ),
+                          );
                         }
-                        return Container();
                       })
                     ],
                   ),
