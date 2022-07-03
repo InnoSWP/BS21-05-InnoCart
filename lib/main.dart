@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: generateRoute,
       onGenerateInitialRoutes: maybeskip,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

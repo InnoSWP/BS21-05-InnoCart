@@ -79,7 +79,7 @@ class Users:
         data = cursor.fetchone()
         return data
 
-    @staticmethod
+    """@staticmethod
     def publicUserInformationById(user_id: int, cursor: sqlite3.Cursor) -> dict:
         data = Users.userInformationById(user_id, cursor)
         return {"user_id": data[0],
@@ -88,6 +88,7 @@ class Users:
                 "surname": data[3],
                 "profile_image": data[7],
                 "rating": data[10]}
+                """
 
     @staticmethod
     def checkTokenSignature(user_id: int, token: str, cursor) -> bool:
@@ -237,9 +238,11 @@ class Tickets:
 
     @staticmethod
     def getTicketInformationWithUser(ticket_id: int,
-                                     cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
+                                         cursor: sqlite3.Cursor) -> dict[str, typing.Any]:
         returnData = Tickets.getTicketInformationById(ticket_id, cursor)
-        returnData['shopper_info'] = Users.publicUserInformationById(returnData['shopper_id'], cursor)
+        returnData['shopper_info'] = Users.contactUserInformationById(returnData['shopper_id'], cursor)
+        if returnData['angel_id'] is not None:
+            returnData['angel_info'] = Users.contactUserInformationById(returnData['angel_id'], cursor)
         return returnData
 
 
@@ -273,7 +276,7 @@ class Tickets:
                 }
             )
         for ticket in return_data['tickets']:
-            shopper_info = Users.publicUserInformationById(ticket['shopper_id'], cursor)
+            shopper_info = Users.contactUserInformationById(ticket['shopper_id'], cursor)
             ticket['shopper_info'] = shopper_info
         print(return_data)
         return return_data
@@ -310,8 +313,10 @@ class Tickets:
                 }
             )
         for ticket in return_data['tickets']:
-            shopper_info = Users.publicUserInformationById(ticket['shopper_id'], cursor)
+            shopper_info = Users.contactUserInformationById(ticket['shopper_id'], cursor)
             ticket['shopper_info'] = shopper_info
+            if ticket['angel_id'] is not None:
+                ticket['angel_info'] = Users.contactUserInformationById(ticket['angel_id'], cursor)
         print(return_data)
         return return_data
 
@@ -444,7 +449,7 @@ class Offers:
                     "ticket_id": offerData[1],
                     "angel_id": offerData[2],
                     "creation_unix_time": offerData[3],
-                    "angel": Users.publicUserInformationById(offerData[2], cursor)
+                    "angel": Users.contactUserInformationById(offerData[2], cursor)
                 }
             )
         return data
