@@ -47,13 +47,19 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                   const SizedBox(
                     height: 70,
                   ),
-                  CircleAvatar(radius: 90, backgroundImage:pickedFile != null
-                      ? Image.file(
-                    File(pickedFile!.path!),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ).image
-                      : Image.asset('assets/images/pizza.jpg').image,),
+                  CircleAvatar(
+                    radius: 90,
+                    backgroundImage: pickedFile != null
+                        ? Image.file(
+                            File(pickedFile!.path!),
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ).image
+                        : Image.network(
+                            'https://www.pngkit.com/png/detail/129-1298005_png-file-upload-image-icon-png.png',
+                            fit: BoxFit.cover,
+                          ).image,
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -219,7 +225,8 @@ class _ProfileChangeScreenState extends State<ProfileChangeScreen> {
                                       dataToUpdate['email'] ?? "Unknown",
                                       dataToUpdate['telegram'] ?? "Unknown");
                                   if (result) {
-                                    pushAvatarFirebaseStorage(pickedFile, currentUser.userId);
+                                    pushAvatarFirebaseStorage(
+                                        pickedFile, currentUser.userId);
                                     Navigator.pushReplacementNamed(
                                         context, '/ProfileScreen');
                                   }

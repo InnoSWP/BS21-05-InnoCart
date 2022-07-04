@@ -57,8 +57,7 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
         }),
         child: Scaffold(
           bottomNavigationBar: const MainNavigationBar(),
-            body:
-           SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
@@ -110,7 +109,8 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                                       width: double.infinity,
                                       fit: BoxFit.cover,
                                     )
-                                  : Image.asset('assets/images/pizza.jpg')),
+                                  : Image.network(
+                                      'https://www.pngkit.com/png/detail/129-1298005_png-file-upload-image-icon-png.png')),
                         ),
                         const SizedBox(
                           width: 10,
@@ -365,8 +365,8 @@ class _OrderFactoryPageState extends State<OrderFactoryPage> {
                             "product_type": type,
                             "reward": reward.toString().replaceAll('.', ',')
                           });
-                          await pushFirebaseStorage(
-                              result['ticket_id'], pickedFile, currentUser.userId);
+                          await pushFirebaseStorage(result['ticket_id'],
+                              pickedFile, currentUser.userId);
                           Navigator.of(context)
                               .pushReplacementNamed('/PageOfActiveOrders');
                         },

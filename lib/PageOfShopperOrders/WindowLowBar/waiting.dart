@@ -19,19 +19,8 @@ Widget waiting(BuildContext context, Ticket ticket, String buttonText,
     style: roundedWhite,
     child: SizedBox(
       width: 120,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            buttonText,
-            style: const TextStyle(fontSize: 14, color: Colors.black),
-          ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black,
-            size: 14,
-          ),
-        ],
+      child: TextAndArrowButtonChild(
+        buttonText: buttonText,
       ),
     ),
   );

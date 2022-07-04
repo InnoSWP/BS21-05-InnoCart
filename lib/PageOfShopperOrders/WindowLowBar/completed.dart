@@ -15,7 +15,7 @@ Widget completed(BuildContext context, Ticket ticket, String buttonText,
         children: [
           CircleAvatar(
             radius: (20),
-            backgroundImage: AssetImage(ticket.angel.profileImage),
+            backgroundImage: NetworkImage(ticket.angel.profileImage),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),

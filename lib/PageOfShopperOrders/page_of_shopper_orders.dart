@@ -118,7 +118,7 @@ class SetTicket extends StatelessWidget {
     if (ticket.status == TicketType.waitingForAccept) {
       buttonText = 'See requests';
     } else if (ticket.status == TicketType.inProgress) {
-      buttonText = 'Cancel Order';
+      buttonText = 'Open chat';
     } else if (ticket.status == TicketType.completed) {
       buttonText = 'Rate Angel';
     }
@@ -131,14 +131,8 @@ class SetTicket extends StatelessWidget {
           if (ticket.status == TicketType.waitingForAccept) {
             seeRequestWindow(context, ticket.ticketId, page);
           } else if (ticket.status == TicketType.inProgress) {
-            if (kDebugMode) {
-              print("BUTTON OF COMPLETING ORDER HAS BEEN PRESSED");
-            }
-            bool result = await completeOrder(ticket.ticketId);
-
-            if (result) {
-              page.setState(() {});
-            }
+            selectedPage = 3;
+            Navigator.of(context).pushReplacementNamed('/Messenger');
           } else if (ticket.status == TicketType.completed) {
             rateWindow(context, ticket, UserType.shopper);
             page.setState(() => {});
@@ -156,9 +150,9 @@ class SetTicket extends StatelessWidget {
     if (ticket.status == TicketType.waitingForAccept) {
       windowLowBar = waiting(context, ticket, 'Cancel Order', page);
     } else if (ticket.status == TicketType.inProgress) {
-      windowLowBar = inProgress(context, ticket, buttonText, page);
+      windowLowBar = inProgress(context, ticket, 'Complete Order', page);
     } else {
-      windowLowBar = completed(context, ticket, buttonText, page);
+      windowLowBar = completed(context, ticket, 'Rate Angel', page);
     }
 
     return TicketBlock(

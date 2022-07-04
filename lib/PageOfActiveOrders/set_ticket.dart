@@ -36,7 +36,8 @@ class SetTicket extends StatelessWidget {
               }),
               child: CircleAvatar(
                 radius: (20),
-                backgroundImage: Image.network(ticket.shopper.profileImage).image,
+                backgroundImage:
+                    Image.network(ticket.shopper.profileImage).image,
               ),
             ),
             Padding(
@@ -87,7 +88,7 @@ class SetTicket extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: (20),
-              backgroundImage: AssetImage(ticket.shopper.profileImage),
+              backgroundImage: NetworkImage(ticket.shopper.profileImage),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),

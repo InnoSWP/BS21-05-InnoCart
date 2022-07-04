@@ -50,7 +50,7 @@ Future rateWindow(
                   fit: FlexFit.tight,
                   child: CircleAvatar(
                     radius: (55),
-                    backgroundImage: AssetImage(ticket.shopper.profileImage),
+                    backgroundImage: NetworkImage(ticket.shopper.profileImage),
                   ),
                 ),
                 Flexible(

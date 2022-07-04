@@ -49,6 +49,8 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
   }
 
   Future<List<Widget>> getTickets() async {
+    // url - ticket picture
+    // url1 - shopper picture
     List<Widget> listToReturn = [];
 
     Map<String, dynamic> waitingForAcceptHistoryTickets =
@@ -66,8 +68,9 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
-      if (await userExists(tokenNote['shopper_id'])){
+      String url1 =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['shopper_id'])) {
         url1 = await getUrlByUserId(tokenNote['shopper_id']);
       }
       listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
@@ -82,8 +85,9 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
-      if (await userExists(tokenNote['shopper_id'])){
+      String url1 =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['shopper_id'])) {
         url1 = await getUrlByUserId(tokenNote['shopper_id']);
       }
       listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
@@ -97,8 +101,9 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
       if (await ticketExists(tokenNote['ticket_id'])) {
         url = await getUrlByTicketId(tokenNote['ticket_id']);
       }
-      String url1 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
-      if (await userExists(tokenNote['shopper_id'])){
+      String url1 =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
+      if (await userExists(tokenNote['shopper_id'])) {
         url1 = await getUrlByUserId(tokenNote['shopper_id']);
       }
       listToReturn.add(createTicketFromData(tokenNote, this, url, url1));
@@ -117,8 +122,8 @@ class PageOfAngelOrdersState extends State<PageOfAngelOrders> {
         ));
   }
 
-  SetTicket createTicketFromData(
-      Map<String, dynamic> data, PageOfAngelOrdersState page, String url, String shopperPicture) {
+  SetTicket createTicketFromData(Map<String, dynamic> data,
+      PageOfAngelOrdersState page, String url, String shopperPicture) {
     return SetTicket(
       Ticket(data, url, shopperPicture),
       page,
@@ -130,14 +135,18 @@ class SetTicket extends StatelessWidget {
   final PageOfAngelOrdersState page;
   final Ticket ticket;
   late final String buttonText;
+  late final String buttonTextPopUp;
 
   SetTicket(this.ticket, this.page, {Key? key}) : super(key: key) {
     if (ticket.status == TicketType.waitingForAccept) {
       buttonText = 'Cancel Request';
+      buttonTextPopUp = 'Cancel Request';
     } else if (ticket.status == TicketType.inProgress) {
-      buttonText = 'Open Chat';
+      buttonText = 'Open chat';
+      buttonTextPopUp = 'Cancel Request';
     } else if (ticket.status == TicketType.completed) {
       buttonText = 'Rate Shopper';
+      buttonTextPopUp = 'Rate Shopper';
     }
   }
 
@@ -150,11 +159,8 @@ class SetTicket extends StatelessWidget {
             popUpRequestCanceled(page.context);
             page.setState(() {});
           } else if (ticket.status == TicketType.inProgress) {
-            var result = await cancelBookOfTicket(ticket.ticketId);
-            if (result) {
-              popUpRequestCanceled(page.context);
-              page.setState(() => {});
-            }
+            selectedPage = 3;
+            Navigator.of(context).pushReplacementNamed('/Messenger');
           } else if (ticket.status == TicketType.completed) {
             rateWindow(context, ticket, UserType.angel);
             page.setState(() => {});
@@ -174,7 +180,7 @@ class SetTicket extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: (20),
-              backgroundImage: AssetImage(ticket.shopper.profileImage),
+              backgroundImage: Image.network(ticket.shopper.profileImage).image,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
@@ -206,14 +212,18 @@ class SetTicket extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             if (ticket.status == TicketType.waitingForAccept) {
-              await cancelOffer(ticket.ticketId);
-              popUpRequestCanceled(page.context);
-              page.setState(() {});
-            } else if (ticket.status == TicketType.inProgress) {
-              var result = await cancelBookOfTicket(ticket.ticketId);
+              var result = await cancelOffer(ticket.ticketId);
               if (result) {
+                Navigator.pop(context);
                 popUpRequestCanceled(page.context);
-                page.setState(() => {});
+                page.setState(() {});
+              }
+            } else if (ticket.status == TicketType.inProgress) {
+              var result = await cancelOffer(ticket.ticketId);
+              if (result) {
+                Navigator.pop(context);
+                popUpRequestCanceled(page.context);
+                page.setState(() {});
               }
             } else if (ticket.status == TicketType.completed) {
               Navigator.pop(context);
@@ -224,19 +234,8 @@ class SetTicket extends StatelessWidget {
           style: roundedWhite,
           child: SizedBox(
             width: 120,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  buttonText,
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black,
-                  size: 14,
-                ),
-              ],
+            child: TextAndArrowButtonChild(
+              buttonText: buttonTextPopUp,
             ),
           ),
         ),

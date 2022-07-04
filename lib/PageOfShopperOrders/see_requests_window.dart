@@ -61,7 +61,8 @@ Future seeRequestWindow(
 
 class AngelOffer extends StatelessWidget {
   static const String buttonText = "Accept";
-  static const String profilePicture = "assets/images/man1.png";
+  static const String profilePicture =
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrvu5dvNWm3aeTwcEfGy5uW2nTSI6dMU-ENCRvcL7UGS7sEYfNTvhFx6_gnajDWE8uLQ&usqp=CAU';
   final String shopperName;
   final double shopperRating;
   final int offerId;
@@ -95,7 +96,7 @@ class AngelOffer extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: (20),
-                  backgroundImage: AssetImage(profilePicture),
+                  backgroundImage: NetworkImage(profilePicture),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -127,9 +128,7 @@ class AngelOffer extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   acceptOffer(offerId);
-                  if (kDebugMode) {
-                    print("Offer Is accepted");
-                  }
+                  Navigator.pop(context);
                   page.setState(() {});
                 },
                 style: roundedWhite,

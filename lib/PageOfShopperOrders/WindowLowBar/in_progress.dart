@@ -16,7 +16,7 @@ Widget inProgress(BuildContext context, Ticket ticket, String buttonText,
         children: [
           CircleAvatar(
             radius: (20),
-            backgroundImage: AssetImage(ticket.angel.profileImage),
+            backgroundImage: NetworkImage(ticket.angel.profileImage),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),
@@ -47,10 +47,9 @@ Widget inProgress(BuildContext context, Ticket ticket, String buttonText,
       ),
       ElevatedButton(
         onPressed: () async {
-          bool result = await cancelOrder(ticket.ticketId);
+          bool result = await completeOrder(ticket.ticketId);
           if (result) {
-            Navigator.of(context).pop();
-            popUpOrderCanceled(context);
+            Navigator.pop(context);
             page.setState(() {});
           }
         },
